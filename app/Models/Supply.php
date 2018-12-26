@@ -59,7 +59,7 @@ class Supply extends Model
     // 审核通过通知
     public function unShipNotify()
     {
-        $this->origin->latestStatus(Supply::PENDING)->user->notify(new SupplyUnShipNotification($this));
+        $this->latestStatus(Supply::PENDING)->user->notify(new SupplyUnShipNotification($this));
     }
 
     // 提交审核通知

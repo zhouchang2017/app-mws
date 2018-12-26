@@ -15,12 +15,12 @@ class SupplyEventSubscriber
      * */
     public function onPending($event)
     {
-        $event->supply->notify(new SupplyPendingNotification($event->supply));
+        $event->supply->pendingNotify();
     }
 
     public function onUnShip($event)
     {
-        $event->supply->notify(new SupplyUnShipNotification($event->supply));
+        $event->supply->unShipNotify();
     }
 
     /**

@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
+    <div>
+        <h2 class="text-80 pb-3">用户中心</h2>
+        <div class="card p-6 w-full">
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
@@ -16,8 +15,6 @@
 
                     You are logged in!
                 </div>
-            </div>
         </div>
     </div>
-</div>
 @endsection

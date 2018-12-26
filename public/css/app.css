@@ -7450,6 +7450,46 @@ a {
   text-decoration: none;
 }
 
+a:link {
+  color: var(--80);
+}
+
+.nav-link {
+  color: var(--80);
+}
+
+.app-side .el-menu {
+  height: 100%;
+  border-right: none !important;
+}
+
+.card {
+  background-color: #fff;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  border-radius: .5rem;
+}
+
+.card-panel {
+  height: 150px;
+}
+
+.card-refresh {
+  padding: .25rem;
+  margin-left: auto;
+  color: var(--80);
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.card-refresh:hover {
+  color: var(--primary);
+}
+
 /**
  * Here you would add any custom utilities you need that don't come out of the
  * box with Tailwind.
@@ -7464,6 +7504,18 @@ a {
  * @import "utilities/background-patterns";
  * @import "utilities/skew-transforms";
  */
+
+.navbar-laravel {
+  background-color: #fff;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .04);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, .04);
+}
+
+.login-box-body {
+  border-radius: @box-border-radius;
+  -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+          box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+}
 
 @media (min-width: 576px) {
   .sm\:list-reset {
