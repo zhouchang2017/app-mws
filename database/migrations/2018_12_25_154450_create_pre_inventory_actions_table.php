@@ -17,7 +17,8 @@ class CreatePreInventoryActionsTable extends Migration
         Schema::create('pre_inventory_actions', function (Blueprint $table) {
             $table->increments('id');
             $table->morphs('origin'); // 来源
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->unsignedInteger('type_id')->comment('操作类型 put/take'); // 操作类型
             $table->timestamps();
         });
     }

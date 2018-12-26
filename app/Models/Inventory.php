@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\DP\Product;
+use App\Models\DP\ProductVariant;
 use Illuminate\Database\Eloquent\Model;
 
 class Inventory extends Model
@@ -17,6 +19,31 @@ class Inventory extends Model
     public function warehouse()
     {
         return $this->belongsTo(Warehouse::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function variant()
+    {
+        return $this->belongsTo(ProductVariant::class);
+    }
+
+    public function supplier()
+    {
+        return $this->hasOne(SupplierVariant::class, 'variant_id', 'variant_id');
+    }
+
+    public function scopeFindWarehouseVariants($query, $warehouseId, $variantId, $productId = null)
+    {
+        return $query->where([
+            ['warehouse_id', $warehouseId],
+            ['variant_id', $variantId],
+        ])->when($productId, function ($query, $productId) {
+            return $query->where('product_id', $productId);
+        });
     }
 
     public static function updateByAction(InventoryAction $action)

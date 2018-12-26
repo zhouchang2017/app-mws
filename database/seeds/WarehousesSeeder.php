@@ -19,6 +19,9 @@ class WarehousesSeeder extends Seeder
             $warehouse->type()->associate(\App\Models\WarehouseType::all()->random());
             $warehouse->admin()->associate(\App\Models\User::all()->random());
             $warehouse->save();
+
+            $warehouse->address()->save(factory(\App\Models\Address::class)->make());
+
         });
     }
 

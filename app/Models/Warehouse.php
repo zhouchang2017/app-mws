@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Contracts\Addressable;
+use App\Traits\AddressableTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Warehouse
  * @package App\Models
  */
-class Warehouse extends Model
+class Warehouse extends Model implements Addressable
 {
+    use AddressableTrait;
     /**
      * @var array
      */
-    protected $fillable = [ 'name' ];
+    protected $fillable = ['name'];
 
     /**
      * @var array

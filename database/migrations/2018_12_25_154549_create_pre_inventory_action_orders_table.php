@@ -19,7 +19,7 @@ class CreatePreInventoryActionOrdersTable extends Migration
             $table->unsignedInteger('warehouse_id')->comment('仓库');
             $table->unsignedInteger('pre_inventory_action_id')->comment('预出\入库');
             $table->unsignedInteger('type_id')->comment('操作类型 put/take'); // 操作类型
-            $table->text('description')->comment('说明');
+            $table->text('description')->nullable()->comment('说明');
             $table->timestamps();
         });
     }

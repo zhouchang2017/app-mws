@@ -31,4 +31,13 @@ class EventServiceProvider extends ServiceProvider
 
         //
     }
+
+    /**
+     * 需要注册的订阅者类。
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        'App\Listeners\SupplyEventSubscriber',
+    ];
 }
