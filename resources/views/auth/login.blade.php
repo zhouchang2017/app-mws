@@ -3,9 +3,8 @@
 @section('content')
     <div class="h-full flex  justify-center items-center w-full max-w-xs flex-col m-auto">
         <h1 class="text-center text-70 my-3">{{config('app.name')}}</h1>
-        <form class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4" method="POST" action="{{ route('login') }}">
+        <form class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4" method="POST" action="{{ route($domain.'.login') }}">
             @csrf
-
             <div class="mb-4">
                 <label for="email"
                        class="block text-grey-darker text-sm font-bold mb-2 text-80">{{ __('E-Mail Address') }}</label>
@@ -48,15 +47,14 @@
                     </label>
                 </div>
             </div>
-
             <div class="flex items-center justify-between">
                 <button class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit">
                     {{ __('Login') }}
                 </button>
-                @if (Route::has('password.request'))
+                @if (Route::has($domain.'.password.request'))
                     <a class="inline-block align-baseline font-bold text-sm text-primary-50% hover:text-blue-darker"
-                       href="{{ route('password.request') }}">
+                       href="{{ route($domain.'.password.request') }}">
                         {{ __('Forgot Your Password?') }}
                     </a>
                 @endif

@@ -16,6 +16,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
 
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *
@@ -39,6 +40,9 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapSupplierWebRoutes();
+
+        $this->mapAdminWebRoutes();
         //
     }
 
@@ -52,8 +56,28 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
+    }
+
+    protected function mapAdminWebRoutes()
+    {
+        Route::group(config('erp.admin.router'), function () {
+            require base_path('routes/admin.php');
+        });
+        Route::group(array_merge(array_except(config('erp.admin.router'), [ 'middleware' => 'web' ])), function () {
+            $this->auth();
+        });
+    }
+
+    protected function mapSupplierWebRoutes()
+    {
+        Route::group(config('erp.supplier.router'), function () {
+            require base_path('routes/supplier.php');
+        });
+        Route::group(array_merge(array_except(config('erp.supplier.router'), [ 'middleware' => 'web' ])), function () {
+            $this->auth();
+        });
     }
 
     /**
@@ -66,8 +90,10 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
+
+
 }

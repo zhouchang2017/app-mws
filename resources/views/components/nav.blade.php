@@ -4,7 +4,7 @@
         <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>供应商管理</template>
             <el-menu-item-group title="分组一">
-                <a class="inline-block" href="{{route('user.show',['user'=>1])}}">
+                <a class="inline-block" href="">
                     <el-menu-item index="1-1">
                         选项1
                     </el-menu-item>

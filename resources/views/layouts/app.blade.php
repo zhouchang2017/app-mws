@@ -33,9 +33,9 @@
                 <i class="el-icon-setting text-white mr-3"></i>
                 <el-dropdown-menu slot="dropdown">
                     @guest
-                        @if (Route::has('register'))
+                        @if (Route::has($domain.'.register'))
                             <el-dropdown-item>
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route($domain.'.register') }}">{{ __('Register') }}</a>
                             </el-dropdown-item>
                         @endif
 
@@ -47,13 +47,13 @@
                             </a>
                         </el-dropdown-item>
                         <el-dropdown-item>
-                            <a class="nav-link" href="{{ route('logout') }}"
+                            <a class="nav-link" href="{{ route($domain.'.logout') }}"
                                onclick="event.preventDefault();
     document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            <form id="logout-form" action="{{ route($domain.'.logout') }}" method="POST"
                                   style="display: none;">
                                 @csrf
                             </form>
@@ -70,7 +70,7 @@
             @component('components.nav')
             @endcomponent
             <el-main>
-                    @yield('content')
+                @yield('content')
             </el-main>
         </el-container>
     </el-container>

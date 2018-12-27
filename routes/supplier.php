@@ -1,0 +1,10 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: zhouchang
+ * Date: 2018/12/27
+ * Time: 下午9:31
+ */
+Route::get('/home','HomeController@index');
+
+
