@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="43b62aea-4081-4ae4-a8cc-89fabf3f8ec0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Listeners/SupplyEventSubscriber.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/SupplyEventSubscriber.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/PreInventoryAction.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/PreInventoryAction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/PreInventoryActionOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/PreInventoryActionOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/PreInventoryActionOrderItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/PreInventoryActionOrderItem.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ShipmentTrack.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ShipmentTrack.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Supply.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Supply.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/SupplyItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/SupplyItem.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/SupplyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/SupplyService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Traits/TrackableTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Traits/TrackableTrait.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2018_12_26_023414_create_shipment_tracks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_12_26_023414_create_shipment_tracks_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/SupplierSuppliesSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/SupplierSuppliesSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/SupplierSupplyTest.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -93,13 +79,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SupplyShipmentTest.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tests/Unit/SupplyShipmentTest.php">
+      <file leaf-file-name="SupplyService.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Services/SupplyService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="487">
-              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="556">
+              <caret line="185" column="19" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
               <folding>
-                <element signature="e#30#59#0#PHP" expanded="true" />
+                <element signature="e#34#69#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -187,9 +173,9 @@
         <option value="$PROJECT_DIR$/app/Models/Supply.php" />
         <option value="$PROJECT_DIR$/app/Models/PreInventoryActionOrderItem.php" />
         <option value="$PROJECT_DIR$/app/Models/PreInventoryActionOrder.php" />
-        <option value="$PROJECT_DIR$/app/Services/SupplyService.php" />
         <option value="$PROJECT_DIR$/app/Traits/TrackableTrait.php" />
         <option value="$PROJECT_DIR$/tests/Unit/SupplyShipmentTest.php" />
+        <option value="$PROJECT_DIR$/app/Services/SupplyService.php" />
       </list>
     </option>
   </component>
@@ -532,7 +518,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81276000" />
+    <option name="totallyTimeSpent" value="81550000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="34" y="38" width="1727" height="959" extended-state="0" />
@@ -906,16 +892,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Supply.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
-          <folding>
-            <element signature="e#30#65#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasRelationships.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
@@ -951,16 +927,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/SupplyService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="183" column="36" selection-start-line="183" selection-start-column="36" selection-end-line="183" selection-end-column="36" />
-          <folding>
-            <element signature="e#34#69#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Models/PreInventoryActionOrder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -991,6 +957,26 @@
           <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
           <folding>
             <element signature="e#30#59#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Models/Supply.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1510">
+          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+          <folding>
+            <element signature="e#30#65#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/SupplyService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="185" column="19" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
+          <folding>
+            <element signature="e#34#69#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

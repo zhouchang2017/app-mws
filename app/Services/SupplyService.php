@@ -182,6 +182,8 @@ class SupplyService
             /** @var PreInventoryActionOrder $preOrder */
             $preOrder = PreInventoryActionOrder::find($logistic['order_id']);
             return $preOrder->toShipment(array_except($logistic, 'order_id'), true);
+        })->tap(function(){
+            // 物流检测
         });
 
     }
