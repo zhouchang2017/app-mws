@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\SupplyApprovedEvent;
+use App\Notifications\SupplyApprovedNotification;
 use App\Notifications\SupplyPendingNotification;
 use App\Notifications\SupplyUnShipNotification;
 use App\Observers\SupplyObserver;
@@ -12,16 +14,18 @@ use Spatie\ModelStatus\HasStatuses;
 
 /**
  * @property mixed origin
+ * @property mixed preInventoryAction
  */
 class Supply extends Model
 {
     use HasStatuses, TrackableTrait;
 
-    const UN_COMMIT = 'UN_COMMIT'; //未提交(保存)
-    const PENDING = 'PENDING';  //待审核(提交审核)
-    const UN_SHIP = 'UN_SHIP';  //待发货
-    const PART_SHIPPED = 'PART_SHIPPED';  //部分发货
-    const SHIPPED = 'SHIPPED';  //已发货
+    const UN_COMMIT = 'UN_COMMIT'; // 未提交(保存)
+    const PENDING = 'PENDING';   // 待审核(提交审核)
+    const APPROVED = 'APPROVED'; // 审核通过 等待分配接收仓库
+    const UN_SHIP = 'UN_SHIP';  // 待发货
+    const PART_SHIPPED = 'PART_SHIPPED';  // 部分发货
+    const SHIPPED = 'SHIPPED';  // 已发货
     const COMPLETED = 'COMPLETED'; //已完成
     const CANCEL = 'CANCEL'; //取消
 
@@ -57,6 +61,12 @@ class Supply extends Model
     }
 
     // 审核通过通知
+    public function approvedNotify()
+    {
+        $this->latestStatus(Supply::PENDING)->user->notify(new SupplyApprovedNotification($this));
+    }
+
+    // 预出\入库(入库单\出货单)已生成 等待发货通知
     public function unShipNotify()
     {
         $this->latestStatus(Supply::PENDING)->user->notify(new SupplyUnShipNotification($this));

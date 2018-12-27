@@ -16,7 +16,7 @@ class SupplierSuppliesSeeder extends Seeder
         DB::table('supply_items')->truncate();
         DB::table('statuses')->truncate();
         DB::table('notifications')->truncate();
-
+        DB::table('pre_inventory_actions')->truncate();
         factory(\App\Models\Supply::class, 20)->make()->each(function ($supply) {
             $supplier = $this->randomSupplier();
 
@@ -46,6 +46,20 @@ class SupplierSuppliesSeeder extends Seeder
         });
 
         // 管理员通过未读消息来审核
+
+    }
+
+    protected function randomSupplier()
+    {
+        $supplier = \App\Models\Supplier::all()->random();
+        if ($supplier->variants()->count() > 0) {
+            return $supplier;
+        }
+        return $this->randomSupplier();
+    }
+
+    protected function testApproved()
+    {
         \App\Models\User::all()->each(function ($user) {
             // 管理员登录
             auth()->login($user);
@@ -63,14 +77,5 @@ class SupplierSuppliesSeeder extends Seeder
                 }
             });
         });
-    }
-
-    protected function randomSupplier()
-    {
-        $supplier = \App\Models\Supplier::all()->random();
-        if ($supplier->variants()->count() > 0) {
-            return $supplier;
-        }
-        return $this->randomSupplier();
     }
 }

@@ -15,7 +15,6 @@ class CreateShipmentTracksTable extends Migration
     {
         Schema::create('shipment_tracks', function (Blueprint $table) {
             $table->increments('id');
-            $table->morphs('trackable');
             $table->unsignedInteger('logistic_id')->comment('物流公司');
             $table->string('tracking_number')->comment('物流单号');
             $table->integer('price')->default(0)->comment('快递费');

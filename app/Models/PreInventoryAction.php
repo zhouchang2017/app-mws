@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Observers\PreInventoryActionObserver;
+use App\Traits\PreInventoryActionStatusTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStatus\HasStatuses;
 
 // 预出\入库(入库单\出货单)
 class PreInventoryAction extends Model
 {
-    use HasStatuses;
+    use HasStatuses, PreInventoryActionStatusTrait;
 
     protected $fillable = ['description', 'type_id'];
 
@@ -18,7 +20,14 @@ class PreInventoryAction extends Model
     const PENDING = 'pending';   // 等待审核
     const APPROVED = 'approved'; // 审核通过
     const REJECTED = 'rejected'; // 拒绝
-    const ORDER_CREATED = 'order_created'; // 以设置操作单
+    const ASSIGNED = 'assigned'; // 以分配库存，生成操作单
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::observe(PreInventoryActionObserver::class);
+    }
+
 
     // 来源
     public function origin()

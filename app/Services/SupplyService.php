@@ -4,9 +4,13 @@
 namespace App\Services;
 
 
+use App\Events\SupplyApprovedEvent;
 use App\Events\SupplyPendingEvent;
 use App\Events\SupplyUnShipEvent;
+use App\Models\InventoryActionType;
+use App\Models\PreInventoryActionOrder;
 use App\Models\Supply;
+use Illuminate\Support\Carbon;
 use Spatie\ModelStatus\Exceptions\InvalidStatus;
 
 class SupplyService
@@ -30,24 +34,31 @@ class SupplyService
         $this->supply = $supply;
     }
 
-    /*
-     * 标记审核操作
-     * */
+
     /**
+     * 标记审核操作
      * @param string $reason
      * @throws \Spatie\ModelStatus\Exceptions\InvalidStatus
      */
-    public function statusToApproved($reason = '等待发货')
+    public function statusToApproved($reason = '审核通过，等待分配接收仓库')
+    {
+        $this->supply->setStatus($this->supply::APPROVED, $reason);
+        event(new SupplyApprovedEvent($this->supply));
+    }
+
+    /**
+     * @param string $reason
+     * @throws InvalidStatus
+     */
+    public function statusToUnShip($reason = '等待发货')
     {
         $this->supply->setStatus($this->supply::UN_SHIP, $reason);
         event(new SupplyUnShipEvent($this->supply));
     }
 
 
-    /*
-     * 进/出货单取消
-     * */
     /**
+     * 进/出货单取消
      * @param string $reason
      * @throws \Spatie\ModelStatus\Exceptions\InvalidStatus
      */
@@ -56,10 +67,9 @@ class SupplyService
         $this->supply->setStatus($this->supply::CANCEL, $reason);
     }
 
-    /*
-     * 标记提交审核
-     * */
+
     /**
+     * 标记提交审核
      * @param string $reason
      * @throws \Spatie\ModelStatus\Exceptions\InvalidStatus
      */
@@ -70,10 +80,8 @@ class SupplyService
     }
 
 
-    /*
-     * 状态初始化
-     * */
     /**
+     * 状态初始化
      * @param string $reason
      */
     public function statusToSave($reason = '保存/未提交')
@@ -84,10 +92,9 @@ class SupplyService
         }
     }
 
-    /*
-     * 标记状态部分发货
-     * */
+
     /**
+     * 标记状态部分发货
      * @param string $reason
      * @throws \Spatie\ModelStatus\Exceptions\InvalidStatus
      */
@@ -96,10 +103,9 @@ class SupplyService
         $this->supply->setStatus($this->supply::PART_SHIPPED, $reason);
     }
 
-    /*
-     * 标记状态已发货
-     * */
+
     /**
+     * 标记状态已发货
      * @param string $reason
      * @throws \Spatie\ModelStatus\Exceptions\InvalidStatus
      */
@@ -108,16 +114,76 @@ class SupplyService
         $this->supply->setStatus($this->supply::SHIPPED, $reason);
     }
 
-    /*
-     * 标记状态已完成
-     * */
+
     /**
+     * 标记状态已完成
      * @param string $reason
      * @throws \Spatie\ModelStatus\Exceptions\InvalidStatus
      */
     public function statusToCompleted($reason = '已完成')
     {
         $this->supply->setStatus($this->supply::COMPLETED, $reason);
+    }
+
+    /**
+     * 创建 预入库单数据
+     * @param null $reason
+     * @return array
+     */
+    protected function formatCreatePreActionParams($reason = null)
+    {
+        /** @var Carbon $createAt */
+        $createAt = $this->supply->latestStatus($this->supply::PENDING)->created_at;
+        $user = $this->supply->latestStatus($this->supply::APPROVED)->user;
+        $updateAt = $this->supply->latestStatus($this->supply::APPROVED)->created_at;
+        return [
+            'description' => $reason ?? '供应商' . $this->supply->origin->name . '于' . $createAt->toDateTimeString() . '提交的入库计划申请, 由' . $user->name . '在' . $updateAt->toDateTimeString() . '审核通过，系统推入库存调度中心',
+        ];
+    }
+
+    /*
+     * 创建 预出\入库(入库单\出货单)
+     * */
+    public function createPreAction(InventoryActionType $type = null, $data = [])
+    {
+        if (is_null($type)) {
+            $type = InventoryActionType::firstOrCreate([
+                'name' => '供应商供货入库',
+                'action' => 'put',
+                'is_accounting' => true,
+            ]);
+        }
+
+        return InventoryService::createPreAction(array_merge($this->formatCreatePreActionParams(), $data, [
+            'type_id' => $type->id,
+        ]), $this->supply);
+    }
+
+    /**
+     * 获取预出\入库(入库单\出货单)详情
+     * @return mixed
+     */
+    public function getPreActionOrders()
+    {
+        return $this->supply->preInventoryAction->orders->map->detail;
+    }
+
+    /**
+     * 发货，目前供应商供货不做拆单处理，仅针对 入库单发货
+     * @param $data
+     * @return \Illuminate\Support\Collection
+     */
+    public function shipment($data)
+    {
+        //order_id
+        //logistic_id
+        //tracking_number
+        return collect($data)->map(function ($logistic) {
+            /** @var PreInventoryActionOrder $preOrder */
+            $preOrder = PreInventoryActionOrder::find($logistic['order_id']);
+            return $preOrder->toShipment(array_except($logistic, 'order_id'), true);
+        });
+
     }
 
 

@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\TrackableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStatus\HasStatuses;
 
 // 操作单(拣货单\入仓单)
 class PreInventoryActionOrder extends Model
 {
-    use HasStatuses;
+    use HasStatuses, TrackableTrait;
 
     protected $fillable = [
         'warehouse_id',
@@ -37,5 +38,26 @@ class PreInventoryActionOrder extends Model
     public function type()
     {
         return $this->belongsTo(InventoryActionType::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(PreInventoryActionOrderItem::class, 'pre_order_id');
+    }
+
+    public function getDetailAttribute()
+    {
+        $this->loadMissing(['warehouse', 'items.variant', 'items.tracks', 'tracks']);
+        return $this;
+    }
+
+
+    public function toShipment($data, $fillItem = false)
+    {
+        return tap($this->shipment($data), function ($shipment) use ($fillItem) {
+            if ($fillItem) {
+                $this->items->each->shipment($shipment);
+            }
+        });
     }
 }

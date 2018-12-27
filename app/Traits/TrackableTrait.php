@@ -16,12 +16,12 @@ trait TrackableTrait
 
     public function tracks()
     {
-        return $this->morphMany(ShipmentTrack::class, 'trackable');
+        return $this->morphToMany(ShipmentTrack::class, 'trackable');
     }
 
     public function track()
     {
-        return $this->morphOne(ShipmentTrack::class, 'trackable');
+        return $this->morphToMany(ShipmentTrack::class, 'trackable');
     }
 
     public function hasTracks()
@@ -29,9 +29,14 @@ trait TrackableTrait
         return $this->tracks()->count() > 0;
     }
 
-    public function isShipped(): bool
+    public function shipment($data)
     {
-
+        if (is_array($data)) {
+            $data = ShipmentTrack::firstOrNew($data);
+        }
+        if ( !$this->tracks()->where('shipment_track_id', $data->id)->count() > 0) {
+            $this->tracks()->attach($data);
+        }
+        return $data;
     }
-
 }

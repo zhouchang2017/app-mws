@@ -16,10 +16,7 @@ class ShipmentTrack extends Model
         'description',
     ];
 
-    public function trackable()
-    {
-        return $this->morphTo();
-    }
+
 
     public function logistic()
     {

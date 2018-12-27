@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SupplyItem extends Model
 {
-    protected $fillable = ['quantity'];
+    protected $fillable = ['quantity', 'variant_id', 'product_id'];
 
     public function supply()
     {

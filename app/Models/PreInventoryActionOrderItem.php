@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Models\DP\Product;
 use App\Models\DP\ProductVariant;
+use App\Traits\TrackableTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class PreInventoryActionOrderItem extends Model
 {
+    use TrackableTrait;
+
     protected $fillable = ['pre_order_id', 'product_id', 'variant_id', 'quantity'];
 
     // 操作单
@@ -39,4 +42,6 @@ class PreInventoryActionOrderItem extends Model
     {
         return $this->state()->count();
     }
+
+
 }

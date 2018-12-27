@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LogisticSeeder::class); // 物流公司
         $this->call(SupplierSeeder::class); // 供应商
         $this->call(SupplierProductsSeeder::class); // 供应商关联产品
-//        $this->call(InventoryActionTypesTableSeeder::class);
+        $this->call(InventoryActionTypesTableSeeder::class);
 //        $this->call(InventoriesTableSeeder::class);
     }
 }

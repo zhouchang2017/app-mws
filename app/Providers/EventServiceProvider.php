@@ -39,5 +39,6 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $subscribe = [
         'App\Listeners\SupplyEventSubscriber',
+        'App\Listeners\InventoryEventSubscriber'
     ];
 }

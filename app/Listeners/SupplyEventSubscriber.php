@@ -2,8 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Notifications\SupplyPendingNotification;
-use App\Notifications\SupplyUnShipNotification;
+use App\Services\SupplyService;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -11,15 +10,31 @@ class SupplyEventSubscriber
 {
 
     /*
-     * 待审核通知
+     * 待审核事件响应
      * */
     public function onPending($event)
     {
+        // 消息通知给供官方小二
         $event->supply->pendingNotify();
     }
 
+    /*
+     * 审核通过事件响应
+     * */
+    public function onApproved($event)
+    {
+        // 推送供货计划到 【库存调配系统】 生成 预出\入库(入库单\出货单)
+        (new SupplyService($event->supply))->createPreAction();
+        // 消息通知给供应商
+        $event->supply->approvedNotify();
+    }
+
+    /*
+     * 已分配接收仓库，待发货事件响应
+     * */
     public function onUnShip($event)
     {
+        // 消息通知给供应商
         $event->supply->unShipNotify();
     }
 
@@ -33,6 +48,11 @@ class SupplyEventSubscriber
         $events->listen(
             'App\Events\SupplyPendingEvent',
             'App\Listeners\SupplyEventSubscriber@onPending'
+        );
+
+        $events->listen(
+            'App\Events\SupplyApprovedEvent',
+            'App\Listeners\SupplyEventSubscriber@onApproved'
         );
 
         $events->listen(
