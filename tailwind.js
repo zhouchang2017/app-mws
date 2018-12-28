@@ -124,6 +124,7 @@ let colors = {
 let svgFillColors = global.Object.assign({ current: 'currentColor' }, colors)
 
 
+
 module.exports = Object.assign({},require('tailwindcss/defaultConfig')(),{
   colors,textColors: colors,
   backgroundColors: colors,
@@ -133,8 +134,87 @@ module.exports = Object.assign({},require('tailwindcss/defaultConfig')(),{
     },
     colors
   ),
+  backgroundSize: {
+    auto: 'auto',
+    cover: 'cover',
+    contain: 'contain',
+  },
   svgFill: svgFillColors,
   svgStroke: {
     current: 'currentColor',
   },
+  borderWidths: {
+    default: '1px',
+    '0': '0',
+    '2': '2px',
+    '4': '4px',
+    '8': '8px',
+  },
+  borderRadius: {
+    none: '0',
+    sm: '.125rem',
+    default: '.25rem',
+    lg: '.5rem',
+    full: '9999px',
+  },
+  fonts: {
+    sans: ['Nunito', 'system-ui', 'BlinkMacSystemFont', '-apple-system', 'sans-serif'],
+    serif: [
+      'Constantia',
+      'Lucida Bright',
+      'Lucidabright',
+      'Lucida Serif',
+      'Lucida',
+      'DejaVu Serif',
+      'Bitstream Vera Serif',
+      'Liberation Serif',
+      'Georgia',
+      'serif',
+    ],
+    mono: ['Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+  },
+  textSizes: {
+    xs: '.75rem', // 12px
+    sm: '.875rem', // 14px
+    base: '1rem', // 16px
+    lg: '1.125rem', // 18px
+    xl: '1.25rem', // 20px
+    '2xl': '1.5rem', // 24px
+    '3xl': '1.875rem', // 30px
+    '4xl': '2.25rem', // 36px
+    '5xl': '3rem', // 48px
+  },
+  fontWeights: {
+    hairline: 200,
+    thin: 200,
+    light: 300,
+    normal: 400,
+    medium: 400,
+    semibold: 600,
+    bold: 800,
+    extrabold: 800,
+    black: 800,
+  },
+
+  leading: {
+    none: 1,
+    tight: 1.25,
+    normal: 1.5,
+    loose: 2,
+    '9': '2.25rem',
+    '12': '3rem',
+    '36': '2.25rem',
+  },
+
+  tracking: {
+    tight: '-0.05em',
+    normal: '0',
+    wide: '0.05em',
+  },
+  height:{
+    '9': '2.25rem',
+    '12': '3rem',
+    full: '100%',
+    'btn-sm': '1.875rem',
+  }
 })

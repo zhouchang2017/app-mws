@@ -10,4 +10,17 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function created($data, $description = null)
+    {
+        $json = [
+            'title' => '创建成功',
+            'data' => $data,
+            'type' => 'success',
+        ];
+        if ($description) {
+            $json = array_merge($json, ['description' => $description]);
+        }
+        return response()->json($json, 201);
+    }
 }

@@ -7,6 +7,7 @@ use App\Models\Inventory;
 use App\Models\ProductPrice;
 use App\Models\Supplier;
 use App\Models\SupplierVariant;
+use App\Scopes\SupplierProductVariantScope;
 use App\Traits\PriceableTrait;
 use Dimsav\Translatable\Translatable;
 
@@ -33,6 +34,13 @@ class ProductVariant extends Model
         'stock',
         'shipping_category_id',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new SupplierProductVariantScope());
+    }
+
 
     public function getVariantNameAttribute()
     {

@@ -11,6 +11,8 @@ class SupplierVariant extends Pivot
 {
     use MoneyFormatableTrait;
 
+    protected $connection = 'mysql';
+
     protected $table = 'supplier_variants';
 
     protected $fillable = [

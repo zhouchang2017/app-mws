@@ -5,6 +5,11 @@
  * Date: 2018/12/27
  * Time: 下午9:31
  */
-Route::get('/home','HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('/supplies', 'SupplyController');
+
+Route::resource('/pre-inventory-actions', 'PreInventoryActionController');
+
+Route::get('/product-variants', 'ProductVariantController@index');
 

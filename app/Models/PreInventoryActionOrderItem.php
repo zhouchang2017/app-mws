@@ -7,6 +7,9 @@ use App\Models\DP\ProductVariant;
 use App\Traits\TrackableTrait;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed preOrder
+ */
 class PreInventoryActionOrderItem extends Model
 {
     use TrackableTrait;
@@ -41,6 +44,12 @@ class PreInventoryActionOrderItem extends Model
     public function getConfirmCountAttribute()
     {
         return $this->state()->count();
+    }
+
+    // 是否需要物流
+    public function transport()
+    {
+        return $this->preOrder->transport();
     }
 
 

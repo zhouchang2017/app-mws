@@ -6,6 +6,7 @@ use App\Models\DP\Product;
 use App\Models\DP\ProductVariant;
 use App\Traits\AddressableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Supplier extends Model
 {
@@ -44,12 +45,22 @@ class Supplier extends Model
         return $this->belongsToMany(Product::class, $database . '.supplier_product');
     }
 
+    public function getProductIdsAttribute()
+    {
+        return DB::table('supplier_product')->where('supplier_id', $this->id)->pluck('product_id')->toArray();
+    }
+
     public function variants()
     {
         $database = $this->getConnection()->getDatabaseName();
         return $this->belongsToMany(ProductVariant::class, $database . '.supplier_variants', 'supplier_id',
             'variant_id')->using(SupplierVariant::class)->withTimestamps()
             ->withPivot('name')->wherePivot('hidden', 0);
+    }
+
+    public function getVariantIdsAttribute()
+    {
+        return DB::table('supplier_variants')->where('supplier_id', $this->id)->pluck('variant_id')->toArray();
     }
 
 }

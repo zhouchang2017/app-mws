@@ -10,6 +10,7 @@ use App\Events\SupplyUnShipEvent;
 use App\Models\InventoryActionType;
 use App\Models\PreInventoryActionOrder;
 use App\Models\Supply;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Spatie\ModelStatus\Exceptions\InvalidStatus;
 
@@ -126,6 +127,33 @@ class SupplyService
     }
 
     /**
+     * 创建供货计划
+     * @param Request $request
+     * @return mixed
+     */
+    public static function createSupply(Request $request)
+    {
+        return tap(new Supply($request->all()), function ($supply) use ($request) {
+            /** @var Supply $supply */
+            $supply->origin()->associate(auth()->user()->supplier);
+            $supply->save();
+            (new static($supply))->createSupplyItems($request->input('items'));
+        });
+    }
+
+    /**
+     * 创建供货计划明细
+     * @param array $data
+     * @return mixed
+     */
+    public function createSupplyItems(array $data)
+    {
+        $this->supply->items()->createMany($data);
+        $this->supply->loadMissing('items');
+        return $this->supply->items;
+    }
+
+    /**
      * 创建 预入库单数据
      * @param null $reason
      * @return array
@@ -170,11 +198,13 @@ class SupplyService
 
     /**
      * 发货，目前供应商供货不做拆单处理，仅针对 入库单发货
+     * 已操作单为单位发货
      * @param $data
      * @return \Illuminate\Support\Collection
      */
     public function shipment($data)
     {
+        //orderModel->shipment
         //order_id
         //logistic_id
         //tracking_number
@@ -182,8 +212,8 @@ class SupplyService
             /** @var PreInventoryActionOrder $preOrder */
             $preOrder = PreInventoryActionOrder::find($logistic['order_id']);
             return $preOrder->toShipment(array_except($logistic, 'order_id'), true);
-        })->tap(function(){
-            // 物流检测
+        })->tap(function () {
+            // 物流检测 preInventoryAction ->orders 全部由物流 -> 发货完成  部分有物流 -> 部分发货
         });
 
     }

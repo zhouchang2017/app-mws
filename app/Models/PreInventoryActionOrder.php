@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStatus\HasStatuses;
 
 // 操作单(拣货单\入仓单)
+
+/**
+ * @property mixed preInventoryAction
+ */
 class PreInventoryActionOrder extends Model
 {
     use HasStatuses, TrackableTrait;
@@ -18,9 +22,8 @@ class PreInventoryActionOrder extends Model
         'description',
     ];
 
-
-    const PENDING = 'pending'; // 等待分配库存
-    const COMPLETED = 'completed'; // 分配完成
+    const UN_SHIP = 'UN_SHIP'; // 待发货
+    const SHIPPED = 'SHIPPED'; // 已发货
 
     // 入库仓库
     public function warehouse()
@@ -43,6 +46,12 @@ class PreInventoryActionOrder extends Model
     public function items()
     {
         return $this->hasMany(PreInventoryActionOrderItem::class, 'pre_order_id');
+    }
+
+    // 是否需要物流
+    public function transport()
+    {
+        return $this->preInventoryAction->transport();
     }
 
     public function getDetailAttribute()

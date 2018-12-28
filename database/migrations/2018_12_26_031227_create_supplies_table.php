@@ -16,7 +16,7 @@ class CreateSuppliesTable extends Migration
         // 供应产品
         Schema::create('supplies', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->nullableMorphs('origin');
             $table->integer('total')->nullable()->default(0);
             $table->boolean('has_ship')->default(true)->comment('是否需要物流');

@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStatus\HasStatuses;
 
 // 预出\入库(入库单\出货单)
+
+/**
+ * @property mixed origin
+ */
 class PreInventoryAction extends Model
 {
     use HasStatuses, PreInventoryActionStatusTrait;
@@ -35,6 +39,12 @@ class PreInventoryAction extends Model
         return $this->morphTo();
     }
 
+    // 是否需要物流
+    public function transport()
+    {
+        return $this->origin->transport();
+    }
+
     public function type()
     {
         return $this->belongsTo(InventoryActionType::class);
@@ -47,4 +57,11 @@ class PreInventoryAction extends Model
     {
         return $this->hasMany(PreInventoryActionOrder::class, 'pre_inventory_action_id');
     }
+
+    // 详情
+    public function scopeWithOrders($query)
+    {
+        return $this->with(['orders.warehouse', 'orders.items.variant', 'orders.tracks.logistic']);
+    }
+
 }
