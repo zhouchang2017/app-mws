@@ -11,5 +11,6 @@ Route::resource('/supplies', 'SupplyController');
 
 Route::resource('/pre-inventory-actions', 'PreInventoryActionController');
 
-Route::get('/product-variants', 'ProductVariantController@index');
+Route::resource('/product-variants', 'ProductVariantController');
+Route::resource('/products', 'ProductController');
 

@@ -37,6 +37,9 @@ export default {
       }
 
     },
+    perTotal () {
+      return _.get(this, 'pageOption.to')
+    },
     perPage () {
       return _.get(this, 'pageOption.per_page')
     },

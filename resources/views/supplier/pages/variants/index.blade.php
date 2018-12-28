@@ -1,13 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-    <div>
-
-        <div class="flex items-center">
-            <h3 class="text-80 py-3 ml-3">产品SKU列表</h3>
-        </div>
-        <div class="card p-6 w-full">
-
-        </div>
-    </div>
+    <h1 class="mb-3 text-90 font-normal text-2xl">SKU</h1>
+    <resources-table label-name="创建变体" resource-name="product-variants">
+        <el-table-column
+                prop="code"
+                label="产品编码"
+        >
+        </el-table-column>
+        <el-table-column
+                prop="variantName"
+                label="SKU名称"
+        >
+        </el-table-column>
+        <el-table-column
+                prop="stock"
+                label="库存"
+        >
+        </el-table-column>
+    </resources-table>
 @endsection

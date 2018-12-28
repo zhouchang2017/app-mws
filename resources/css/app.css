@@ -64,10 +64,6 @@ a{
     text-decoration: none;
 }
 
-a:link{
-    @apply text-80
-}
-
 .nav-link {
     @apply text-80
 }

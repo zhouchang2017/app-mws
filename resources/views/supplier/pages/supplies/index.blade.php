@@ -1,18 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-    <div>
-
-        <div class="flex items-center">
-            <h3 class="text-80 py-3 ml-3">供应商入库计划</h3>
-            <div class="ml-auto">
-                <form action="{{ route($domain.'.supplies.create') }}">
-                    <el-button native-type="submit" type="primary" size="small">创建入库计划</el-button>
-                </form>
-            </div>
-        </div>
-        <div class="card p-6 w-full">
-            <resources-table resource-name="supplies"></resources-table>
-        </div>
-    </div>
+    <h1 class="mb-3 text-90 font-normal text-2xl">供应商入库计划</h1>
+    <resources-table label-name="创建入库计划" resource-name="supplies">
+        <el-table-column
+                prop="description"
+                label="计划描述"
+        >
+        </el-table-column>
+        <el-table-column
+                prop="current_state"
+                label="当前状态"
+        >
+        </el-table-column>
+    </resources-table>
 @endsection

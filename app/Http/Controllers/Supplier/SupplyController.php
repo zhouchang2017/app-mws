@@ -18,8 +18,11 @@ class SupplyController extends Controller
      */
     public function index()
     {
-        $resources = Supply::paginate(15)->toArray();
-        return view('supplier.pages.supplies.index', compact('resources'));
+        $resources = Supply::paginate(15);
+        if (request()->ajax()) {
+            return $resources;
+        }
+        return view('supplier.pages.supplies.index');
     }
 
     /**
@@ -55,9 +58,14 @@ class SupplyController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Supply $supply)
     {
-        //
+        $resource = $supply->with([ 'origin', 'items.variant' ])->first();
+        if (request()->ajax()) {
+            return $resource;
+        } else {
+            return view('supplier.pages.supplies.detail', compact('resource'));
+        }
     }
 
     /**
@@ -66,9 +74,14 @@ class SupplyController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Supply $supply)
     {
-        //
+        $resource = $supply->with([ 'origin', 'items.variant' ])->first();
+        if (request()->ajax()) {
+            return $resource;
+        } else {
+            return view('supplier.pages.supplies.update', compact('resource'));
+        }
     }
 
     /**

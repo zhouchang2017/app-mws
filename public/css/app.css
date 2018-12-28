@@ -593,10 +593,6 @@ a {
   text-decoration: none;
 }
 
-a:link {
-  color: var(--80);
-}
-
 .nav-link {
   color: var(--80);
 }

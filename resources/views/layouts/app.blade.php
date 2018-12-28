@@ -21,7 +21,7 @@
     <link href="{{ asset('css/vendor.css') }}" rel="stylesheet">
 </head>
 <body>
-<div id="app" class="h-screen w-full bg-grey-lightest">
+<div id="app" class="h-screen w-full bg-40 text-black min-h-full font-sans">
     <el-container class="h-full">
         <el-header class="bg-indigo-darker text-center p-4 px-6 flex items-center text-white flex">
             <div>
