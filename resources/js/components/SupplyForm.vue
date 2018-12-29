@@ -68,6 +68,22 @@
                         <el-input v-model="row.quantity" placeholder="请输入数量"></el-input>
                     </template>
                 </el-table-column>
+                <el-table-column
+                        label="操作">
+                    <template slot-scope="{row}">
+                        <el-popover
+                                placement="top"
+                                width="160"
+                                v-model="visible">
+                            <p>确定删除吗？</p>
+                            <div style="text-align: right; margin: 0">
+                                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                                <el-button type="primary" size="mini" @click="removeSelection(row)">确定</el-button>
+                            </div>
+                            <el-button size="small" slot="reference" type="danger">移 除</el-button>
+                        </el-popover>
+                    </template>
+                </el-table-column>
             </el-table>
         </el-form-item>
 
@@ -79,8 +95,8 @@
         </el-form-item>
 
         <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
-            <el-button>取消</el-button>
+            <el-button type="primary" @click="onSubmit">{{btnTitle}}</el-button>
+            <el-button>返回</el-button>
         </el-form-item>
 
         <el-dialog
@@ -138,6 +154,13 @@
     name: 'supply-form',
 
     mixins: [Pageable],
+
+    props: {
+      origin: {
+        type: Object,
+        default: null
+      }
+    },
     data () {
       return {
         form: {
@@ -148,29 +171,52 @@
         resources: {},
         loading: true,
         centerDialogVisible: false,
-        currentVariant: {}
+        currentVariant: {},
+        isUpdate: false,
+        visible: false
       }
     },
     methods: {
+      updatePageInit () {
+        if (!_.isNull(this.origin)) {
+          const {description, has_ship, items} = this.origin
+          this.form = Object.assign({}, this.form, {description, has_ship, items})
+          this.isUpdate = true
+        }
+      },
       formatRequestData () {
         const {description, has_ship} = this.form
         return {
           description,
           has_ship,
           items: this.form.items.map(item => {
-            const {variant,...data} = item
+            const {variant, ...data} = item
             return data
           })
         }
       },
       onSubmit () {
-        axios.post('/supplies', this.formatRequestData()).then(({data}) => {
-          console.log(data)
+        this.isUpdate ? this.update().then(({data}) => {
+          this.notify(data)
+          this.go(`/supplies/${this.origin.id}`)
+        }).catch(err => {
+          console.error(err.response)
+        }) : this.store().then(({data}) => {
+          this.notify(data)
+          this.go(`/supplies/${data.data.id}`)
+        }).catch(err => {
+          console.error(err.response)
         })
+      },
+      store () {
+        return axios.post('/supplies', this.formatRequestData())
+      },
+      update () {
+        return axios.patch(`/supplies/${this.origin.id}`, this.formatRequestData())
       },
       fetchVariants () {
         this.loading = true
-        return axios.get(`/product-variants?page=${this.currentPage}`).then(({data}) => {
+        return axios.get(this.variantsApi).then(({data}) => {
           this.resources = data
           this.setOptions(data)
           this.loading = false
@@ -187,6 +233,11 @@
           Object.assign({}, {product_id, variant_id: id, quantity}, {variant: this.currentVariant})
         )
         this.centerDialogVisible = false
+      },
+      removeSelection (row) {
+        const index = this.form.items.findIndex(item => item === row)
+        this.form.items.splice(index, 1)
+        this.visible = false
       }
     },
 
@@ -200,9 +251,21 @@
       variants () {
         return _.get(this, 'resources.data', [])
       },
+      btnTitle () {
+        return this.isUpdate ? '更新' : '保存创建'
+      },
+      variantsApi () {
+        return this.appConfig.userType === 'App\\Models\\User' ?
+          `/product-variants?supplier=${this.supplier.id}&page=${this.currentPage}` :
+          `/product-variants?page=${this.currentPage}`
+      },
+      supplier(){
+        return _.get(this,'origin.origin')
+      }
     },
     async mounted () {
       await this.fetchVariants()
+      this.updatePageInit()
     }
   }
 </script>

@@ -7,11 +7,12 @@ use App\Notifications\SupplyApprovedNotification;
 use App\Notifications\SupplyPendingNotification;
 use App\Notifications\SupplyUnShipNotification;
 use App\Observers\SupplyObserver;
+use App\Scopes\WithStateScope;
+use App\Traits\HasStatuses;
 use App\Traits\TrackableTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notification;
-use Spatie\ModelStatus\HasStatuses;
 
 /**
  * @property mixed origin
@@ -37,25 +38,23 @@ class Supply extends Model
 
     protected $appends = ['current_state'];
 
+    protected $casts = [
+        'has_ship' => 'bool',
+    ];
+
     protected static function boot()
     {
         parent::boot();
         static::observe(SupplyObserver::class);
-        static::addGlobalScope('withState',function(Builder $builder){
-            $builder->with('state');
-        });
+        static::addGlobalScope(new WithStateScope());
     }
 
-    public function scopeWithStatus(Builder $builder)
-    {
-        $builder->with('state');
-    }
 
     public function getCurrentStateAttribute()
     {
         $status = [
             self::UN_COMMIT => '未提交',
-            self::PENDING => '待审核(提交审核)',
+            self::PENDING => '已提交(审核中)',
             self::APPROVED => '审核通过,等待分配接收仓库',
             self::UN_SHIP => '待发货',
             self::PART_SHIPPED => '部分发货',
@@ -64,12 +63,6 @@ class Supply extends Model
             self::CANCEL => '已取消',
         ];
         return array_get($status, $this->state->name, 'N/A');
-    }
-
-    public function state()
-    {
-        return $this->morphOne($this->getStatusModelClassName(), 'model', 'model_type', $this->getModelKeyColumnName())
-            ->latest('id');
     }
 
 

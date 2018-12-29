@@ -7,18 +7,22 @@
  */
 return [
     'supplier' => [
-        'router' => [ 'domain'     => env('SUPPLIER_DOMAIN', 'supplier') . '.' . config('app.url'),
-                      'as'         => 'supplier.',
-                      'namespace'  => 'App\Http\Controllers\Supplier',
+        'router' => [
+            'domain' => env('SUPPLIER_DOMAIN', 'supplier') . '.' . config('app.url'),
+            'as' => 'supplier.',
+            'namespace' => 'App\Http\Controllers\Supplier',
 //    'prefix' => 'supplier-api',
-                      'middleware' => [ 'web', 'supplier', 'auth:supplier_web' ], ],
+            'middleware' => ['web', 'erp', 'supplier', 'auth:supplier_web'],
+        ],
     ],
 
     'admin' => [
-        'router' => [ 'domain'     => env('ADMIN_DOMAIN', 'admin') . '.' . config('app.url'),
-                      'as'         => 'admin.',
-                      'namespace'  => 'App\Http\Controllers\Admin',
+        'router' => [
+            'domain' => env('ADMIN_DOMAIN', 'admin') . '.' . config('app.url'),
+            'as' => 'admin.',
+            'namespace' => 'App\Http\Controllers\Admin',
 //    'prefix' => 'admin-api',
-                      'middleware' => [ 'web', 'admin', 'auth:admin' ], ],
+            'middleware' => ['web', 'erp', 'admin', 'auth:admin'],
+        ],
     ],
 ];

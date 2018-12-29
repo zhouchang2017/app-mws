@@ -11,16 +11,29 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function created($data, $description = null)
+    public function created($data, $message = null)
     {
         $json = [
             'title' => '创建成功',
             'data' => $data,
             'type' => 'success',
         ];
-        if ($description) {
-            $json = array_merge($json, ['description' => $description]);
+        if ($message) {
+            $json = array_merge($json, ['message' => $message]);
         }
         return response()->json($json, 201);
+    }
+
+    public function updated($data = null, $title = null, $message = null)
+    {
+        $json = [
+            'title' => $title ?? '更新成功',
+            'data' => $data,
+            'type' => 'success',
+        ];
+        if ($message) {
+            $json = array_merge($json, ['message' => $message]);
+        }
+        return response()->json($json, 200);
     }
 }

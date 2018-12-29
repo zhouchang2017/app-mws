@@ -28,11 +28,12 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import notifyable from './notifyable'
+import helper from './helper'
 
+Vue.mixin(notifyable)
+Vue.mixin(helper)
+Vue.prototype.appConfig = _.cloneDeep(config)
 const app = new Vue({
-  el: '#app',
-  methods: {
-    go (uri) {
-    }
-  }
+  el: '#app'
 })

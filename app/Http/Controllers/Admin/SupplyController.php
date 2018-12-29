@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Supplier;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\SupplyRequest;
-use App\Models\DP\ProductVariant;
 use App\Models\Supply;
 use App\Services\SupplyService;
 use Illuminate\Http\Request;
@@ -22,7 +21,7 @@ class SupplyController extends Controller
         if (request()->ajax()) {
             return $resources;
         }
-        return view('supplier.pages.supplies.index');
+        return view('admin.pages.supplies.index');
     }
 
     /**
@@ -59,11 +58,11 @@ class SupplyController extends Controller
      */
     public function show(Supply $supply)
     {
-        $resource = $supply->loadMissing(['origin', 'items.variant']);
+        $resource = $supply->loadMissing(['origin', 'items.variant','statuses.user']);
         if (request()->ajax()) {
             return response()->json($resource);
         } else {
-            return view('supplier.pages.supplies.detail', compact('resource'));
+            return view('admin.pages.supplies.detail', compact('resource'));
         }
     }
 
@@ -76,10 +75,11 @@ class SupplyController extends Controller
     public function edit(Supply $supply)
     {
         $resource = $supply->loadMissing(['origin', 'items.variant']);
+//        dd($resource);
         if (request()->ajax()) {
             return response()->json($resource);
         } else {
-            return view('supplier.pages.supplies.update', compact('resource'));
+            return view('admin.pages.supplies.update', compact('resource'));
         }
     }
 
@@ -107,13 +107,15 @@ class SupplyController extends Controller
         //
     }
 
-    public function submit(Supply $supply)
+
+    public function approved(Supply $supply)
     {
-        (new SupplyService($supply))->statusToPending();
+        (new SupplyService($supply))->statusToApproved();
         if (request()->ajax()) {
-            return $this->updated([], '供货计划已提交', '您的提交会尽快处理,请耐心等待');
+            return $this->updated([], '审核完成');
         } else {
-            return redirect()->route('supplier.supplies.show', ['supply' => $supply->id]);
+            return redirect()->route('admin.supplies.show', ['supply' => $supply->id]);
         }
     }
+
 }

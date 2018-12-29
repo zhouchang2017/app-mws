@@ -41,6 +41,12 @@ class ProductVariant extends Model
         static::addGlobalScope(new SupplierProductVariantScope());
     }
 
+    public function scopeFilterSupplier($query, $id)
+    {
+        $supplier = Supplier::find($id);
+        $query->whereIn('id', $supplier->variant_ids);
+    }
+
 
     public function getVariantNameAttribute()
     {

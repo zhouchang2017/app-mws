@@ -2,7 +2,7 @@
 
 @section('content')
     <h1 class="mb-3 text-90 font-normal text-2xl">供应商入库计划</h1>
-    <resources-table label-name="创建入库计划" resource-name="supplies">
+    <resources-table :can-create="false" label-name="创建入库计划" resource-name="supplies">
         <el-table-column
                 prop="description"
                 label="计划描述"

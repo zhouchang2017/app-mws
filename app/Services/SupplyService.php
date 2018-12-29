@@ -137,7 +137,27 @@ class SupplyService
             /** @var Supply $supply */
             $supply->origin()->associate(auth()->user()->supplier);
             $supply->save();
-            (new static($supply))->createSupplyItems($request->input('items'));
+            (new static($supply))->updateOrCreateSupplyItems($request->input('items'));
+        });
+    }
+
+    /**
+     * 更新供货单
+     * @param Request $request
+     * @return mixed
+     */
+    public function updateSupply(Request $request)
+    {
+        return tap($this->supply->update($request->only(['description', 'has_ship'])), function () use ($request) {
+            // 删除
+            $this->supply->items()->pluck('id')->diff(
+                collect($request->get('items'))->pluck('id')->filter()
+            )->each(function ($id) {
+                $this->supply->items()->find($id)->delete();
+            });
+
+            // 创建/更新 Items
+            $this->updateOrCreateSupplyItems($request->get('items'));
         });
     }
 
@@ -146,11 +166,13 @@ class SupplyService
      * @param array $data
      * @return mixed
      */
-    public function createSupplyItems(array $data)
+    public function updateOrCreateSupplyItems(array $data)
     {
-        $this->supply->items()->createMany($data);
-        $this->supply->loadMissing('items');
-        return $this->supply->items;
+        return collect($data)->map(function ($item) {
+            return $this->supply->items()->updateOrCreate(['id' => array_get($item, 'id'),], $item);
+        })->tap(function () {
+            $this->supply->loadMissing('items');
+        });
     }
 
     /**

@@ -362,11 +362,28 @@ a{
     @apply .opacity-75;
 }
 
+.btn-a:hover{
+    background-color: var(--primary-dark);
+}
+
 .no-text-shadow {
     text-shadow: none;
 }
 
+.nav-bar-left .li{
 
+}
+
+.form-list {
+    @apply card p-6 w-full
+}
+.form-list .form-list__item{
+    @apply border-b border-40 flex text-80
+}
+
+.form-list .form-list__item:last-child{
+    @apply border-none
+}
 
 /**
  * This injects all of Tailwind's utility classes, generated based on your

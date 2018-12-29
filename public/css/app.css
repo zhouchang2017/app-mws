@@ -978,8 +978,35 @@ a {
   opacity: .75;
 }
 
+.btn-a:hover {
+  background-color: var(--primary-dark);
+}
+
 .no-text-shadow {
   text-shadow: none;
+}
+
+.nav-bar-left .li {
+}
+
+.form-list {
+  background-color: #fff;
+  border-radius: .5rem;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.form-list .form-list__item {
+  border-bottom-width: 1px;
+  border-color: var(--40);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: var(--80);
+}
+
+.form-list .form-list__item:last-child {
+  border-style: none;
 }
 
 /**

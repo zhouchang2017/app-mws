@@ -8,7 +8,7 @@
                 >
                 </el-input>
             </div>
-            <div class="w-full flex items-center mb-6">
+            <div v-if="canCreate" class="w-full flex items-center mb-6">
                 <div class="flex-no-shrink ml-auto">
                     <a class="btn btn-default btn-primary" :href="`/${resourceName}/create`">{{ labelName }}</a>
                 </div>
@@ -18,6 +18,7 @@
         <div class="card p-6 w-full">
             <el-table
                     :data="resources"
+                    v-loading="loading"
             >
                 <slot/>
                 <el-table-column
@@ -76,6 +77,10 @@
       labelName: {
         type: String,
         default: '创建'
+      },
+      canCreate: {
+        type: Boolean,
+        default: true
       }
     },
 

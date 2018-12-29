@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="mb-3 text-90 font-normal text-2xl">供应商入库计划</h1>
-    <resources-table label-name="创建入库计划" resource-name="supplies">
+    <card-title label-name="预出\入库(入库单\出货单)"></card-title>
+    <resources-table :can-create="false" :can-create="false" label-name="创建预出\入库(入库单\出货单)" resource-name="pre-inventory-actions">
         <el-table-column
                 prop="description"
                 label="计划描述"

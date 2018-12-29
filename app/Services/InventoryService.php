@@ -25,6 +25,12 @@ class InventoryService
         });
     }
 
+    /**
+     * 创建 操作单(拣货单\入仓单)
+     * @param PreInventoryAction $action
+     * @param $data
+     * @return mixed
+     */
     public static function createPreActionOrder(PreInventoryAction $action, $data)
     {
         return collect($data)->groupBy('warehouse_id')->map(function ($items, $key) use ($action) {

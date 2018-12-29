@@ -25,7 +25,7 @@
 
             <!----> <!---->
 
-            <a :href="toEdit" class="btn btn-default btn-icon bg-primary"
+            <a v-if="canUpdate" :href="toEdit" class="btn btn-default btn-icon bg-primary"
                data-testid="edit-resource" dusk="edit-resource-button" title="Edit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                      aria-labelledby="edit" role="presentation" class="fill-current text-white"
@@ -52,7 +52,11 @@
         type: [String, Number]
       },
       canDestroy: {
-        type: Boolean,
+        type: [Boolean,Number],
+        default: true
+      },
+      canUpdate:{
+        type: [Boolean,Number],
         default: true
       }
     },

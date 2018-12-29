@@ -7,9 +7,10 @@
  */
 Route::get('/home', 'HomeController@index')->name('home');
 
+// 供货计划
 Route::resource('/supplies', 'SupplyController');
-
-Route::resource('/pre-inventory-actions', 'PreInventoryActionController');
+// 供货计划提交审核
+Route::patch('/supplies/{supply}/submit', 'SupplyController@submit')->name('supplies.submit');
 
 Route::resource('/product-variants', 'ProductVariantController');
 Route::resource('/products', 'ProductController');

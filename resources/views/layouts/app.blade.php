@@ -9,9 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -21,7 +18,7 @@
     <link href="{{ asset('css/vendor.css') }}" rel="stylesheet">
 </head>
 <body>
-<div id="app" class="h-screen w-full bg-40 text-black min-h-full font-sans">
+<div id="app" class="h-screen w-full bg-40 text-black  font-sans">
     <el-container class="h-full">
         <el-header class="bg-indigo-darker text-center p-4 px-6 flex items-center text-white flex">
             <div>
@@ -67,7 +64,7 @@
         </el-header>
 
         <el-container>
-            @component('components.nav')
+            @component('components.nav2')
             @endcomponent
             <el-main>
                 @yield('content')
@@ -76,5 +73,9 @@
     </el-container>
 
 </div>
+<script> window.config = @json(\App\Supports\ERP::jsonVariables(request())) </script>
+
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
