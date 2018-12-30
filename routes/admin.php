@@ -19,8 +19,14 @@ Route::resource('/pre-inventory-actions', 'PreInventoryActionController');
 // 预出\入库(入库单\出货单)审核
 Route::patch('/pre-inventory-actions/{pre_inventory_action}/approved', 'PreInventoryActionController@approved')
     ->name('pre-inventory-actions.approved');
+// 分配库存页面
 Route::get('/pre-inventory-actions/{pre_inventory_action}/assign', 'PreInventoryActionController@assign')
-    ->name('pre-inventory-actions.assign');
+    ->name('pre-inventory-actions.assign.create');
+// 提交分配库存
+Route::post('/pre-inventory-actions/{pre_inventory_action}/assigned', 'PreInventoryActionController@assigned')
+    ->name('pre-inventory-actions.assign.store');
+
+Route::resource('/pre-inventory-action-orders', 'PreInventoryActionOrderController');
 // 变体
 Route::resource('/product-variants', 'ProductVariantController');
 

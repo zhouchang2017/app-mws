@@ -9,10 +9,8 @@
     ></resource-detail-header>
 
     <div class="form-list mb-6">
-        @component('components.form-item',['title'=>'计划说明','body'=>$resource->description])
-        @endcomponent
-        @component('components.form-item',['title'=>'当前状态','body'=>$resource->current_state])
-        @endcomponent
+        <form-item title="计划说明" value="{{$resource->description}}"></form-item>
+        <form-item title="当前状态" value="{{$resource->current_state}}"></form-item>
     </div>
 
     <card-title label-name="状态记录"></card-title>
@@ -20,22 +18,9 @@
     @endcomponent
 
     <card-title label-name="入库商品列表"></card-title>
-    <div class="card w-full">
+    <div class="card w-full mb-6">
         <div class="p-6">
-            <el-table
-                    :data='@json($resource->origin->items)'
-            >
-                <el-table-column
-                        prop="variant.variantName"
-                        label="商品名称"
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="quantity"
-                        label="数量"
-                >
-                </el-table-column>
-            </el-table>
+            <product-variant-list :items='@json($resource->origin->items)'></product-variant-list>
         </div>
         {{--已提交，显示审核按钮--}}
         @if ($resource->state->name === \App\Models\PreInventoryAction::PENDING)
@@ -57,7 +42,7 @@
         {{-- 以审核，显示分配仓库操作按钮--}}
         @if ($resource->state->name === \App\Models\PreInventoryAction::APPROVED)
             <div class="bg-30 flex px-8 py-4 ">
-                <a  href="{{ route($domain.'.pre-inventory-actions.assign',['pre-inventory-action'=>$resource->id]) }}"
+                <a  href="{{ route($domain.'.pre-inventory-actions.assign.create',['pre-inventory-action'=>$resource->id]) }}"
                     class="btn btn-a btn-default ml-auto cursor-pointer text-white bg-primary"
                     title="Assign">
                     分配仓库
@@ -67,59 +52,20 @@
     </div>
 
     @foreach ($resource->orders as $order)
-        <h3 class="text-80 py-3 ml-3">明细 ID{{$order->id}}</h3>
-        <div class="card p-6 w-full">
-            <div class="flex text-80">
-                <div class="w-1/5 py-6 px-8">
-                    接收仓库
-                </div>
-                <div class="py-6 px-8">
-                    {{$order->warehouse->name}}
-                </div>
-            </div>
-            <div class="flex border-b border-40 text-80">
-                <div class="w-1/5 py-6 px-8">
-                    入库单明细
-                </div>
-                <div class="w-4/5 py-6 px-8">
-                    <el-table
-                            :data='{{ json_encode($order->items) }}'
-                    >
-                        <el-table-column
-                                prop="variant.variantName"
-                                label="商品名称"
-                        >
-                        </el-table-column>
-                        <el-table-column
-                                prop="quantity"
-                                label="数量"
-                        >
-                        </el-table-column>
 
-                    </el-table>
-                </div>
-            </div>
-            <div class="flex text-80">
-                <div class="w-1/5 py-6 px-8">
-                    物流信息
-                </div>
-                <div class="w-4/5 py-6 px-8">
-                    <el-table
-                            :data='@json($order->tracks)'
-                    >
-                        <el-table-column
-                                prop="logistic.name"
-                                label="物流公司"
-                        >
-                        </el-table-column>
-                        <el-table-column
-                                prop="tracking_number"
-                                label="物流单号"
-                        >
-                        </el-table-column>
-                    </el-table>
-                </div>
-            </div>
+        <resource-detail-header
+                label-name="操作单[id:{{$order->id}}]"
+                resource-name="pre-inventory-action-orders"
+                :can-destroy="false"
+                :can-update="false"
+                resource-id="{{$order->id}}"
+        ></resource-detail-header>
+        <div class="form-list mb-6">
+            <form-item title="接收仓库" value="{{$order->warehouse->name}}"></form-item>
+            <form-item title="物流状态" value="{{$order->hasTracks() ? '已发货' : '待发货'}}"></form-item>
+            <form-item title="操作单">
+                <product-variant-list slot="value" :items='@json($order->items)'></product-variant-list>
+            </form-item>
         </div>
     @endforeach
 @endsection

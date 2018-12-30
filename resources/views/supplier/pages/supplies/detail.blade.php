@@ -8,65 +8,25 @@
             :can-destroy="{{+($resource->state->name === \App\Models\Supply::UN_COMMIT)}}"
             :can-update="{{+($resource->state->name === \App\Models\Supply::UN_COMMIT)}}"
     ></resource-detail-header>
-    <div class="card p-6 w-full mb-6">
-        <div class="flex border-b border-40 text-80">
-            <div class="w-1/5 py-6 px-8">
-                计划说明
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->description}}
-            </div>
-        </div>
-        <div class="flex border-b border-40 text-80">
-            <div class="w-1/5 py-6 px-8">
-                当前状态
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->current_state}}
-            </div>
-        </div>
-        <div class="flex border-b border-40 text-80">
-            <div class="w-1/5 py-6 px-8">
-                运输方式
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->has_ship ? '物流/快递' : '无需物流' }}
-            </div>
-        </div>
-        <div class="flex  text-80">
-            <div class="w-1/5 py-6 px-8">
-                更新时间
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->updated_at}}
-            </div>
-        </div>
+
+    <div class="form-list mb-6">
+        <form-item title="计划说明" value="{{$resource->description}}"></form-item>
+        <form-item title="当前状态" value="{{$resource->current_state}}"></form-item>
+        <form-item title="运输方式" value="{{$resource->has_ship ? '物流/快递' : '无需物流' }}"></form-item>
+        <form-item title="最后更新时间" value="{{$resource->updated_at}}"></form-item>
     </div>
+
     <card-title label-name="入库商品列表"></card-title>
-    <div class="card w-full">
+    <div class="card w-full mb-6">
         <div class="p-6">
-            <el-table
-                    :data='@json($resource->items)'
-            >
-                <el-table-column
-                        prop="variant.variantName"
-                        label="商品名称"
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="quantity"
-                        label="数量"
-                >
-                </el-table-column>
-
-            </el-table>
-
+            <product-variant-list :items='@json($resource->items)'></product-variant-list>
         </div>
         {{--未提交，显示提交审核按钮--}}
         @if ($resource->state->name === \App\Models\Supply::UN_COMMIT)
             <div class="bg-30 flex px-8 py-4">
-                <form class="ml-auto" action="{{ route($domain.'.supplies.submit',['supply'=>$resource->id]) }}" method="POST"
-                      >
+                <form class="ml-auto" action="{{ route($domain.'.supplies.submit',['supply'=>$resource->id]) }}"
+                      method="POST"
+                >
                     @method('PATCH')
                     @csrf
                     <button type="submit" class="btn btn-default btn-primary inline-flex items-center relative">
@@ -78,4 +38,39 @@
             </div>
         @endif
     </div>
+
+    @if($resource->canShowOrders())
+        @foreach ($resource->preInventoryAction->orders as $order)
+            <resource-detail-header
+                    label-name="入库单{{$loop->index + 1}}"
+                    resource-name="pre-inventory-action-orders"
+                    :can-destroy="false"
+                    :can-update="false"
+                    resource-id="{{$order->id}}"
+            ></resource-detail-header>
+            <div class="form-list mb-6 p-0">
+                <div class="p-6">
+                    <form-item title="接收仓库" value="{{$order->warehouse->name}}"></form-item>
+                    {{--<form-item title="仓库地址" value="{{$order->warehouse->simple_address}}"></form-item>--}}
+                    <form-item title="物流状态" value="{{$order->hasTracks() ? '已发货' : '待发货'}}"></form-item>
+                    <form-item title="操作单">
+                        <product-variant-list slot="value" :items='@json($order->items)'></product-variant-list>
+                    </form-item>
+                </div>
+                {{-- 待发货，显示发货操作按钮--}}
+                @if (!$order->hasTracks())
+                    <div class="bg-30 flex px-8 py-4 ">
+                        <a href="{{route('supplier.supplies.order.shipment.create',['supply'=>$resource->id,'order'=>$order->id])}}"
+                           class="btn btn-a btn-default ml-auto cursor-pointer text-white bg-primary"
+                           title="Ship">
+                            发货
+                        </a>
+                    </div>
+                @endif
+
+            </div>
+
+
+        @endforeach
+    @endif
 @endsection

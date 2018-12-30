@@ -34,9 +34,9 @@ class Supply extends Model
     const COMPLETED = 'COMPLETED'; // 已完成
     const CANCEL = 'CANCEL'; // 取消
 
-    protected $fillable = ['description', 'total', 'has_ship']; // has_ship 是否需要物流
+    protected $fillable = [ 'description', 'total', 'has_ship' ]; // has_ship 是否需要物流
 
-    protected $appends = ['current_state'];
+    protected $appends = [ 'current_state' ];
 
     protected $casts = [
         'has_ship' => 'bool',
@@ -53,14 +53,14 @@ class Supply extends Model
     public function getCurrentStateAttribute()
     {
         $status = [
-            self::UN_COMMIT => '未提交',
-            self::PENDING => '已提交(审核中)',
-            self::APPROVED => '审核通过,等待分配接收仓库',
-            self::UN_SHIP => '待发货',
+            self::UN_COMMIT    => '未提交',
+            self::PENDING      => '已提交(审核中)',
+            self::APPROVED     => '审核通过,等待分配接收仓库',
+            self::UN_SHIP      => '待发货',
             self::PART_SHIPPED => '部分发货',
-            self::SHIPPED => '已发货',
-            self::COMPLETED => '已完成',
-            self::CANCEL => '已取消',
+            self::SHIPPED      => '已发货',
+            self::COMPLETED    => '已完成',
+            self::CANCEL       => '已取消',
         ];
         return array_get($status, $this->state->name, 'N/A');
     }
@@ -79,6 +79,26 @@ class Supply extends Model
     public function origin()
     {
         return $this->morphTo();
+    }
+
+    public function canShowOrders()
+    {
+        return tap(in_array($this->status, [
+            static::UN_SHIP,
+            static::PART_SHIPPED,
+            static::SHIPPED,
+            static::COMPLETED,
+        ]), function ($res) {
+            if ($res) {
+                $this->loadOrders();
+            }
+        });
+    }
+
+    public function loadOrders()
+    {
+        $this->loadMissing(['preInventoryAction.orders']);
+        $this->preInventoryAction->orders->each->loadDetailAttribute();
     }
 
     /*

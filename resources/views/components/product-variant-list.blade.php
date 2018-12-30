@@ -1,0 +1,19 @@
+<el-table
+        :data='@json($items)'
+>
+    <el-table-column
+            prop="variant.variantName"
+            label="商品名称"
+    >
+    </el-table-column>
+    <el-table-column
+            prop="variant.code"
+            label="商品编码"
+    >
+    </el-table-column>
+    <el-table-column
+            prop="quantity"
+            label="数量"
+    >
+    </el-table-column>
+</el-table>

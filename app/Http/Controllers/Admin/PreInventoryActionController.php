@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\PreInventoryAction;
+use App\Services\InventoryService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +16,7 @@ class PreInventoryActionController extends Controller
      */
     public function index()
     {
-        $resources = PreInventoryAction::latest('updated_at')->paginate(15);
+        $resources = PreInventoryAction::withType()->latest('updated_at')->paginate(15);
         if (request()->ajax()) {
             return $resources;
         }
@@ -104,7 +105,7 @@ class PreInventoryActionController extends Controller
             return $this->updated([], '审核完成');
         } else {
             return redirect()->route('admin.pre-inventory-actions.show',
-                ['pre-inventory-action' => $preInventoryAction->id]);
+                [ 'pre-inventory-action' => $preInventoryAction->id ]);
         }
     }
 
@@ -112,5 +113,11 @@ class PreInventoryActionController extends Controller
     {
         $resource = $preInventoryAction->loadOrders()->loadStatuses()->loadOriginItems();
         return view('admin.pages.pre-inventory-actions.assign', compact('resource'));
+    }
+
+    public function assigned(PreInventoryAction $preInventoryAction, Request $request)
+    {
+        InventoryService::createPreActionOrder($preInventoryAction, $request);
+        return $this->created([], '操作单已推入仓库中心');
     }
 }

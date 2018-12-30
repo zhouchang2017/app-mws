@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Supplier;
 
 use App\Http\Requests\SupplyRequest;
 use App\Models\DP\ProductVariant;
+use App\Models\Logistic;
+use App\Models\PreInventoryActionOrder;
 use App\Models\Supply;
 use App\Services\SupplyService;
 use Illuminate\Http\Request;
@@ -47,7 +49,7 @@ class SupplyController extends Controller
         if ($request->ajax()) {
             return $this->created($supply);
         } else {
-            return redirect(route('supplier.supplies.show', ['supply' => $supply->id]));
+            return redirect(route('supplier.supplies.show', [ 'supply' => $supply->id ]));
         }
     }
 
@@ -59,7 +61,7 @@ class SupplyController extends Controller
      */
     public function show(Supply $supply)
     {
-        $resource = $supply->loadMissing(['origin', 'items.variant']);
+        $resource = $supply->loadMissing([ 'origin', 'items.variant' ]);
         if (request()->ajax()) {
             return response()->json($resource);
         } else {
@@ -75,7 +77,7 @@ class SupplyController extends Controller
      */
     public function edit(Supply $supply)
     {
-        $resource = $supply->loadMissing(['origin', 'items.variant']);
+        $resource = $supply->loadMissing([ 'origin', 'items.variant' ]);
         if (request()->ajax()) {
             return response()->json($resource);
         } else {
@@ -113,7 +115,23 @@ class SupplyController extends Controller
         if (request()->ajax()) {
             return $this->updated([], '供货计划已提交', '您的提交会尽快处理,请耐心等待');
         } else {
-            return redirect()->route('supplier.supplies.show', ['supply' => $supply->id]);
+            return redirect()->route('supplier.supplies.show', [ 'supply' => $supply->id ]);
         }
+    }
+
+    public function shipment(Supply $supply, PreInventoryActionOrder $order)
+    {
+        $order->loadDetailAttribute();
+        $order->warehouse->append('simple_address');
+        $logistic = Logistic::all();
+        return view('supplier.pages.supplies.shipment', [ 'resource' => $supply, 'order' => $order, 'logistic' => $logistic ]);
+    }
+
+    public function shipped(Supply $supply, PreInventoryActionOrder $order,Request $request)
+    {
+        return $this->updated(
+            (new SupplyService($supply))->shipment($order,$request),
+            '发货成功'
+        );
     }
 }

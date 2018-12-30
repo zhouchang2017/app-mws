@@ -49,8 +49,6 @@ class InventoryEventSubscriber
         if ($origin instanceof Supply) {
             // 供货计划，标记为等待发货
             (new SupplyService($origin))->statusToUnShip();
-
-            // 通知仓库
         }
     }
 

@@ -18,8 +18,8 @@
     <link href="{{ asset('css/vendor.css') }}" rel="stylesheet">
 </head>
 <body>
-<div id="app" class="h-screen w-full bg-40 text-black  font-sans">
-    <el-container class="h-full">
+<div id="app" class="w-full absolute bg-40">
+    <el-container>
         <el-header class="bg-indigo-darker text-center p-4 px-6 flex items-center text-white flex">
             <div>
                 <a class="h-2 font-bold text-white" href="{{ url('/') }}">

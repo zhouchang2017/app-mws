@@ -216,5 +216,6 @@ module.exports = Object.assign({},require('tailwindcss/defaultConfig')(),{
     '12': '3rem',
     full: '100%',
     'btn-sm': '1.875rem',
+    screen: '100vw',
   }
 })

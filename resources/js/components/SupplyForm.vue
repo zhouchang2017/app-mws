@@ -232,6 +232,8 @@
         this.form.items.push(
           Object.assign({}, {product_id, variant_id: id, quantity}, {variant: this.currentVariant})
         )
+        const name = this.currentVariant.variantName || 'N/A'
+        this.notify({title: '已加入到下方表格', message: `${name}以加入${quantity}件`, type: 'success'})
         this.centerDialogVisible = false
       },
       removeSelection (row) {
@@ -259,8 +261,8 @@
           `/product-variants?supplier=${this.supplier.id}&page=${this.currentPage}` :
           `/product-variants?page=${this.currentPage}`
       },
-      supplier(){
-        return _.get(this,'origin.origin')
+      supplier () {
+        return _.get(this, 'origin.origin')
       }
     },
     async mounted () {

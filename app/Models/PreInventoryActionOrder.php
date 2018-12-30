@@ -10,6 +10,7 @@ use Spatie\ModelStatus\HasStatuses;
 
 /**
  * @property mixed preInventoryAction
+ * @property mixed warehouse
  */
 class PreInventoryActionOrder extends Model
 {
@@ -54,9 +55,15 @@ class PreInventoryActionOrder extends Model
         return $this->preInventoryAction->transport();
     }
 
-    public function getDetailAttribute()
+    public function loadDetailAttribute()
     {
         $this->loadMissing(['warehouse', 'items.variant', 'items.tracks', 'tracks']);
+        return $this;
+    }
+
+    public function appendWarehouseSimpleAddress()
+    {
+        $this->warehouse->append('simple_address');
         return $this;
     }
 

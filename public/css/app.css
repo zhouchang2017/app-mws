@@ -589,6 +589,12 @@ table {
   --90-half: rgba(40, 54, 61, .5);
 }
 
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Nunito, system-ui, BlinkMacSystemFont, -apple-system, sans-serif;
+}
+
 a {
   text-decoration: none;
 }
@@ -980,6 +986,25 @@ a {
 
 .btn-a:hover {
   background-color: var(--primary-dark);
+}
+
+.btn-cancel {
+  height: 2.25rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  line-height: 2.25rem;
+  border-radius: .5rem;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+  color: #3d4852;
+  text-shadow: none;
+  background-color: var(--20);
+}
+
+.btn-cancel:not([disabled]):not(.btn-disabled):hover {
+  background-color: var(--primary-dark);
+  background-color: #f8fafc;
 }
 
 .no-text-shadow {
@@ -4123,6 +4148,10 @@ a {
 
 .h-btn-sm {
   height: 1.875rem;
+}
+
+.h-screen {
+  height: 100vw;
 }
 
 .leading-9 {
@@ -10922,6 +10951,10 @@ a {
     height: 1.875rem;
   }
 
+  .sm\:h-screen {
+    height: 100vw;
+  }
+
   .sm\:leading-9 {
     line-height: 2.25rem;
   }
@@ -17322,6 +17355,10 @@ a {
 
   .md\:h-btn-sm {
     height: 1.875rem;
+  }
+
+  .md\:h-screen {
+    height: 100vw;
   }
 
   .md\:leading-9 {
@@ -23726,6 +23763,10 @@ a {
     height: 1.875rem;
   }
 
+  .lg\:h-screen {
+    height: 100vw;
+  }
+
   .lg\:leading-9 {
     line-height: 2.25rem;
   }
@@ -30126,6 +30167,10 @@ a {
 
   .xl\:h-btn-sm {
     height: 1.875rem;
+  }
+
+  .xl\:h-screen {
+    height: 100vw;
   }
 
   .xl\:leading-9 {

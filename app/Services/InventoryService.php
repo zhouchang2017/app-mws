@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Models\PreInventoryAction;
 use App\Models\PreInventoryActionOrder;
+use Illuminate\Http\Request;
 
 class InventoryService
 {
@@ -28,31 +29,42 @@ class InventoryService
     /**
      * 创建 操作单(拣货单\入仓单)
      * @param PreInventoryAction $action
-     * @param $data
+     * @param Request $request
      * @return mixed
      */
-    public static function createPreActionOrder(PreInventoryAction $action, $data)
+    public static function createPreActionOrder(PreInventoryAction $action, Request $request)
     {
-        return collect($data)->groupBy('warehouse_id')->map(function ($items, $key) use ($action) {
+        return collect($request->all())->map(function ($items) use ($action) {
             /** @var PreInventoryActionOrder $order */
             $order = $action->orders()->create([
-                'warehouse_id' => $key,
+                'warehouse_id' => $items['warehouse_id'],
+                'description'=>$items['description'],
                 'type_id' => $action->type->id,
             ]);
-            $items->each(function ($item) use ($order) {
+            collect($items['items'])->each(function($item)use($order){
                 (new static)->createPreActionOrderItem($order, $item);
             });
             return $order;
-        })->flatten(1)->tap(function () use ($action) {
+        })->tap(function () use ($action) {
             // 操作单(拣货单\入仓单) 创建完成
             $action->statusToAssigned();
         });
     }
 
 
-
+    /**
+     * 创建 操作单(拣货单\入仓单) 明细
+     * @param PreInventoryActionOrder $order
+     * @param $data
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     protected function createPreActionOrderItem(PreInventoryActionOrder $order, $data)
     {
         return $order->items()->create($data);
+    }
+
+    public function preActionOrderShipment()
+    {
+
     }
 }

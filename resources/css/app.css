@@ -60,6 +60,9 @@
     --90-half: rgba(40, 54, 61, 0.5);
 }
 
+html {
+    @apply antialiased font-sans
+}
 a{
     text-decoration: none;
 }
@@ -364,6 +367,14 @@ a{
 
 .btn-a:hover{
     background-color: var(--primary-dark);
+}
+
+.btn-cancel {
+    @apply btn-default text-grey-darkest no-text-shadow bg-20;
+}
+
+.btn-cancel:not([disabled]):not(.btn-disabled):hover {
+    @apply .bg-primary-dark bg-grey-lightest;
 }
 
 .no-text-shadow {

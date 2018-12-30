@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-    <card-title label-name="预出\入库(入库单\出货单)"></card-title>
-    <resources-table :can-create="false" :can-create="false" label-name="创建预出\入库(入库单\出货单)" resource-name="pre-inventory-actions">
+    <card-title label-name="操作单"></card-title>
+    <resources-table :can-create="false" :can-create="false" label-name="操作单" resource-name="pre-inventory-action-orders">
         <el-table-column
                 prop="description"
                 label="计划描述"
         >
         </el-table-column>
         <el-table-column
-                prop="type.name"
-                label="类型"
+                prop="warehouse.name"
+                label="仓库"
         >
         </el-table-column>
         <el-table-column
-                prop="current_state"
-                label="当前状态"
+                prop="type.name"
+                label="类型"
         >
         </el-table-column>
         <el-table-column
