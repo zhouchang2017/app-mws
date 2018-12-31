@@ -32,4 +32,9 @@ class InventoryActionType extends Model
         return $this->action === static::TAKE;
     }
 
+    public function isPut()
+    {
+        return $this->action === static::PUT;
+    }
+
 }

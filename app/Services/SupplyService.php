@@ -148,7 +148,7 @@ class SupplyService
      */
     public function updateSupply(Request $request)
     {
-        return tap($this->supply->update($request->only(['description', 'has_ship'])), function () use ($request) {
+        return tap($this->supply->update($request->only([ 'description', 'has_ship' ])), function () use ($request) {
             // 删除
             $this->supply->items()->pluck('id')->diff(
                 collect($request->get('items'))->pluck('id')->filter()
@@ -169,7 +169,7 @@ class SupplyService
     public function updateOrCreateSupplyItems(array $data)
     {
         return collect($data)->map(function ($item) {
-            return $this->supply->items()->updateOrCreate(['id' => array_get($item, 'id'),], $item);
+            return $this->supply->items()->updateOrCreate([ 'id' => array_get($item, 'id'), ], $item);
         })->tap(function () {
             $this->supply->loadMissing('items');
         });
@@ -198,8 +198,8 @@ class SupplyService
     {
         if (is_null($type)) {
             $type = InventoryActionType::firstOrCreate([
-                'name' => '供应商供货入库',
-                'action' => 'put',
+                'name'          => '供应商供货入库',
+                'action'        => 'put',
                 'is_accounting' => true,
             ]);
         }
@@ -225,21 +225,19 @@ class SupplyService
      * @param Request $request
      * @return \Illuminate\Support\Collection
      */
-    public function shipment(PreInventoryActionOrder $order,Request $request)
+    public function shipment(PreInventoryActionOrder $order, Request $request)
     {
-        //orderModel->shipment
-        //order_id
-        //logistic_id
-        //tracking_number
-        return $order->toShipment($request->all(),true);
-//        return collect($data)->map(function ($logistic) {
-//            /** @var PreInventoryActionOrder $preOrder */
-//            $preOrder = PreInventoryActionOrder::find($logistic['order_id']);
-//            return $preOrder->toShipment(array_except($logistic, 'order_id'), true);
-//        })->tap(function () {
-//            // 物流检测 preInventoryAction ->orders 全部由物流 -> 发货完成  部分有物流 -> 部分发货
-//        });
+        InventoryService::preActionOrderShipment($order, $request, true);
+        if($this->isShipped()){
+            $this->statusToShipped();
+        }else{
+            $this->statusToPartShipped();
+        }
+    }
 
+    private function isShipped()
+    {
+        return $this->supply->preInventoryAction->orders->every->hasTracks();
     }
 
 

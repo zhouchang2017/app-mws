@@ -127,10 +127,15 @@ class SupplyController extends Controller
         return view('supplier.pages.supplies.shipment', [ 'resource' => $supply, 'order' => $order, 'logistic' => $logistic ]);
     }
 
-    public function shipped(Supply $supply, PreInventoryActionOrder $order,Request $request)
+    public function shipped(Supply $supply, PreInventoryActionOrder $order, Request $request)
     {
+        (new SupplyService($supply))->shipment($order, $request);
+        $supply->refresh();
+        $order->refresh();
+        $order->loadDetailAttribute();
+        $order->warehouse->append('simple_address');
         return $this->updated(
-            (new SupplyService($supply))->shipment($order,$request),
+            [ 'resource' => $supply, 'order' => $order ],
             '发货成功'
         );
     }

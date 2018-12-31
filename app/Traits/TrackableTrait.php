@@ -29,14 +29,23 @@ trait TrackableTrait
         return $this->tracks()->count() > 0;
     }
 
+    public function getIsShippedAttribute()
+    {
+        return $this->hasTracks() ? '已发货' : '待发货';
+    }
+
     public function shipment($data)
     {
-        if (is_array($data)) {
-            $data = ShipmentTrack::firstOrNew($data);
+        if ($data instanceof ShipmentTrack) {
+            $shipment = $data;
+        } else {
+            $shipment = ShipmentTrack::firstOrNew($data);
+            $shipment->save();
         }
-        if ( !$this->tracks()->where('shipment_track_id', $data->id)->count() > 0) {
-            $this->tracks()->attach($data);
+
+        if ( !$this->tracks()->where('shipment_track_id', $shipment->id)->first()) {
+            $this->tracks()->attach($shipment);
         }
-        return $data;
+        return $shipment;
     }
 }

@@ -15,7 +15,9 @@ class PreInventoryActionOrderController extends Controller
      */
     public function index()
     {
-        $resources = PreInventoryActionOrder::with(['warehouse','type'])->latest('updated_at')->paginate(15);
+        $resources = PreInventoryActionOrder::with([ 'warehouse', 'type' ])
+            ->latest('updated_at')
+            ->paginate(15);
         if (request()->ajax()) {
             return $resources;
         }
@@ -35,7 +37,7 @@ class PreInventoryActionOrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,7 +63,7 @@ class PreInventoryActionOrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -72,8 +74,8 @@ class PreInventoryActionOrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -84,11 +86,20 @@ class PreInventoryActionOrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    public function check(PreInventoryActionOrder $preInventoryActionOrder)
+    {
+        $resource = $preInventoryActionOrder->loadDetailAttribute()->loadItemState();
+        if (request()->ajax()) {
+            return response()->json($resource);
+        }
+        return view('admin.pages.pre-inventory-action-orders.check', compact('resource'));
     }
 }

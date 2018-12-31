@@ -38,6 +38,8 @@ class Supply extends Model
 
     protected $appends = [ 'current_state' ];
 
+    protected $touches = ['statuses'];
+
     protected $casts = [
         'has_ship' => 'bool',
     ];

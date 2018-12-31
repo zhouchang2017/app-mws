@@ -2,7 +2,7 @@
 
 @section('content')
     <card-title label-name="预出\入库(入库单\出货单)"></card-title>
-    <resources-table :can-create="false" :can-create="false" label-name="创建预出\入库(入库单\出货单)" resource-name="pre-inventory-actions">
+    <resources-table :can-create="false"  :can-update="false"  label-name="创建预出\入库(入库单\出货单)" resource-name="pre-inventory-actions">
         <el-table-column
                 prop="description"
                 label="计划描述"

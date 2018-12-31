@@ -25,8 +25,14 @@ Route::get('/pre-inventory-actions/{pre_inventory_action}/assign', 'PreInventory
 // 提交分配库存
 Route::post('/pre-inventory-actions/{pre_inventory_action}/assigned', 'PreInventoryActionController@assigned')
     ->name('pre-inventory-actions.assign.store');
-
+// 操作单
 Route::resource('/pre-inventory-action-orders', 'PreInventoryActionOrderController');
+// 操作单出入库检测
+Route::get('/pre-inventory-action-orders/{pre_inventory_action_order}/check', 'PreInventoryActionOrderController@check')
+    ->name('pre-inventory-action-orders.check');
+
+Route::post('/pre-inventory-action-order-items/{pre_inventory_action_order_item}/check', 'PreInventoryActionOrderItemController@addCheck')
+    ->name('pre-inventory-action-order-items.check.create');
 // 变体
 Route::resource('/product-variants', 'ProductVariantController');
 

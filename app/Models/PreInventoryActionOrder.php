@@ -26,6 +26,8 @@ class PreInventoryActionOrder extends Model
     const UN_SHIP = 'UN_SHIP'; // 待发货
     const SHIPPED = 'SHIPPED'; // 已发货
 
+    protected $appends = ['is_shipped'];
+
     // 入库仓库
     public function warehouse()
     {
@@ -57,7 +59,13 @@ class PreInventoryActionOrder extends Model
 
     public function loadDetailAttribute()
     {
-        $this->loadMissing(['warehouse', 'items.variant', 'items.tracks', 'tracks']);
+        $this->loadMissing(['warehouse', 'items.variant', 'items.tracks', 'tracks.logistic']);
+        return $this;
+    }
+
+    public function loadItemState()
+    {
+        $this->loadMissing(['items.state.type']);
         return $this;
     }
 

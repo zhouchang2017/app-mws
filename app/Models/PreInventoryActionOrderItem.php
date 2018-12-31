@@ -9,12 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed preOrder
+ * @property mixed quantity
  */
 class PreInventoryActionOrderItem extends Model
 {
     use TrackableTrait;
 
-    protected $fillable = ['pre_order_id', 'product_id', 'variant_id', 'quantity'];
+    protected $fillable = [ 'pre_order_id', 'product_id', 'variant_id', 'quantity' ];
 
     // 操作单
     public function preOrder()
@@ -37,13 +38,39 @@ class PreInventoryActionOrderItem extends Model
     // 确认状态
     public function state()
     {
-        return $this->hasMany(PreInventoryActionOrderItem::class, 'item_id');
+        return $this->hasMany(PreInventoryActionOrderItemState::class, 'item_id');
+    }
+
+    public function loadState()
+    {
+        $this->loadMissing([ 'state.type' ]);
+        return $this;
+    }
+
+    /**
+     * 入库
+     * @param $quantity
+     * @param $warehouseArea
+     * @return PreInventoryActionOrderItemState
+     * @throws \Exception
+     */
+    public function addCheck($quantity, $warehouseArea)
+    {
+        if ($quantity + $this->getConfirmCountAttribute() <= $this->quantity) {
+            return $this->state()->create([
+                'quantity'       => $quantity,
+                'warehouse_area' => $warehouseArea,
+                'type_id'        => $this->preOrder->type->id,
+            ]);
+        } else {
+            throw new \Exception('超出实际数量');
+        }
     }
 
     // 已确认数量
     public function getConfirmCountAttribute()
     {
-        return $this->state()->count();
+        return $this->state()->sum('quantity');
     }
 
     // 是否需要物流

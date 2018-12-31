@@ -58,6 +58,7 @@
                 resource-name="pre-inventory-action-orders"
                 :can-destroy="false"
                 :can-update="false"
+                :can-view="true"
                 resource-id="{{$order->id}}"
         ></resource-detail-header>
         <div class="form-list mb-6">

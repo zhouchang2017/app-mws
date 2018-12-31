@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Models\PreInventoryAction;
 use App\Models\PreInventoryActionOrder;
+use App\Models\PreInventoryActionOrderItem;
 use Illuminate\Http\Request;
 
 class InventoryService
@@ -38,10 +39,10 @@ class InventoryService
             /** @var PreInventoryActionOrder $order */
             $order = $action->orders()->create([
                 'warehouse_id' => $items['warehouse_id'],
-                'description'=>$items['description'],
-                'type_id' => $action->type->id,
+                'description'  => $items['description'],
+                'type_id'      => $action->type->id,
             ]);
-            collect($items['items'])->each(function($item)use($order){
+            collect($items['items'])->each(function ($item) use ($order) {
                 (new static)->createPreActionOrderItem($order, $item);
             });
             return $order;
@@ -63,8 +64,31 @@ class InventoryService
         return $order->items()->create($data);
     }
 
-    public function preActionOrderShipment()
+    /**
+     * 操作单发货
+     * @param PreInventoryActionOrder $order
+     * @param Request $request
+     * @param bool $fill
+     * @return mixed
+     */
+    public static function preActionOrderShipment(PreInventoryActionOrder $order, Request $request, $fill = false)
+    {
+        return $order->toShipment($request->all(), $fill);
+    }
+
+    public static function preActionOrderCheck(PreInventoryActionOrder $order, Request $request)
     {
 
+    }
+
+    /**
+     * @param PreInventoryActionOrderItem $item
+     * @param Request $request
+     * @return \App\Models\PreInventoryActionOrderItemState
+     * @throws \Exception
+     */
+    public static function preActionOrderItemCheck(PreInventoryActionOrderItem $item, Request $request)
+    {
+        return $item->addCheck($request->get('quantity'), $request->get('warehouse_area'));
     }
 }

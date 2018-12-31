@@ -58,15 +58,13 @@
                     </form-item>
                 </div>
                 {{-- 待发货，显示发货操作按钮--}}
-                @if (!$order->hasTracks())
-                    <div class="bg-30 flex px-8 py-4 ">
-                        <a href="{{route('supplier.supplies.order.shipment.create',['supply'=>$resource->id,'order'=>$order->id])}}"
-                           class="btn btn-a btn-default ml-auto cursor-pointer text-white bg-primary"
-                           title="Ship">
-                            发货
-                        </a>
-                    </div>
-                @endif
+                <div class="bg-30 flex px-8 py-4 ">
+                    <a href="{{route('supplier.supplies.order.shipment.create',['supply'=>$resource->id,'order'=>$order->id])}}"
+                       class="btn btn-a btn-default ml-auto cursor-pointer text-white bg-primary"
+                       title="Ship">
+                        {{$order->hasTracks() ? '物流详情' : '发货'}}
+                    </a>
+                </div>
 
             </div>
 

@@ -78224,6 +78224,8 @@ var map = {
 	"./components/EmptyResources.vue": 227,
 	"./components/FormItem.vue": 232,
 	"./components/LogisticSelect.vue": 243,
+	"./components/PreInventoryActionOrderCheck.vue": 253,
+	"./components/PreInventoryActionOrderCheckItem.vue": 258,
 	"./components/PreInventoryActionOrderShipment.vue": 248,
 	"./components/ProductVariantList.vue": 238,
 	"./components/ResourceDetailHeader.vue": 201,
@@ -80329,7 +80331,7 @@ exports = module.exports = __webpack_require__(18)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -80347,6 +80349,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
 //
 //
 //
@@ -80428,7 +80431,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       default: '创建'
     },
     canCreate: {
-      type: Boolean,
+      type: [Boolean, Number],
+      default: true
+    },
+    canUpdate: {
+      type: [Boolean, Number],
+      default: true
+    },
+    canDestroy: {
+      type: [Boolean, Number],
+      default: false
+    },
+    canView: {
+      type: [Boolean, Number],
       default: true
     }
   },
@@ -80572,79 +80587,90 @@ var render = function() {
             _vm._t("default"),
             _vm._v(" "),
             _c("el-table-column", {
-              attrs: { fixed: "right", label: "操作" },
+              attrs: { align: "right", fixed: "right", label: "操作" },
               scopedSlots: _vm._u([
                 {
                   key: "default",
                   fn: function(ref) {
                     var row = ref.row
                     return [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "cursor-pointer text-70 hover:text-primary mr-3",
-                          attrs: { href: "/" + _vm.resourceName + "/" + row.id }
-                        },
-                        [
-                          _c(
-                            "svg",
+                      _vm.canView
+                        ? _c(
+                            "a",
                             {
-                              staticClass: "fill-current",
+                              staticClass:
+                                "cursor-pointer text-70 hover:text-primary",
+                              class: { "mr-3": _vm.canUpdate },
                               attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                viewBox: "0 0 24 24",
-                                width: "24",
-                                height: "24"
+                                href: "/" + _vm.resourceName + "/" + row.id
                               }
                             },
                             [
-                              _c("path", {
-                                staticClass: "heroicon-ui",
-                                attrs: {
-                                  d:
-                                    "M17.56 17.66a8 8 0 0 1-11.32 0L1.3 12.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95zm-9.9-1.42a6 6 0 0 0 8.48 0L20.38 12l-4.24-4.24a6 6 0 0 0-8.48 0L3.4 12l4.25 4.24zM11.9 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
-                                }
-                              })
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "fill-current",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    viewBox: "0 0 24 24",
+                                    width: "24",
+                                    height: "24"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    staticClass: "heroicon-ui",
+                                    attrs: {
+                                      d:
+                                        "M17.56 17.66a8 8 0 0 1-11.32 0L1.3 12.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95zm-9.9-1.42a6 6 0 0 0 8.48 0L20.38 12l-4.24-4.24a6 6 0 0 0-8.48 0L3.4 12l4.25 4.24zM11.9 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
+                                    }
+                                  })
+                                ]
+                              )
                             ]
                           )
-                        ]
-                      ),
+                        : _vm._e(),
                       _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "cursor-pointer text-70 hover:text-primary",
-                          attrs: {
-                            href:
-                              "/" + _vm.resourceName + "/" + row.id + "/edit"
-                          }
-                        },
-                        [
-                          _c(
-                            "svg",
+                      _vm.canUpdate
+                        ? _c(
+                            "a",
                             {
-                              staticClass: "fill-current",
+                              staticClass:
+                                "cursor-pointer text-70 hover:text-primary",
                               attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                viewBox: "0 0 24 24",
-                                width: "24",
-                                height: "24"
+                                href:
+                                  "/" +
+                                  _vm.resourceName +
+                                  "/" +
+                                  row.id +
+                                  "/edit"
                               }
                             },
                             [
-                              _c("path", {
-                                staticClass: "heroicon-ui",
-                                attrs: {
-                                  d:
-                                    "M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1 1 0 0 1 0 2H4v14h14v-6z"
-                                }
-                              })
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "fill-current",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    viewBox: "0 0 24 24",
+                                    width: "24",
+                                    height: "24"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    staticClass: "heroicon-ui",
+                                    attrs: {
+                                      d:
+                                        "M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1 1 0 0 1 0 2H4v14h14v-6z"
+                                    }
+                                  })
+                                ]
+                              )
                             ]
                           )
-                        ]
-                      )
+                        : _vm._e()
                     ]
                   }
                 }
@@ -82503,7 +82529,7 @@ exports = module.exports = __webpack_require__(18)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -82514,6 +82540,44 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -82580,8 +82644,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       logistic_id: null,
-      track_number: null,
-      loading: false
+      tracking_number: null,
+      loading: false,
+      update: false,
+      routeName: '',
+      staticResource: {},
+      staticOrder: {}
     };
   },
 
@@ -82592,22 +82660,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.loading = true;
       axios.post(this.postApi, {
         logistic_id: this.logistic_id,
-        track_number: this.track_number
+        tracking_number: this.tracking_number
       }).then(function (_ref) {
         var data = _ref.data;
 
-        console.log(data);
-        _this.loading = false;
+        _this.notify(data);
+        _this.staticOrder = data.data.order;
+        _this.staticResource = data.data.resource;
+        _this.routeName = 'detail';
       });
+      this.loading = false;
+    },
+    getLogistic: function getLogistic(id) {
+      return _.find(this.logistic, ['id', +id]);
     }
   },
   computed: {
     hasShip: function hasShip() {
-      return _.get(this, 'resource.has_ship', true) ? '物流/快递' : '无需物流';
+      return _.get(this, 'staticResource.has_ship', true) ? '物流/快递' : '无需物流';
     },
     trackStatus: function trackStatus() {
-      return _.get(this, 'order.tracks', []).length > 0 ? '已发货' : '待发货';
+      return this.shipped ? '已发货' : '待发货';
+    },
+    shipped: function shipped() {
+      return _.get(this, 'staticOrder.tracks', []).length > 0;
     }
+  },
+  created: function created() {
+    this.staticResource = this.resource;
+    this.staticOrder = this.order;
+  },
+  mounted: function mounted() {
+
+    this.routeName = this.shipped ? 'detail' : 'create';
   }
 });
 
@@ -82621,137 +82706,272 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      directives: [
-        {
-          name: "loading",
-          rawName: "v-loading",
-          value: _vm.loading,
-          expression: "loading"
-        }
-      ],
-      staticClass: "form-list mb-6 p-0"
-    },
     [
+      _c("card-title", { attrs: { "label-name": "入库单发货" } }, [
+        _vm.routeName === "detail"
+          ? _c("div", { staticClass: "ml-3 w-full flex items-center" }, [
+              _c("div", {
+                staticClass: "flex w-full justify-end items-center"
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "ml-3" }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default btn-icon btn-primary",
+                  attrs: { slot: "reference", title: "Update", type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.routeName = "update"
+                    }
+                  },
+                  slot: "reference"
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "fill-current text-white",
+                      staticStyle: {
+                        "margin-top": "-2px",
+                        "margin-left": "3px"
+                      },
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "20",
+                        height: "20",
+                        viewBox: "0 0 20 20",
+                        "aria-labelledby": "edit",
+                        role: "presentation"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M4.3 10.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM6 14h2.59l9-9L15 2.41l-9 9V14zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6a1 1 0 1 1 0 2H2v14h14v-6z"
+                        }
+                      })
+                    ]
+                  )
+                ]
+              )
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
       _c(
         "div",
-        { staticClass: "p-6" },
-        [
-          _c("form-item", {
-            attrs: { title: "计划说明", value: _vm.resource.description }
-          }),
-          _vm._v(" "),
-          _c("form-item", {
-            attrs: { title: "当前状态", value: _vm.resource.current_state }
-          }),
-          _vm._v(" "),
-          _c("form-item", { attrs: { title: "运输方式", value: _vm.hasShip } }),
-          _vm._v(" "),
-          _c("form-item", {
-            attrs: { title: "最后更新时间", value: _vm.resource.updated_at }
-          }),
-          _vm._v(" "),
-          _c("form-item", {
-            attrs: { title: "接收仓库", value: _vm.order.warehouse.name }
-          }),
-          _vm._v(" "),
-          _c("form-item", {
-            attrs: {
-              title: "仓库地址",
-              value: _vm.order.warehouse.simple_address
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
             }
-          }),
-          _vm._v(" "),
-          _c("form-item", {
-            attrs: { title: "物流状态", value: _vm.trackStatus }
-          }),
-          _vm._v(" "),
+          ],
+          staticClass: "form-list mb-6 p-0"
+        },
+        [
           _c(
-            "form-item",
-            { attrs: { title: "操作单" } },
+            "div",
+            { staticClass: "p-6" },
             [
-              _c("product-variant-list", {
-                attrs: { slot: "value", items: _vm.order.items },
-                slot: "value"
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "form-item",
-            { attrs: { title: "物流公司" } },
-            [
-              _c(
-                "el-select",
-                {
-                  attrs: {
-                    slot: "value",
-                    name: "logistic_id",
-                    value: "id",
-                    filterable: "",
-                    placeholder: "请选择"
-                  },
-                  slot: "value",
-                  model: {
-                    value: _vm.logistic_id,
-                    callback: function($$v) {
-                      _vm.logistic_id = $$v
-                    },
-                    expression: "logistic_id"
-                  }
-                },
-                _vm._l(_vm.logistic, function(item) {
-                  return _c("el-option", {
-                    key: item.id,
-                    attrs: { label: item.name, value: item.id }
-                  })
-                }),
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "form-item",
-            { attrs: { title: "物流单号" } },
-            [
-              _c("el-input", {
+              _c("form-item", {
                 attrs: {
-                  slot: "value",
-                  name: "track_number",
-                  placeholder: "请输入快递单号"
-                },
-                slot: "value",
-                model: {
-                  value: _vm.track_number,
-                  callback: function($$v) {
-                    _vm.track_number = $$v
-                  },
-                  expression: "track_number"
+                  title: "计划说明",
+                  value: _vm.staticResource.description
                 }
-              })
+              }),
+              _vm._v(" "),
+              _c("form-item", {
+                attrs: {
+                  title: "当前状态",
+                  value: _vm.staticResource.current_state
+                }
+              }),
+              _vm._v(" "),
+              _c("form-item", {
+                attrs: { title: "运输方式", value: _vm.hasShip }
+              }),
+              _vm._v(" "),
+              _c("form-item", {
+                attrs: {
+                  title: "最后更新时间",
+                  value: _vm.staticResource.updated_at
+                }
+              }),
+              _vm._v(" "),
+              _c("form-item", {
+                attrs: {
+                  title: "接收仓库",
+                  value: _vm.staticOrder.warehouse.name
+                }
+              }),
+              _vm._v(" "),
+              _c("form-item", {
+                attrs: {
+                  title: "仓库地址",
+                  value: _vm.staticOrder.warehouse.simple_address
+                }
+              }),
+              _vm._v(" "),
+              _c("form-item", {
+                attrs: { title: "物流状态", value: _vm.trackStatus }
+              }),
+              _vm._v(" "),
+              _c(
+                "form-item",
+                { attrs: { title: "产品明细" } },
+                [
+                  _c("product-variant-list", {
+                    attrs: { slot: "value", items: _vm.staticOrder.items },
+                    slot: "value"
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.routeName === "detail"
+                ? [
+                    _vm._l(_vm.staticOrder.tracks, function(track) {
+                      return [
+                        _c("form-item", {
+                          attrs: {
+                            title: "物流公司",
+                            value: _vm.getLogistic(track.id).name
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("form-item", {
+                          attrs: {
+                            title: "物流单号",
+                            value: track.tracking_number
+                          }
+                        })
+                      ]
+                    })
+                  ]
+                : [
+                    _c(
+                      "form-item",
+                      { attrs: { title: "物流公司" } },
+                      [
+                        _c(
+                          "el-select",
+                          {
+                            attrs: {
+                              slot: "value",
+                              name: "logistic_id",
+                              value: "id",
+                              filterable: "",
+                              placeholder: "请选择"
+                            },
+                            slot: "value",
+                            model: {
+                              value: _vm.logistic_id,
+                              callback: function($$v) {
+                                _vm.logistic_id = $$v
+                              },
+                              expression: "logistic_id"
+                            }
+                          },
+                          _vm._l(_vm.logistic, function(item) {
+                            return _c("el-option", {
+                              key: item.id,
+                              attrs: { label: item.name, value: item.id }
+                            })
+                          }),
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "form-item",
+                      { attrs: { title: "物流单号" } },
+                      [
+                        _c("el-input", {
+                          attrs: {
+                            slot: "value",
+                            name: "tracking_number",
+                            placeholder: "请输入快递单号"
+                          },
+                          slot: "value",
+                          model: {
+                            value: _vm.tracking_number,
+                            callback: function($$v) {
+                              _vm.tracking_number = $$v
+                            },
+                            expression: "tracking_number"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ]
             ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "bg-30 flex px-8 py-4" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "ml-auto btn btn-default btn-primary inline-flex items-center relative",
-            attrs: { disable: _vm.loading, type: "button" },
-            on: { click: _vm.shipment }
-          },
-          [_c("span", {}, [_vm._v("\n                提交\n            ")])]
-        )
-      ])
-    ]
+            2
+          ),
+          _vm._v(" "),
+          _vm.routeName === "create"
+            ? _c("div", { staticClass: "bg-30 flex px-8 py-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "ml-auto btn btn-default btn-primary inline-flex items-center relative",
+                    attrs: { disable: _vm.loading, type: "button" },
+                    on: { click: _vm.shipment }
+                  },
+                  [
+                    _c("span", {}, [
+                      _vm._v("\n                提交\n            ")
+                    ])
+                  ]
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.routeName === "update"
+            ? _c("div", { staticClass: "bg-30 flex px-8 py-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "ml-auto btn text-80 font-normal h-9 px-3 mr-3 btn-link",
+                    on: {
+                      click: function($event) {
+                        _vm.routeName = "detail"
+                      }
+                    }
+                  },
+                  [_vm._v("取消\n            ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-default btn-primary inline-flex items-center relative",
+                    attrs: { disable: _vm.loading, type: "button" },
+                    on: { click: _vm.shipment }
+                  },
+                  [
+                    _c("span", {}, [
+                      _vm._v("\n                更新\n            ")
+                    ])
+                  ]
+                )
+              ])
+            : _vm._e()
+        ]
+      )
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -82761,6 +82981,735 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-12aed39e", module.exports)
+  }
+}
+
+/***/ }),
+/* 253 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(254)
+}
+var normalizeComponent = __webpack_require__(20)
+/* script */
+var __vue_script__ = __webpack_require__(256)
+/* template */
+var __vue_template__ = __webpack_require__(257)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-277e0298"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/PreInventoryActionOrderCheck.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-277e0298", Component.options)
+  } else {
+    hotAPI.reload("data-v-277e0298", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 254 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(255);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(19)("e37170b2", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-277e0298\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PreInventoryActionOrderCheck.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-277e0298\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PreInventoryActionOrderCheck.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 256 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'pre-inventory-action-order-check',
+  props: {
+    resource: {
+      type: Object,
+      default: function _default() {}
+    },
+    resourceName: {
+      type: String,
+      default: 'pre-inventory-action-orders'
+    },
+    resourceId: {
+      type: [String, Number]
+    }
+  },
+  provide: function provide() {
+    return {
+      type: this.resource.type,
+      resourceName: this.resourceName,
+      resourceId: this.resourceId
+    };
+  },
+  data: function data() {
+    return {
+      dialogVisible: false
+    };
+  },
+
+  methods: {
+    check: function check(item) {
+      console.log(item);
+      this.dialogVisible = true;
+    }
+  },
+  computed: {
+    items: function items() {
+      return _.get(this, 'resource.items', []);
+    }
+  }
+});
+
+/***/ }),
+/* 257 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    _vm._l(_vm.items, function(item) {
+      return _c("pre-inventory-action-order-check-item", {
+        key: item.id,
+        attrs: { item: item }
+      })
+    }),
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-277e0298", module.exports)
+  }
+}
+
+/***/ }),
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(259)
+}
+var normalizeComponent = __webpack_require__(20)
+/* script */
+var __vue_script__ = __webpack_require__(261)
+/* template */
+var __vue_template__ = __webpack_require__(262)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-41a7ae67"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/PreInventoryActionOrderCheckItem.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-41a7ae67", Component.options)
+  } else {
+    hotAPI.reload("data-v-41a7ae67", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 259 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(260);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(19)("5db47ce3", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-41a7ae67\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PreInventoryActionOrderCheckItem.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-41a7ae67\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PreInventoryActionOrderCheckItem.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 260 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 261 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'pre-inventory-action-order-check-item',
+  props: {
+    item: {
+      type: Object,
+      default: function _default() {}
+    }
+  },
+  inject: ['type'],
+  data: function data() {
+    var _this = this;
+
+    var checkQuantity = function checkQuantity(rule, value, callback) {
+      if (!value) {
+        return callback(new Error('数量不能为空'));
+      }
+      if (value <= 0) {
+        return callback(new Error('最小数量不能小于0'));
+      }
+      if (!Number.isInteger(value)) {
+        callback(new Error('请输入数字值'));
+      } else {
+        if (value + _this.checkCount > _this.item.quantity) {
+          callback(new Error('\u8D85\u51FA\u6700\u5927\u6570\u91CF'));
+        } else {
+          callback();
+        }
+      }
+    };
+    return {
+      dialogVisible: false,
+      form: {
+        quantity: 0,
+        warehouse_area: 'good'
+      },
+      rules: {
+        quantity: [{ validator: checkQuantity, trigger: 'blur' }]
+      },
+      state: []
+    };
+  },
+
+  methods: {
+    addCheck: function addCheck() {
+      var _this2 = this;
+
+      this.$refs['form'].validate(function (valid) {
+        if (valid) {
+          axios.post(_this2.api, _this2.form).then(function (_ref) {
+            var data = _ref.data;
+
+            _this2.notify(data);
+            _this2.state.push(data.data);
+            _this2.resetForm();
+            _this2.dialogVisible = false;
+          }).catch(function (err) {
+            _this2.notify({ type: 'error', title: 'error', message: err.response });
+          });
+        } else {
+          _this2.notify({ type: 'error', title: '表单数据不合法' });
+          return false;
+        }
+      });
+    },
+    resetForm: function resetForm() {
+      this.$refs['form'].resetFields();
+    }
+  },
+  computed: {
+    checkCount: function checkCount() {
+      return _.sumBy(this.state, 'quantity');
+    },
+    max: function max() {
+      return _.get(this.item, 'quantity');
+    },
+    api: function api() {
+      return '/pre-inventory-action-order-items/' + this.item.id + '/check';
+    },
+    canAddMax: function canAddMax() {
+      return this.max - this.checkCount - this.form.quantity;
+    },
+    checked: function checked() {
+      return this.checkCount === this.max;
+    }
+  },
+  created: function created() {
+    this.state = this.item.state;
+  }
+});
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("card-title", { attrs: { "label-name": _vm.item.variant.code } }, [
+        _c("div", { staticClass: "ml-3 w-full flex items-center" }, [
+          _c("div", { staticClass: "flex w-full justify-end items-center" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "ml-3" }),
+          _vm._v(" "),
+          !_vm.checked
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-default btn-icon btn-primary",
+                  attrs: { title: "addCheck" },
+                  on: {
+                    click: function($event) {
+                      _vm.dialogVisible = true
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "fill-current text-white",
+                      staticStyle: {
+                        "margin-top": "-2px",
+                        "margin-left": "3px"
+                      },
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "20",
+                        height: "20",
+                        viewBox: "0 0 20 20",
+                        "aria-labelledby": "edit",
+                        role: "presentation"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M4.3 10.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM6 14h2.59l9-9L15 2.41l-9 9V14zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6a1 1 0 1 1 0 2H2v14h14v-6z"
+                        }
+                      })
+                    ]
+                  )
+                ]
+              )
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { key: _vm.item.id, staticClass: "card w-full mb-6" },
+        [
+          _c(
+            "div",
+            { staticClass: "form-list" },
+            [
+              _c("form-item", {
+                attrs: {
+                  title: "商品名称",
+                  value: _vm.item.variant.variantName
+                }
+              }),
+              _vm._v(" "),
+              _c("form-item", {
+                attrs: { title: "商品编码", value: _vm.item.variant.code }
+              }),
+              _vm._v(" "),
+              _c("form-item", {
+                attrs: { title: "应到货数量", value: _vm.item.quantity }
+              }),
+              _vm._v(" "),
+              _c(
+                "form-item",
+                { attrs: { title: "入仓记录" } },
+                [
+                  _c(
+                    "el-table",
+                    {
+                      attrs: { slot: "value", data: _vm.state },
+                      slot: "value"
+                    },
+                    [
+                      _c("el-table-column", {
+                        attrs: { prop: "quantity", label: "批次到货数量" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { label: "货品状态" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var row = ref.row
+                              return [
+                                _c("span", [
+                                  _vm._v(
+                                    _vm._s(
+                                      row.warehouse_area === "good"
+                                        ? "良品"
+                                        : "不良品"
+                                    )
+                                  )
+                                ])
+                              ]
+                            }
+                          }
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { prop: "updated_at", label: "更新时间" }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-dialog",
+            {
+              attrs: {
+                title: _vm.type.name,
+                visible: _vm.dialogVisible,
+                width: "50%"
+              },
+              on: {
+                "update:visible": function($event) {
+                  _vm.dialogVisible = $event
+                }
+              }
+            },
+            [
+              _c(
+                "el-form",
+                {
+                  ref: "form",
+                  attrs: {
+                    model: _vm.form,
+                    rules: _vm.rules,
+                    "status-icon": "",
+                    "label-position": "left",
+                    "label-width": "80px"
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "mb-3" },
+                    [
+                      _c("el-alert", {
+                        attrs: {
+                          title: "最大还能添加" + _vm.canAddMax + "个",
+                          type: "info",
+                          "show-icon": ""
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "数量", prop: "quantity" } },
+                    [
+                      _c("el-input", {
+                        attrs: {
+                          type: "number",
+                          placeholder: "最大还能添加" + _vm.canAddMax + "个"
+                        },
+                        model: {
+                          value: _vm.form.quantity,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "quantity", _vm._n($$v))
+                          },
+                          expression: "form.quantity"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "货品状态", prop: "warehouse_area" } },
+                    [
+                      _c(
+                        "el-radio-group",
+                        {
+                          model: {
+                            value: _vm.form.warehouse_area,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "warehouse_area", $$v)
+                            },
+                            expression: "form.warehouse_area"
+                          }
+                        },
+                        [
+                          _c("el-radio", { attrs: { label: "good" } }, [
+                            _vm._v("良品")
+                          ]),
+                          _vm._v(" "),
+                          _c("el-radio", { attrs: { label: "bad" } }, [
+                            _vm._v("不良品")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "dialog-footer",
+                  attrs: { slot: "footer" },
+                  slot: "footer"
+                },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.dialogVisible = false
+                        }
+                      }
+                    },
+                    [_vm._v("取 消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    { attrs: { type: "primary" }, on: { click: _vm.addCheck } },
+                    [_vm._v("确 定")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-41a7ae67", module.exports)
   }
 }
 

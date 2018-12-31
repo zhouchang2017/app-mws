@@ -16,6 +16,9 @@ class CreatePreInventoryActionOrderItemStatesTable extends Migration
         Schema::create('pre_inventory_action_order_item_states', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('item_id');
+            $table->unsignedInteger('quantity');
+            $table->unsignedInteger('type_id')->comment('操作类型 put/take'); // 操作类型
+            $table->unsignedInteger('variant_id');
             $table->string('warehouse_area')->default('good')->comment('仓库区域 good = 良品 bad = 次品'); // 仓库区域 good = 良品 bad = 次品
             $table->timestamps();
         });
