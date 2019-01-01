@@ -33,7 +33,23 @@ import helper from './helper'
 
 Vue.mixin(notifyable)
 Vue.mixin(helper)
-Vue.prototype.appConfig = _.cloneDeep(config)
+const erpConfig = _.cloneDeep(config)
 const app = new Vue({
-  el: '#app'
+  el: '#app',
+  data () {
+    return {
+      erpConfig: {}
+    }
+  },
+  methods: {
+    setConfig (config) {
+      // _.each(config, (value, key) => {
+      //   this.$set(this.erpConfig, key, value)
+      // })
+      this.erpConfig = config
+    }
+  },
+  mounted () {
+    this.setConfig(erpConfig)
+  }
 })

@@ -10,13 +10,20 @@ class ErpMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        ERP::provideToScript([]);
+        $locales = array_map(function ($value) {
+            return __($value);
+        }, config('translatable.locales'));
+
+        ERP::provideToScript([
+            'locales'     => $locales,
+            'indexLocale' => app()->getLocale()
+        ]);
         return $next($request);
     }
 }

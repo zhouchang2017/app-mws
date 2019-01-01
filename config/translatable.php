@@ -10,11 +10,9 @@ return [
     | Contains an array with the applications available locales.
     |
     */
-    'locales' => [
-        'en' => ['US'],
-        'zh' => [
-            'CN',
-        ],
+    'locales'                            => [
+        'en-US' => '英文',
+        'zh-CN' => '中文',
     ],
 
     /*
@@ -27,7 +25,7 @@ return [
     | colombian spanish will be saved as 'es-CO' into the database.
     |
     */
-    'locale_separator' => '-',
+    'locale_separator'                   => '-',
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +39,7 @@ return [
     | and never fallback to the translator one.
     |
     */
-    'locale' => 'zh-CN',
+    'locale'                             => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +52,7 @@ return [
     | $useTranslationFallback when defined
     |
     */
-    'use_fallback' => true,
+    'use_fallback'                       => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -66,7 +64,7 @@ return [
     | locale. Note that 'use_fallback' must be enabled.
     |
      */
-    'use_property_fallback' => true,
+    'use_property_fallback'              => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +76,7 @@ return [
     | set it to false.
     |
     */
-    'fallback_locale' => 'en-US',
+    'fallback_locale'                    => 'en-US',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +88,7 @@ return [
     | set this to 'App\Translations'.
     |
     */
-    'translation_model_namespace' => 'App\Models\DP\Translations',
+    'translation_model_namespace'        => 'App\Models\DP\Translations',
 
     /*
     |--------------------------------------------------------------------------
@@ -102,7 +100,7 @@ return [
     | application, set this to 'Trans'.
     |
     */
-    'translation_suffix' => 'Translation',
+    'translation_suffix'                 => 'Translation',
 
     /*
     |--------------------------------------------------------------------------
@@ -113,7 +111,7 @@ return [
     | translation model.
     |
     */
-    'locale_key' => 'locale_code',
+    'locale_key'                         => 'locale_code',
 
     /*
     |--------------------------------------------------------------------------

@@ -13,7 +13,9 @@
 
 Route::view('/', 'welcome');
 
-
+Route::get('/test',function (){
+    return \App\Models\DP\Product::with('optionValues')->first();
+});
 //Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/users/{user}', 'UserController@show')->name('user.show');

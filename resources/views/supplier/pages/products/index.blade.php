@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="mb-3 text-90 font-normal text-2xl">产品</h1>
+    <card-title label-name="产品"></card-title>
     <resources-table label-name="创建产品" resource-name="products">
         <el-table-column
                 prop="code"

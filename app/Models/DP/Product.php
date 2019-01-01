@@ -3,6 +3,7 @@
 namespace App\Models\DP;
 
 
+use App\Scopes\SupplierProductScope;
 use App\Traits\ProductCheckStatus;
 use Dimsav\Translatable\Translatable;
 
@@ -27,6 +28,13 @@ class Product extends Model
     ];
 
     protected $fillable = ['code', 'taxon_id', 'enabled'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new SupplierProductScope());
+    }
+
 
     public function attributeValues()
     {
