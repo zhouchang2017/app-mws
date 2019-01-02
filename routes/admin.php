@@ -31,9 +31,21 @@ Route::resource('/pre-inventory-action-orders', 'PreInventoryActionOrderControll
 Route::get('/pre-inventory-action-orders/{pre_inventory_action_order}/check', 'PreInventoryActionOrderController@check')
     ->name('pre-inventory-action-orders.check');
 
-Route::post('/pre-inventory-action-order-items/{pre_inventory_action_order_item}/check', 'PreInventoryActionOrderItemController@addCheck')
+Route::post('/pre-inventory-action-order-items/{pre_inventory_action_order_item}/check',
+    'PreInventoryActionOrderItemController@addCheck')
     ->name('pre-inventory-action-order-items.check.create');
 // 变体
 Route::resource('/product-variants', 'ProductVariantController');
-
+// 仓库
 Route::resource('warehouses', 'WarehouseController');
+// 产品
+Route::resource('/products', 'ProductController');
+
+// 产品分类
+Route::get('/taxons', 'TaxonController@index')->name('taxons.index');
+
+// 产品属性
+Route::resource('/product-attributes', 'ProductAttributeController');
+
+// 产品销售属性
+Route::resource('/product-options', 'ProductOptionController');

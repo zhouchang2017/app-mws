@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property mixed preOrder
  * @property mixed quantity
+ * @property mixed variant_id
  */
 class PreInventoryActionOrderItem extends Model
 {
@@ -61,6 +62,7 @@ class PreInventoryActionOrderItem extends Model
                 'quantity'       => $quantity,
                 'warehouse_area' => $warehouseArea,
                 'type_id'        => $this->preOrder->type->id,
+                'variant_id'     => $this->variant_id
             ]);
         } else {
             throw new \Exception('超出实际数量');

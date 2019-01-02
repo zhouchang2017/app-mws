@@ -35,6 +35,11 @@ class Product extends Model
         static::addGlobalScope(new SupplierProductScope());
     }
 
+    public function taxon()
+    {
+        return $this->belongsTo(Taxon::class);
+    }
+
 
     public function attributeValues()
     {

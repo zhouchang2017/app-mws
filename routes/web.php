@@ -14,7 +14,7 @@
 Route::view('/', 'welcome');
 
 Route::get('/test',function (){
-    return \App\Models\DP\Product::with('optionValues')->first();
+    return \App\Models\DP\Order::all()->getExpendItems();
 });
 //Route::get('/home', 'HomeController@index')->name('home');
 

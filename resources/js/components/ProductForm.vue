@@ -34,10 +34,10 @@
 
                 <template v-for="(attr,index) in attributes">
                     <el-form-item :label="attr.name"
-                                  :prop="`attributes.${index}.value`"
+                                  :prop="`attributes.${index}.value.value`"
                     >
                         <translation-field :attribute="attr.name"
-                                           v-model="form.attributes[index].value"></translation-field>
+                                           v-model="form.attributes[index].value.value"></translation-field>
                     </el-form-item>
                 </template>
 
@@ -74,7 +74,7 @@
                 <button @click="submit" type="button"
                         class="btn btn-default btn-primary inline-flex items-center relative">
                     <span class="">
-                        创建产品
+                        {{createPage ? '创建产品' : '更新产品'}}
                     </span>
                 </button>
             </div>
@@ -83,8 +83,25 @@
 </template>
 
 <script>
+  import Translatable from '../translatable'
+
   export default {
     name: 'product-form',
+
+    mixins: [Translatable],
+
+    props: {
+      resourceId: {
+        type: [String, Number]
+      },
+      resourceName: {
+        type: String,
+        default: 'products'
+      },
+      resource: {
+        type: Object,
+      }
+    },
     data () {
       return {
         optionConfig: {
@@ -104,6 +121,7 @@
         options: [],
         rules: {
           name: [
+            {required: true, message: '请输入产品名称', trigger: 'blur'},
             {validator: this.checkName, trigger: 'blur'}
           ],
           code: [{required: true, message: '请输入产品编码', trigger: 'blur'}],
@@ -135,27 +153,57 @@
         })
         callback()
       },
-      formData () {
-        const clone = _.cloneDeep(this.form)
-        delete clone.taxon
-        clone.taxon_id = this.taxon
-        return clone
-      },
-      submit () {
-        this.$refs['form'].validate((valid) => {
+      async submit () {
+        this.$refs['form'].validate(async (valid) => {
           if (valid) {
             this.loading = true
-            axios.post('/products', this.formData()).then(({data}) => {
-              console.log(data)
-              this.notify(data)
-              // this.state.push(data.data)
-              // this.resetForm()
-            })
+            try {
+              if (this.createPage) {
+                const {data} = await this.createRequest()
+                this.notify(data)
+                this.go(`${this.resourceName}/${data.data.id}`)
+              } else {
+                const {data} = await this.updateRequest()
+                this.notify(data)
+                this.go(`/${this.resourceName}/${data.data.id}`)
+              }
+
+            } catch (e) {
+              this.notify({type: 'error', title: 'ERROR',message:e.response})
+            }
+
+            // this.state.push(data.data)
+            // this.resetForm()
             this.loading = false
           } else {
             this.notify({type: 'error', title: '表单数据不合法'})
             return false
           }
+        })
+      },
+      /**
+       * Send a create request for this resource
+       */
+      createRequest () {
+        return axios.post(
+          `/${this.resourceName}`,
+          this.createResourceFormData()
+        )
+      },
+      /**
+       * Send a update request for this resource
+       */
+      updateRequest () {
+        return axios.patch(
+          `/${this.resourceName}/${this.resourceId}`,
+          this.createResourceFormData()
+        )
+      },
+
+      createResourceFormData () {
+        return _.tap(_.cloneDeep(this.form), formData => {
+          delete formData.taxon
+          formData.taxon_id = this.taxon
         })
       },
       resetForm () {
@@ -171,9 +219,19 @@
         return axios.get('/product-attributes?taxon=' + this.taxon).then(({data}) => {
           this.attributes = data
           this.form.attributes = data.map(item => {
+            const attribute_id = item.id
+            let value = {value:{},id:null}
+            if (_.get(this, 'resource.taxon_id') === this.taxon && this.updatePage) {
+              const attributeValues = this.resource.attribute_values.filter(item => item.attribute_id === attribute_id)
+              value = attributeValues.reduce((value, cur) => {
+                value.value[cur.locale_code] = cur.text_value
+                value.id = cur.id
+                return value
+              }, value)
+            }
             return {
-              id: item.id,
-              value: {}
+              attribute_id,
+              value
             }
           })
         })
@@ -185,6 +243,30 @@
       },
       toLocaleCode (code) {
         return _.get(this, `appConfig.locales.${code}`)
+      },
+      fillTaxon () {
+        this.form.taxon = _.get(this, 'resource.taxon.ancestors')
+      },
+      fillAttributes () {
+        return this.resource.attribute_values.reduce((res, cur) => {
+          const {attribute_id, locale_code, text_value, id} = cur
+          const attribute = _.find(res, ['attribute_id', attribute_id])
+          if (attribute) {
+            _.set(attribute.value, locale_code, text_value)
+          } else {
+            const value = {}
+            _.set(value, locale_code, text_value)
+            res.push({
+              id,
+              attribute_id,
+              value
+            })
+          }
+          return res
+        }, [])
+      },
+      fillOptions () {
+        this.form.options = _.get(this, 'resource.options').map(option => option.option_id)
       }
     },
 
@@ -209,10 +291,25 @@
         if (this.options.length === 0 && this.taxon) {
           return '该分类暂无匹配销售属性'
         }
+      },
+
+      updatePage () {
+        return !_.isUndefined(this.resourceId)
+      },
+
+      createPage () {
+        return !this.updatePage
       }
     },
     async created () {
       await this.fetchTaxons()
+      if (this.updatePage) {
+
+        this.fillAttribute('name', _.get(this, 'resource.translations'), 'form.name')
+        this.form.code = _.get(this, 'resource.code')
+        this.fillTaxon()
+        this.fillOptions()
+      }
     }
   }
 </script>

@@ -6,10 +6,10 @@
  * Time: 下午11:05
  */
 
-namespace Chang\Erp\Traits;
+namespace App\Traits;
 
 
-use Chang\Erp\Models\Market;
+use App\Models\Market;
 
 trait MarketableTrait
 {
@@ -23,16 +23,12 @@ trait MarketableTrait
         return $this->name;
     }
 
-    public function register()
-    {
-        if (is_null($this->market)) {
-            $this->market()->create(['name' => $this->getName()]);
-        }
-        return $this->market;
-    }
-
     public function sync()
     {
-        return $this->register();
+        return $this->market()->updateOrCreate([
+            'marketable_id' => $this->id,
+            'marketable_type' => get_class($this),
+            'name' => $this->getName(),
+        ]);
     }
 }

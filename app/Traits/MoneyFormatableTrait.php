@@ -20,7 +20,8 @@ trait MoneyFormatableTrait
 {
     protected $currency = 'USD';
 
-    protected $priceField = 'price';
+    public $priceFields = ['price'];
+
 
     /**
      * @return string
@@ -72,22 +73,20 @@ trait MoneyFormatableTrait
 
     public function hasSetMoneyMutator($key)
     {
-        return $key === $this->priceField;
+        return in_array($key,$this->priceFields);
     }
 
     public function setAttribute($key, $value)
     {
         if ($this->hasSetMoneyMutator($key)) {
-            return  $this->attributes[$this->priceField] = $this->saveCurrencyUsing($value === 0 ? '0.00' : $value);
-
+            return $this->attributes[$key] = $this->saveCurrencyUsing($value === 0 ? '0.00' : (string)$value);
         }
-
         return parent::setAttribute($key, $value);
     }
 
     public function hasGetMutator($key)
     {
-        if ($key === $this->priceField) {
+        if ($this->hasSetMoneyMutator($key)) {
             return true;
         }
         return parent::hasGetMutator($key);
@@ -95,20 +94,10 @@ trait MoneyFormatableTrait
 
     protected function mutateAttribute($key, $value)
     {
-        if ($key === $this->priceField) {
+        if ($this->hasSetMoneyMutator($key)) {
             return $this->displayCurrencyUsing($value);
         }
         return parent::mutateAttribute($key, $value);
     }
 
-
-    public function getPriceAttribute($value)
-    {
-        return $this->displayCurrencyUsing($value);
-    }
-
-    public function setPriceAttribute($value)
-    {
-        $this->attributes[$this->priceField] = $this->saveCurrencyUsing($value === 0 ? '0.00' : $value);
-    }
 }

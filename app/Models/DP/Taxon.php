@@ -74,4 +74,9 @@ class Taxon extends Model
     {
         return $this->hasMany(ProductOption::class);
     }
+
+    public function getAncestorsAttribute()
+    {
+        return $this->getAncestors(['id'])->push($this)->pluck('id');
+    }
 }

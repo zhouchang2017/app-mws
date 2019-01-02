@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Supplier;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\DP\Product;
-use App\Services\ProductService;
+use App\Models\DP\Taxon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ProductController extends Controller
+class TaxonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        if (request()->ajax()) {
-            return response()->json(Product::latest('updated_at')->paginate(15));
-        }
-        return view('supplier.pages.products.index');
+        return response()->json(Taxon::all()->toTree());
     }
 
     /**
@@ -29,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('supplier.pages.products.create');
+        //
     }
 
     /**
@@ -40,7 +36,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        ProductService::updateOrCreateProduct($request);
+        //
     }
 
     /**
