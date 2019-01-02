@@ -19,7 +19,7 @@ class ProductController extends Controller
         if (request()->ajax()) {
             return response()->json(Product::latest('updated_at')->paginate(15));
         }
-        return view('supplier.pages.products.index');
+        return view('products.index');
     }
 
     /**
@@ -29,7 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('supplier.pages.products.create');
+        return view('products.create');
     }
 
     /**
@@ -40,41 +40,51 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        ProductService::updateOrCreateProduct($request);
+        return $this->created(
+            ProductService::updateOrCreateProduct($request)
+        );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param Product $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        $resource = $product->loadMissing(['attributeValues.attribute', 'options', 'taxon', 'variants']);
+        if (request()->ajax()) {
+            return response()->json($resource);
+        }
+        return view('products.detail', compact('resource'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param Product $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        $resource = $product->loadMissing(['taxon', 'attributeValues', 'options:option_id']);
+        $product->taxon->append('ancestors');
+        return view('products.update', compact('resource'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        return $this->updated(
+            ProductService::updateOrCreateProduct($request, $product)
+        );
     }
 
     /**

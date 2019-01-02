@@ -14,7 +14,9 @@
 Route::view('/', 'welcome');
 
 Route::get('/test',function (){
-    return \App\Models\DP\Order::all()->getExpendItems();
+    $variant = \App\Models\DP\ProductVariant::find(1);
+    $variant->loadMissing(['optionValues']);
+    return $variant;
 });
 //Route::get('/home', 'HomeController@index')->name('home');
 

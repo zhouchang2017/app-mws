@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 class ProductVariantController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +19,7 @@ class ProductVariantController extends Controller
         if (request()->ajax()) {
             return response()->json(ProductVariant::paginate(15));
         }
-        return view('supplier.pages.variants.index');
+        return view('product-variants.index');
     }
 
     /**
@@ -28,7 +29,12 @@ class ProductVariantController extends Controller
      */
     public function create()
     {
-        //
+        $viaRelationName = request()->get('viaRelationName');
+        $viaRelationId = request()->get('viaRelationId');
+        $product = $this->findRelationship(ProductVariant::class);
+        return view('product-variants.create', compact('viaRelationId', 'viaRelationName','product'));
+//        $relationModel = app(ProductVariant::class)->{request()->viaRelationName}()->getModel();
+
     }
 
     /**

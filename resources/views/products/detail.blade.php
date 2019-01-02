@@ -29,7 +29,7 @@
     </div>
 
     <resource-index-header
-            via-relation-name="products"
+            via-relation-name="product"
             resource-name="product-variants"
             via-relation-id="{{$resource->id}}"
             can-create
@@ -68,9 +68,3 @@
         @endif
     </div>
 @endsection
-<script>
-  import ResourceDetailHeader from '../../js/components/ResourceDetailHeader'
-  export default {
-    components: {ResourceDetailHeader}
-  }
-</script>

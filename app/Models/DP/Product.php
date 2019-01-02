@@ -3,6 +3,7 @@
 namespace App\Models\DP;
 
 
+use App\Models\SupplierUser;
 use App\Scopes\SupplierProductScope;
 use App\Traits\ProductCheckStatus;
 use Dimsav\Translatable\Translatable;
@@ -27,12 +28,17 @@ class Product extends Model
         'meta_description',
     ];
 
-    protected $fillable = ['code', 'taxon_id', 'enabled'];
+    protected $fillable = [ 'code', 'taxon_id', 'enabled' ];
 
     protected static function boot()
     {
         parent::boot();
         static::addGlobalScope(new SupplierProductScope());
+        static::created(function ($model) {
+            if (auth()->user() instanceof SupplierUser) {
+                auth()->user()->supplier->products()->attach($model);
+            }
+        });
     }
 
     public function taxon()

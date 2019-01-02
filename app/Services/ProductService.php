@@ -15,6 +15,18 @@ use Illuminate\Http\Request;
 
 class ProductService
 {
+    protected $product;
+
+    /**
+     * ProductService constructor.
+     * @param $product
+     */
+    public function __construct(Product $product)
+    {
+        $this->product = $product;
+    }
+
+
     public static function updateOrCreateProduct(Request $request, Product $product = null)
     {
         return tap($product ?? new Product(), function ($product) use ($request) {
@@ -23,8 +35,7 @@ class ProductService
             $product->fill($request->all());
 
             // save translation field
-            collect($request->all())->only($product->translatedAttributes)->each(function ($translation, $attribute) use
-            (
+            collect($request->all())->only($product->translatedAttributes)->each(function ($translation, $attribute) use (
                 $product
             ) {
 
@@ -51,8 +62,8 @@ class ProductService
                     'id' => array_get($attribute, 'value.id'),
                 ], [
                     'attribute_id' => $attribute['attribute_id'],
-                    'locale_code' => $locale,
-                    'text_value' => $value,
+                    'locale_code'  => $locale,
+                    'text_value'   => $value,
                 ]);
             });
         });
@@ -62,4 +73,10 @@ class ProductService
     {
         $product->options()->sync($options);
     }
+
+    public function createProductVariant(Request $request)
+    {
+
+    }
+
 }

@@ -40,7 +40,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        ProductService::updateOrCreateProduct($request);
+        return $this->created(
+            ProductService::updateOrCreateProduct($request)
+        );
     }
 
     /**

@@ -15,11 +15,11 @@ class Controller extends BaseController
     {
         $json = [
             'title' => '创建成功',
-            'data' => $data,
-            'type' => 'success',
+            'data'  => $data,
+            'type'  => 'success',
         ];
         if ($message) {
-            $json = array_merge($json, ['message' => $message]);
+            $json = array_merge($json, [ 'message' => $message ]);
         }
         return response()->json($json, 201);
     }
@@ -28,12 +28,18 @@ class Controller extends BaseController
     {
         $json = [
             'title' => $title ?? '更新成功',
-            'data' => $data,
-            'type' => 'success',
+            'data'  => $data,
+            'type'  => 'success',
         ];
         if ($message) {
-            $json = array_merge($json, ['message' => $message]);
+            $json = array_merge($json, [ 'message' => $message ]);
         }
         return response()->json($json, 200);
     }
+
+    public function findRelationship($model)
+    {
+        return request()->findRelationship($model);
+    }
+
 }
