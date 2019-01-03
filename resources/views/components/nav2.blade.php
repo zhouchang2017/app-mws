@@ -51,6 +51,36 @@
             </li>
         @endif
 
+        @if (Route::has($domain.'.inventories.index'))
+            <li class="ml-2 mb-4 flex items-center">
+                <svg class="sidebar-icon w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path fill="var(--sidebar-icon)"
+                          d="M3 1h4c1.1045695 0 2 .8954305 2 2v4c0 1.1045695-.8954305 2-2 2H3c-1.1045695 0-2-.8954305-2-2V3c0-1.1045695.8954305-2 2-2zm0 2v4h4V3H3zm10-2h4c1.1045695 0 2 .8954305 2 2v4c0 1.1045695-.8954305 2-2 2h-4c-1.1045695 0-2-.8954305-2-2V3c0-1.1045695.8954305-2 2-2zm0 2v4h4V3h-4zM3 11h4c1.1045695 0 2 .8954305 2 2v4c0 1.1045695-.8954305 2-2 2H3c-1.1045695 0-2-.8954305-2-2v-4c0-1.1045695.8954305-2 2-2zm0 2v4h4v-4H3zm10-2h4c1.1045695 0 2 .8954305 2 2v4c0 1.1045695-.8954305 2-2 2h-4c-1.1045695 0-2-.8954305-2-2v-4c0-1.1045695.8954305-2 2-2zm0 2v4h4v-4h-4z"
+                    />
+                </svg>
+                <a class="cursor-pointer text-90 hover:text-primary font-medium mobile-home-trigger
+                    {{Route::currentRouteName() === $domain.'.inventories.index' ? 'text-primary' : ''}}"
+                   href="{{route($domain.'.inventories.index')}}">
+                    库存
+                </a>
+            </li>
+        @endif
+
+        @if (Route::has($domain.'.attachment-types.index'))
+            <li class="ml-2 mb-4 flex items-center">
+                <svg class="sidebar-icon w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path fill="var(--sidebar-icon)"
+                          d="M3 1h4c1.1045695 0 2 .8954305 2 2v4c0 1.1045695-.8954305 2-2 2H3c-1.1045695 0-2-.8954305-2-2V3c0-1.1045695.8954305-2 2-2zm0 2v4h4V3H3zm10-2h4c1.1045695 0 2 .8954305 2 2v4c0 1.1045695-.8954305 2-2 2h-4c-1.1045695 0-2-.8954305-2-2V3c0-1.1045695.8954305-2 2-2zm0 2v4h4V3h-4zM3 11h4c1.1045695 0 2 .8954305 2 2v4c0 1.1045695-.8954305 2-2 2H3c-1.1045695 0-2-.8954305-2-2v-4c0-1.1045695.8954305-2 2-2zm0 2v4h4v-4H3zm10-2h4c1.1045695 0 2 .8954305 2 2v4c0 1.1045695-.8954305 2-2 2h-4c-1.1045695 0-2-.8954305-2-2v-4c0-1.1045695.8954305-2 2-2zm0 2v4h4v-4h-4z"
+                    />
+                </svg>
+                <a class="cursor-pointer text-90 hover:text-primary font-medium mobile-home-trigger
+                    {{Route::currentRouteName() === $domain.'.attachment-types.index' ? 'text-primary' : ''}}"
+                   href="{{route($domain.'.attachment-types.index')}}">
+                    费用调整类型
+                </a>
+            </li>
+        @endif
+
         {{--<li class="ml-2 mb-4 flex items-center">--}}
             {{--<svg class="sidebar-icon w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">--}}
                 {{--<path fill="var(--sidebar-icon)"--}}

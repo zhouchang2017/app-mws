@@ -105,4 +105,11 @@ class PreInventoryAction extends Model
         });
     }
 
+    public function loadType()
+    {
+        return tap($this, function ($model) {
+            $model->loadMissing([ 'type' ]);
+        });
+    }
+
 }

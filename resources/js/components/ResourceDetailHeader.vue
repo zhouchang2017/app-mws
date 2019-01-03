@@ -24,8 +24,8 @@
             </el-popover>
 
             <!----> <!---->
-            <a v-if="canView"  :href="toView" class="btn btn-default btn-icon bg-primary" :class="{'mr-3':viewMr}"
-                title="View">
+            <a v-if="canView" :href="toView" class="btn btn-default btn-icon bg-primary" :class="{'mr-3':viewMr}"
+               title="View">
                 <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
                      height="24">
                     <path class="heroicon-ui"
@@ -60,16 +60,16 @@
         type: [String, Number]
       },
       canDestroy: {
-        type: [Boolean,Number],
+        type: [Boolean, Number],
         default: true
       },
-      canUpdate:{
-        type: [Boolean,Number],
+      canUpdate: {
+        type: [Boolean, Number],
         default: true
       },
-      canView:{
-        type:[Boolean,Number],
-        default:false
+      canView: {
+        type: [Boolean, Number],
+        default: false
       }
     },
     data () {
@@ -82,7 +82,7 @@
       requestDelApi () {
         this.loading = true
         axios.delete(this.delApi).then(({data}) => {
-          console.log(data)
+          this.go(`/${this.resourceName}`)
         })
         this.loading = false
       }
@@ -94,13 +94,13 @@
       toEdit () {
         return `/${this.resourceName}/${this.resourceId}/edit`
       },
-      toView(){
+      toView () {
         return `/${this.resourceName}/${this.resourceId}`
       },
-      delMr(){
+      delMr () {
         return this.canView || this.canUpdate
       },
-      viewMr(){
+      viewMr () {
         return this.canUpdate
       }
     }

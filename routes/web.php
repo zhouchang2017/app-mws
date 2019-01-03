@@ -14,9 +14,15 @@
 Route::view('/', 'welcome');
 
 Route::get('/test',function (){
-    $variant = \App\Models\DP\ProductVariant::find(1);
-    $variant->loadMissing(['optionValues']);
-    return $variant;
+    $order = \App\Models\DP\Order::find(115);
+    return $order->getExpendItems();
+//    $order->loadMissing(['units']);
+//    $unitPrice = $order->unit_price;
+//    $order->units->map(function ($item) use ($unitPrice) {
+//        $item->price = $unitPrice + $item->adjustments_total;
+//        return $item;
+//    });
+//    return $order;
 });
 //Route::get('/home', 'HomeController@index')->name('home');
 

@@ -3,8 +3,12 @@
 namespace App\Models\DP;
 
 
+use App\Traits\MoneyFormatableTrait;
+
 class OrderItem extends Model
 {
+    use MoneyFormatableTrait;
+
     protected $casts = [
         'option_values' => 'array'
     ];
@@ -28,4 +32,26 @@ class OrderItem extends Model
     {
         return $this->hasMany(Adjustment::class);
     }
+
+    public function getUnitPrice()
+    {
+        $this->units->each->append('price');
+        return $this;
+    }
+
+    public function getUnitsTotalAttribute($value)
+    {
+        return $this->displayCurrencyUsing($value);
+    }
+
+    public function getTotalAttribute($value)
+    {
+        return $this->displayCurrencyUsing($value);
+    }
+
+    public function getUnitPriceAttribute($value)
+    {
+        return $this->displayCurrencyUsing($value);
+    }
+
 }

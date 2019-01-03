@@ -1,6 +1,6 @@
 <template>
     <div>
-        <card-title label-name="入库单发货">
+        <card-title :label-name="`创建物流信息(${staticResource.type.name})`">
             <div v-if="routeName==='detail'" class="ml-3 w-full flex items-center">
                 <div class="flex w-full justify-end items-center"></div>
                 <div class="ml-3"><!----> <!----></div>
@@ -19,26 +19,45 @@
         <div class="form-list mb-6 p-0" v-loading="loading">
             <div class="p-6">
                 <form-item title="计划说明" :value="staticResource.description"></form-item>
-                <form-item title="当前状态" :value="staticResource.current_state"></form-item>
                 <form-item title="运输方式" :value="hasShip"></form-item>
                 <form-item title="最后更新时间" :value="staticResource.updated_at"></form-item>
-                <form-item title="接收仓库" :value="staticOrder.warehouse.name"></form-item>
-                <form-item title="仓库地址" :value="staticOrder.warehouse.simple_address"></form-item>
+                <form-item title="客户地址" :value="staticResource.simple_address"></form-item>
                 <form-item title="物流状态" :value="trackStatus"></form-item>
                 <form-item title="产品明细">
-                    <product-variant-list slot="value" :items="staticOrder.items"></product-variant-list>
+                    <product-variant-list slot="value" :items="staticResource.items"></product-variant-list>
                 </form-item>
+            </div>
+        </div>
+
+        <card-title label-name="物流信息">
+            <div v-if="routeName==='create'" class="ml-3 w-full flex items-center">
+                <div class="flex w-full justify-end items-center"></div>
+                <div class="ml-3"><!----> <!----></div>
+                <button title="Update" type="button"
+                        @click="addAttachment"
+                        class="btn btn-default btn-icon btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                         aria-labelledby="edit" role="presentation" class="fill-current text-white"
+                         style="margin-top: -2px; margin-left: 3px;">
+                        <path d="M4.3 10.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM6 14h2.59l9-9L15 2.41l-9 9V14zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6a1 1 0 1 1 0 2H2v14h14v-6z"></path>
+                    </svg>
+                </button>
+
+            </div>
+        </card-title>
+        <div class="form-list  p-0" v-loading="loading">
+            <div class="p-6">
                 <template v-if="routeName === 'detail'">
-                    <template v-for="track in staticOrder.tracks">
+                    <template v-for="track in staticResource.tracks">
                         <form-item title="物流公司" :value="getLogistic(track.id).name"></form-item>
                         <form-item title="物流单号" :value="track.tracking_number"></form-item>
-
                     </template>
                 </template>
-                <template v-else>
-                    <form-item title="物流公司">
-                        <el-select slot="value" v-model="logistic_id" name="logistic_id" value="id" filterable
-                                   placeholder="请选择">
+                <el-form v-else v-loading="loading" ref="form" :rules="rules" :model="form" label-position="left"
+                         label-width="180px">
+                    <el-form-item label="费用调整类型名称" prop="logistic_id">
+                        <el-select v-model="form.logistic_id" name="logistic_id" value="id" filterable
+                                   placeholder="请选择物流公司">
                             <el-option
                                     v-for="item in logistic"
                                     :key="item.id"
@@ -46,12 +65,16 @@
                                     :value="item.id">
                             </el-option>
                         </el-select>
-                    </form-item>
-                    <form-item title="物流单号">
-                        <el-input slot="value" v-model="tracking_number" name="tracking_number"
+                    </el-form-item>
+                    <el-form-item label="费用调整比率" prop="tracking_number">
+                        <el-input v-model="form.tracking_number" name="tracking_number"
                                   placeholder="请输入快递单号"></el-input>
-                    </form-item>
-                </template>
+                    </el-form-item>
+                    <el-form-item v-for="(type,index) in form.attachments" :key="type.id" :label="type.name" :prop="`attachments.${index}.price`">
+                        <el-input v-model="type.price"
+                                  placeholder="请输入调整金额"></el-input>
+                    </el-form-item>
+                </el-form>
             </div>
             <div v-if="routeName === 'create'" class="bg-30 flex px-8 py-4">
                 <button :disable="loading" @click="shipment" type="button"
@@ -61,18 +84,22 @@
                 </span>
                 </button>
             </div>
-            <div v-if="routeName === 'update'" class="bg-30 flex px-8 py-4">
-                <button class="ml-auto btn text-80 font-normal h-9 px-3 mr-3 btn-link"
-                        @click="routeName = 'detail'">取消
-                </button>
-                <button :disable="loading" @click="shipment" type="button"
-                        class="btn btn-default btn-primary inline-flex items-center relative">
-                <span class="">
-                    更新
-                </span>
-                </button>
-            </div>
         </div>
+        <el-dialog
+                title="添加附加费用"
+                :visible.sync="dialogVisible"
+                width="40%"
+                >
+            <div>
+                <el-checkbox-group v-model="form.attachments">
+                    <el-checkbox v-for="type in attachmentTypes" :label="type" :key="type.id"  border>{{type.name}}</el-checkbox>
+                </el-checkbox-group>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+              </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -81,10 +108,6 @@
     name: 'pre-inventory-action-order-shipment',
     props: {
       resource: {
-        type: Object,
-        default: () => {}
-      },
-      order: {
         type: Object,
         default: () => {}
       },
@@ -105,10 +128,39 @@
         update: false,
         routeName: '',
         staticResource: {},
-        staticOrder: {}
+        form: {
+          logistic_id: null,
+          tracking_number: null,
+          attachments: []
+        },
+        rules: {
+          logistic_id: [
+            {required: true, message: '请选择物流公司', trigger: 'change'},
+          ],
+          tracking_number: [
+            {required: true, message: '请输入物流单号', trigger: 'blur'},
+          ]
+        },
+        attachmentTypes: [],
+        isOk: false,
+        dialogVisible:false
       }
     },
     methods: {
+      // 添加附加费用
+      async addAttachment () {
+        if (!this.isOk) {
+          await this.fetchAttachmentTypes()
+          this.isOk = true
+        }
+        this.dialogVisible =true
+
+      },
+      fetchAttachmentTypes () {
+        axios.get('/attachment-types?all=1').then(({data}) => {
+          this.attachmentTypes = data
+        })
+      },
       shipment () {
         this.loading = true
         axios.post(this.postApi, {
@@ -116,8 +168,7 @@
           tracking_number: this.tracking_number
         }).then(({data}) => {
           this.notify(data)
-          this.staticOrder = data.data.order
-          this.staticResource = data.data.resource
+          this.staticResource = data.data
           this.routeName = 'detail'
         })
         this.loading = false
@@ -137,15 +188,13 @@
           '待发货'
       },
       shipped () {
-        return (_.get(this, 'staticOrder.tracks', [])).length > 0
+        return (_.get(this, 'staticResource.tracks', [])).length > 0
       }
     },
     created () {
       this.staticResource = this.resource
-      this.staticOrder = this.order
     },
     mounted () {
-
       this.routeName = this.shipped ? 'detail' : 'create'
     }
   }

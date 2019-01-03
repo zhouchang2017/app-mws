@@ -37,6 +37,19 @@ class Controller extends BaseController
         return response()->json($json, 200);
     }
 
+    public function deleted($data = null, $title = null, $message = null)
+    {
+        $json = [
+            'title' => $title ?? '删除成功',
+            'data'  => $data,
+            'type'  => 'success',
+        ];
+        if ($message) {
+            $json = array_merge($json, [ 'message' => $message ]);
+        }
+        return response()->json($json, 204);
+    }
+
     public function findRelationship($model)
     {
         return request()->findRelationship($model);

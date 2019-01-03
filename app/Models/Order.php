@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Services\OrderService;
 use App\Traits\HasStatuses;
 use App\Traits\MoneyFormatableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\ModelStatus\Exceptions\InvalidStatus;
 
 /**
  * @property mixed origin
  * @property mixed description
+ * @property mixed status
+ * @property mixed preInventoryAction
  */
 class Order extends Model
 {
@@ -26,6 +30,7 @@ class Order extends Model
     protected $fillable = [
         'origin_id',
         'origin_type',
+        'market_id',
         'price',
         'created_at',
         'updated_at',
@@ -39,9 +44,35 @@ class Order extends Model
     protected static function boot()
     {
         parent::boot();
-        static::created(function($model){
-
+        static::created(function ($model) {
+            $service = new OrderService($model);
+            $service->createOrderItems();
+            $service->createPreInventoryAction();
         });
+    }
+
+    // 预出\入库(入库单\出货单)
+    public function preInventoryAction()
+    {
+        return $this->morphOne(PreInventoryAction::class, 'origin');
+    }
+
+    /**
+     * @param string $name
+     * @param null|string $reason
+     * @return Order
+     * @throws InvalidStatus
+     */
+    public function setStatus(string $name, ?string $reason = null): self
+    {
+        if ($name === $this->status) {
+            return $this;
+        }
+        if ( !$this->isValidStatus($name, $reason)) {
+            throw InvalidStatus::create($name);
+        }
+
+        return $this->forceSetStatus($name, $reason);
     }
 
 
@@ -66,14 +97,20 @@ class Order extends Model
     }
 
     // ====================================================================================== //
-    public function getItemsAttribute()
-    {
-        return $this->origin->getExpendItems();
-    }
 
     public function getDescriptionAttribute()
     {
         return $this->origin->description;
+    }
+
+    public function getExpendItems()
+    {
+        return $this->origin->getExpendItems();
+    }
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 
 }

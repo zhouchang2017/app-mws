@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Contracts\Orderable;
 use App\Models\InventoryActionType;
 use App\Models\Order;
+use App\Models\PreInventoryActionOrder;
 use Illuminate\Http\Request;
 
 class OrderService
@@ -55,7 +56,7 @@ class OrderService
      */
     public function createPreInventoryAction()
     {
-        InventoryService::createPreAction([
+        return InventoryService::createPreAction([
             'description' => $this->getPreInventoryActionDescription(),
             'type_id' => $this->getActionType()->id,
         ], $this->order);
@@ -69,6 +70,7 @@ class OrderService
     {
         $this->order->setStatus($this->order::PENDING, $reason);
     }
+
 
     /**
      * @param string $reason
@@ -115,9 +117,14 @@ class OrderService
         $this->order->setStatus($this->order::UNFULFILLABLE, $reason);
     }
 
+    /**
+     * 同步订单
+     * @param Orderable $orderable
+     * @return mixed
+     */
     public static function syncOrder(Orderable $orderable)
     {
-        return Order::updateOrCreate([
+        return tap(Order::updateOrCreate([
             'origin_id' => $orderable->id,
             'origin_type' => get_class($orderable),
         ], [
@@ -127,7 +134,54 @@ class OrderService
             'market_id' => $orderable->market_id,
             'created_at' => $orderable->created_at,
             'updated_at' => $orderable->updated_at,
-        ]);
+        ]), function ($order) use ($orderable) {
+
+            (new static($order))->setStatusByOrder($orderable);
+        });
     }
 
+    public function createOrderItems()
+    {
+        return $this->order->getExpendItems()->map(function($item){
+            return $this->order->items()->create($item);
+        });
+    }
+
+    public function setStatusByOrder(Orderable $orderable)
+    {
+        switch ($orderable->getStatusAttribute()) {
+            case Order::UN_SHIP:
+                $this->statusToUnShip();
+                break;
+            case Order::PENDING:
+                $this->statusToPending();
+                break;
+            case Order::SHIPPED:
+                $this->statusToShipped();
+                break;
+            case Order::CANCEL:
+                $this->statusToCancel();
+                break;
+            case Order::UNFULFILLABLE:
+                $this->statusToUnfulfillable();
+                break;
+            default:
+                $this->order->setStatus('N/A', '未知状态');
+        }
+    }
+
+    public function shipment(PreInventoryActionOrder $preInventoryActionOrder,Request $request)
+    {
+        InventoryService::preActionOrderShipment($preInventoryActionOrder,$request,true);
+        if($this->isShipped()){
+            $this->statusToShipped();
+        }else{
+            $this->statusToPartShipped();
+        }
+    }
+
+    private function isShipped()
+    {
+        return $this->order->preInventoryAction->orders->every->hasTracks();
+    }
 }

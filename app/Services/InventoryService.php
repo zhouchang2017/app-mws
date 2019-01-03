@@ -9,9 +9,11 @@
 namespace App\Services;
 
 
+use App\Models\Inventory;
 use App\Models\PreInventoryAction;
 use App\Models\PreInventoryActionOrder;
 use App\Models\PreInventoryActionOrderItem;
+use App\Models\PreInventoryActionOrderItemState;
 use Illuminate\Http\Request;
 
 class InventoryService
@@ -39,8 +41,8 @@ class InventoryService
             /** @var PreInventoryActionOrder $order */
             $order = $action->orders()->create([
                 'warehouse_id' => $items['warehouse_id'],
-                'description'  => $items['description'],
-                'type_id'      => $action->type->id,
+                'description' => $items['description'],
+                'type_id' => $action->type->id,
             ]);
             collect($items['items'])->each(function ($item) use ($order) {
                 (new static)->createPreActionOrderItem($order, $item);

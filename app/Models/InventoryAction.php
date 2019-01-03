@@ -37,4 +37,9 @@ class InventoryAction extends Model
     {
         return $this->belongsTo(InventoryActionType::class);
     }
+
+    public function origin()
+    {
+        return $this->morphTo();
+    }
 }

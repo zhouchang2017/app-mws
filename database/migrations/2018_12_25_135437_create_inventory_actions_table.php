@@ -18,7 +18,7 @@ class CreateInventoryActionsTable extends Migration
             $table->unsignedInteger(config('inventory.product_key'))->nullable();
             $table->unsignedInteger(config('inventory.variant_key'));
             $table->integer('quantity')->comment('数量');
-            $table->nullableMorphs('inventoriable'); // 来源
+            $table->nullableMorphs('origin'); // 来源
             $table->unsignedInteger('warehouse_id')->comment('仓库');
             $table->string('warehouse_area')->default('good')->comment('仓库区域 good = 良品 bad = 次品'); // 仓库区域 good = 良品 bad = 次品
             $table->unsignedInteger('type_id')->comment('操作类型 put/take'); // 操作类型

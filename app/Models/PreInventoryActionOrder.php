@@ -63,6 +63,12 @@ class PreInventoryActionOrder extends Model
         return $this;
     }
 
+    public function loadType()
+    {
+        $this->loadMissing(['type']);
+        return $this;
+    }
+
     public function loadItemState()
     {
         $this->loadMissing(['items.state.type']);
@@ -73,6 +79,13 @@ class PreInventoryActionOrder extends Model
     {
         $this->warehouse->append('simple_address');
         return $this;
+    }
+
+    public function getSimpleAddressAttribute()
+    {
+        return $this->type->isTake() ?
+            $this->preInventoryAction->origin->simple_address :
+            $this->warehouse->simple_address;
     }
 
 

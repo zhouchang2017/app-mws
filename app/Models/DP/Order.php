@@ -15,12 +15,14 @@ use App\Traits\MoneyFormatableTrait;
  * @property mixed shipping_state
  * @property mixed payment_state
  * @property mixed total
+ * @property mixed items
+ * @property mixed id
  */
 class Order extends Model implements Orderable
 {
     use MoneyFormatableTrait;
 
-    public $priceFields = ['items_total', 'adjustments_total', 'total'];
+    protected $priceFields = ['items_total', 'adjustments_total', 'total'];
 
     protected $casts = [
         'rest' => 'array',
@@ -30,6 +32,23 @@ class Order extends Model implements Orderable
         'fulfilled_at' => 'datetime',
     ];
 
+    // ==============money format====================
+    public function getItemsTotalAttribute($value)
+    {
+        return $this->displayCurrencyUsing($value);
+    }
+
+    public function getAdjustmentsTotalAttribute($value)
+    {
+        return $this->displayCurrencyUsing($value);
+    }
+
+    public function getTotalAttribute($value)
+    {
+        return $this->displayCurrencyUsing($value);
+    }
+
+    // ==================scope =======================
     public function scopeCheckout($query)
     {
         return $query->where('state', OrderState::CHECKOUT);
@@ -40,6 +59,7 @@ class Order extends Model implements Orderable
         return $query->where('number', $number);
     }
 
+    // ====================relationship======================
     public function items()
     {
         return $this->hasMany(OrderItem::class);
@@ -103,18 +123,18 @@ class Order extends Model implements Orderable
     // 订单明细
     public function getExpendItems()
     {
-        $data = $this
-            ->items()
-            ->get(['product_id', 'variant_id', 'quantity', 'units_total'])
-            ->map(function ($order) {
+        $this->loadMissing(['items.units']);
+
+        return $this->items->reduce(function ($list, $item) {
+            return $list->concat($item->units->map(function ($unit) use ($item) {
                 return [
-                    'product_id' => $order->product_id,
-                    'product_variant_id' => $order->variant_id,
-                    'pcs' => $order->quantity,
-                    'price' => $order->units_total,
+                    'product_id' => $item->product_id,
+                    'variant_id' => $item->variant_id,
+                    'quantity' => 1,
+                    'price' => $unit->price,
                 ];
-            });
-        return new ExpendItems($data);
+            }));
+        }, collect([]));
     }
 
     // 订单描述

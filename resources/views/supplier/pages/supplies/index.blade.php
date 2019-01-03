@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="mb-3 text-90 font-normal text-2xl">供应商入库计划</h1>
-    <resources-table label-name="创建入库计划" resource-name="supplies">
+    <index resource-name="supplies" label-name="入库计划" can-create >
         <el-table-column
                 prop="description"
                 label="计划描述"
@@ -18,5 +17,5 @@
                 label="最后更新时间"
         >
         </el-table-column>
-    </resources-table>
+    </index>
 @endsection

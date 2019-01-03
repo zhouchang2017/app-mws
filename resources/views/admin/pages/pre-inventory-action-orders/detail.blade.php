@@ -12,12 +12,14 @@
         <form-item title="描述信息" value="{{$resource->description}}"></form-item>
         <form-item title="仓库" value="{{$resource->warehouse->name}}"></form-item>
         <form-item title="仓库负责人" value="{{$resource->warehouse->admin->name}}"></form-item>
+        @if($resource->type->isTake())
+            <form-item title="客户地址" value="{{$resource->preInventoryAction->origin->simple_address}}"></form-item>
+        @endif
         <form-item title="是否发货" value="{{$resource->hasTracks() ? '已发货' : '待发货'}}"></form-item>
         <form-item title="最后更新时间" value="{{$resource->updated_at}}"></form-item>
     </div>
 
-
-    <card-title label-name="入库商品列表"></card-title>
+    <card-title label-name="{{$resource->type->name.'列表'}}"></card-title>
     <div class="card w-full mb-6">
         <div class="p-6">
             <product-variant-list :items='@json($resource->items)' ></product-variant-list>
@@ -34,7 +36,21 @@
         @endif
     </div>
 
-    <card-title label-name="物流信息"></card-title>
+    <div class="flex">
+        <div class="flex items-center h-9 mb-3 flex-no-shrink">
+            <div>
+                <h4 class="text-90 font-normal text-2xl flex-no-shrink">
+                    物流信息
+                </h4>
+            </div>
+        </div>
+        <div class="w-full flex items-center mb-3">
+            <div class="flex-no-shrink ml-auto">
+                <a href="{{route($domain.'.pre-inventory-action-orders.shipment.create',['pre-inventory-action-order'=>$resource->id])}}"
+                   class="btn btn-default btn-primary">创建物流信息</a>
+            </div>
+        </div>
+    </div>
     <div class="form-list">
         @if($resource->tracks()->count() > 0)
             <el-table

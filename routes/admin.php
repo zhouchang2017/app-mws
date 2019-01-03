@@ -31,6 +31,16 @@ Route::resource('/pre-inventory-action-orders', 'PreInventoryActionOrderControll
 Route::get('/pre-inventory-action-orders/{pre_inventory_action_order}/check', 'PreInventoryActionOrderController@check')
     ->name('pre-inventory-action-orders.check');
 
+// 操作单发货页面
+Route::get('/pre-inventory-action-orders/{pre_inventory_action_order}/shipment',
+    'PreInventoryActionOrderController@shipment')
+    ->name('pre-inventory-action-orders.shipment.create');
+
+// 操作单发货提交
+Route::post('/pre-inventory-action-orders/{pre_inventory_action_order}/shipment',
+    'PreInventoryActionOrderController@shipped')
+    ->name('pre-inventory-action-orders.shipment.store');
+
 Route::post('/pre-inventory-action-order-items/{pre_inventory_action_order_item}/check',
     'PreInventoryActionOrderItemController@addCheck')
     ->name('pre-inventory-action-order-items.check.create');
@@ -49,3 +59,10 @@ Route::resource('/product-attributes', 'ProductAttributeController');
 
 // 产品销售属性
 Route::resource('/product-options', 'ProductOptionController');
+
+// 库存
+Route::get('/inventories/search', 'InventoryController@search')->name('inventories.search');
+Route::resource('/inventories', 'InventoryController');
+
+
+Route::resource('/attachment-types', 'AttachmentTypeController');

@@ -52,7 +52,7 @@ class PreInventoryActionController extends Controller
      */
     public function show(PreInventoryAction $preInventoryAction)
     {
-        $resource = $preInventoryAction->loadOrders()->loadStatuses()->loadOriginItems();
+        $resource = $preInventoryAction->loadOrders()->loadStatuses()->loadOriginItems()->loadType();
         if (request()->ajax()) {
             return response()->json($resource);
         }

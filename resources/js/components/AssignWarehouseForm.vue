@@ -24,7 +24,8 @@
                         label="仓库"
                 >
                     <template slot-scope="{row}">
-                        <el-select v-model="row.warehouse_id" placeholder="请选择">
+                        <remote-inventory :item="row" v-if="isTake"></remote-inventory>
+                        <el-select v-else v-model="row.warehouse_id" placeholder="请选择">
                             <el-option
                                     v-for="item in warehouses"
                                     :key="item.id"
@@ -115,10 +116,13 @@
         warehouses: [],
         dialogVisible: false,
         form: [],
-        loading:false
+        loading: false,
       }
     },
     methods: {
+      remoteMethod(query){
+        console.log(query)
+      },
       fetchWarehouses () {
         return axios.get('/warehouses').then(({data}) => {
           this.warehouses = data
@@ -128,7 +132,7 @@
         return _.map(_.groupBy(this.resources, 'warehouse_id'), (items, key) => {
           return {
             warehouse_id: key,
-            description: '',
+            description: this.isTake ? this.response.description : '',
             items: items.map(item => {
               const {product_id, variant_id, quantity, variant} = item
               return {product_id, variant_id, quantity, variant}
@@ -164,6 +168,9 @@
           })
           return clone
         })
+      },
+      isTake () {
+        return _.get(this, 'response.type.action') === 'take'
       }
     },
     async mounted () {

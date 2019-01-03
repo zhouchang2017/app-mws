@@ -17,9 +17,10 @@ class SupplyController extends Controller
      */
     public function index()
     {
-        $resources = Supply::latest('updated_at')->paginate(15);
         if (request()->ajax()) {
-            return $resources;
+            return response()->json(
+                Supply::with('origin')->latest('updated_at')->paginate(15)
+            );
         }
         return view('admin.pages.supplies.index');
     }

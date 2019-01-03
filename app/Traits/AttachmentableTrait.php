@@ -6,10 +6,10 @@
  * Time: 2:51 PM
  */
 
-namespace Chang\Erp\Traits;
+namespace App\Traits;
 
 
-use Chang\Erp\Models\Attachment;
+use App\Models\Attachment;
 
 trait AttachmentableTrait
 {

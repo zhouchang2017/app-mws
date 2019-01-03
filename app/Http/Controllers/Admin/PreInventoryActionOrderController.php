@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Logistic;
+use App\Models\Order;
 use App\Models\PreInventoryActionOrder;
+use App\Models\Supply;
+use App\Services\OrderService;
+use App\Services\SupplyService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +20,7 @@ class PreInventoryActionOrderController extends Controller
      */
     public function index()
     {
-        $resources = PreInventoryActionOrder::with([ 'warehouse', 'type' ])
+        $resources = PreInventoryActionOrder::with(['warehouse', 'type'])
             ->latest('updated_at')
             ->paginate(15);
         if (request()->ajax()) {
@@ -101,5 +106,35 @@ class PreInventoryActionOrderController extends Controller
             return response()->json($resource);
         }
         return view('admin.pages.pre-inventory-action-orders.check', compact('resource'));
+    }
+
+    public function shipment(PreInventoryActionOrder $preInventoryActionOrder)
+    {
+        $preInventoryActionOrder->loadDetailAttribute()->loadType()->append('simple_address');
+        $logistic = Logistic::all();
+        return view('admin.pages.pre-inventory-action-orders.shipment',
+            ['resource' => $preInventoryActionOrder, 'logistic' => $logistic]
+        );
+    }
+
+    public function shipped(PreInventoryActionOrder $preInventoryActionOrder, Request $request)
+    {
+        $origin = $preInventoryActionOrder->preInventoryAction->origin;
+        if ($origin instanceof Order) {
+            // 订单出库
+            (new OrderService($origin))->shipment($preInventoryActionOrder, $request);
+        }
+
+        if ($origin instanceof Supply) {
+            // 供应商入库
+            (new SupplyService($origin))->shipment($preInventoryActionOrder, $request);
+        }
+
+        $preInventoryActionOrder->loadDetailAttribute()->loadType()->append('simple_address');
+
+        return $this->updated(
+            ['resource' => $preInventoryActionOrder],
+            '发货成功'
+        );
     }
 }

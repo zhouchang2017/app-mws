@@ -11,13 +11,16 @@
     <div class="form-list mb-6">
         <form-item title="计划说明" value="{{$resource->description}}"></form-item>
         <form-item title="当前状态" value="{{$resource->current_state}}"></form-item>
+        @if($resource->origin instanceof \App\Models\Order)
+            <form-item title="客户地址" value="{{$resource->origin->simple_address}}"></form-item>
+        @endif
     </div>
 
     <card-title label-name="状态记录"></card-title>
     @component('components.statuses',['statuses'=>$resource->statuses])
     @endcomponent
 
-    <card-title label-name="入库商品列表"></card-title>
+    <card-title label-name="{{$resource->type->name.'列表'}}"></card-title>
     <div class="card w-full mb-6">
         <div class="p-6">
             <product-variant-list :items='@json($resource->origin->items)'></product-variant-list>
@@ -62,7 +65,7 @@
                 resource-id="{{$order->id}}"
         ></resource-detail-header>
         <div class="form-list mb-6">
-            <form-item title="接收仓库" value="{{$order->warehouse->name}}"></form-item>
+            <form-item title="{{$resource->type->isTake() ? '出货仓库':'接收仓库'}}" value="{{$order->warehouse->name}}"></form-item>
             <form-item title="物流状态" value="{{$order->hasTracks() ? '已发货' : '待发货'}}"></form-item>
             <form-item title="操作单">
                 <product-variant-list slot="value" :items='@json($order->items)'></product-variant-list>

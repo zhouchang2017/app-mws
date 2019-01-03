@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\DP\Product;
 use App\Models\DP\ProductVariant;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Inventory extends Model
@@ -43,6 +44,15 @@ class Inventory extends Model
             ['variant_id', $variantId],
         ])->when($productId, function ($query, $productId) {
             return $query->where('product_id', $productId);
+        });
+    }
+
+    public function scopeSearch(Builder $query)
+    {
+        return $query->when(request()->variant_id,function($query,$variantId){
+            return $query->where('variant_id',$variantId);
+        })->when(request()->warehouse_id,function($query,$warehouseId){
+           return $query->where('warehouse_id',$warehouseId);
         });
     }
 

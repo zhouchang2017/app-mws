@@ -7,60 +7,21 @@
             resource-name="supplies"
             resource-id="{{$resource->id}}"
     ></resource-detail-header>
-    <div class="card p-6 w-full mb-6">
-        <div class="flex border-b border-40 text-80">
-            <div class="w-1/5 py-6 px-8">
-                计划说明
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->description}}
-            </div>
-        </div>
-        <div class="flex border-b border-40 text-80">
-            <div class="w-1/5 py-6 px-8">
-                当前状态
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->current_state}}
-            </div>
-        </div>
-        <div class="flex border-b border-40 text-80">
-            <div class="w-1/5 py-6 px-8">
-                运输方式
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->has_ship ? '物流/快递' : '无需物流' }}
-            </div>
-        </div>
-        <div class="flex  text-80">
-            <div class="w-1/5 py-6 px-8">
-                更新时间
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->updated_at}}
-            </div>
-        </div>
+    <div class="form-list mb-6">
+        <form-item title="计划说明" value="{{$resource->description}}"></form-item>
+        <form-item title="当前状态" value="{{$resource->current_state}}"></form-item>
+        <form-item title="运输方式" value="{{$resource->has_ship ? '物流/快递' : '无需物流' }}"></form-item>
+        <form-item title="更新时间" value="{{$resource->updated_at }}"></form-item>
     </div>
-    <card-title label-name="计划来源供应商"></card-title>
 
-    <div class="card p-6 w-full mb-6">
-        <div class="flex border-b border-40 text-80">
-            <div class="w-1/5 py-6 px-8">
-                名称
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->origin->name}}
-            </div>
-        </div>
-        <div class="flex  text-80">
-            <div class="w-1/5 py-6 px-8">
-                编码
-            </div>
-            <div class="py-6 px-8">
-                {{$resource->origin->code}}
-            </div>
-        </div>
+    <card-title label-name="计划来源供应商"></card-title>
+    <div class="form-list mb-6">
+        <form-item title="名称" value="{{$resource->origin->name}}"></form-item>
+        <form-item title="编码" value="{{$resource->origin->code}}"></form-item>
+        <form-item title="运输方式" value="{{$resource->has_ship ? '物流/快递' : '无需物流' }}"></form-item>
+        <form-item title="更新时间" value="{{$resource->updated_at }}"></form-item>
     </div>
+
 
     <card-title label-name="状态记录"></card-title>
     @component('components.statuses',['statuses'=>$resource->statuses])
@@ -70,22 +31,7 @@
 
     <div class="card w-full">
         <div class="p-6">
-            <el-table
-                    :data='@json($resource->items)'
-            >
-                <el-table-column
-                        prop="variant.variantName"
-                        label="商品名称"
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="quantity"
-                        label="数量"
-                >
-                </el-table-column>
-
-            </el-table>
-
+            <product-variant-list :items='@json($resource->items)'></product-variant-list>
         </div>
         {{--已提交，显示审核按钮--}}
         @if ($resource->state->name === \App\Models\Supply::PENDING)
