@@ -1,103 +1,113 @@
 <template>
-    <el-form ref="form" :model="form" label-position="left" label-width="180px">
+    <div>
+        <div class="p-6">
+            <el-form ref="form" :model="form" label-position="left" label-width="180px">
 
-        <el-form-item label="入库计划描述">
-            <el-input type="textarea" v-model="form.description"></el-input>
-        </el-form-item>
+                <el-form-item label="入库计划描述">
+                    <el-input type="textarea" v-model="form.description"></el-input>
+                </el-form-item>
 
-        <el-form-item label="选择即将入库产品(变体)">
-            <el-table
-                    v-loading="loading"
-                    :data="variants"
+                <el-form-item label="选择即将入库产品(变体)">
+                    <el-table
+                            v-loading="loading"
+                            :data="variants"
+                    >
+                        <el-table-column
+                                prop="code"
+                                label="变体编码"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="variantName"
+                                label="变体名称"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="stock"
+                                label="当前库存数量">
+                        </el-table-column>
+                        <el-table-column
+                                label="操作">
+                            <template slot-scope="{row}">
+                                <el-button type="primary" @click="handleSelectionChange(row)" size="mini">添加</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div class="flex my-3">
+                        <el-pagination
+                                background
+                                :current-page.sync="currentPage"
+                                :page-size="perPage"
+                                layout="prev, pager, next"
+                                :total="total">
+                        </el-pagination>
+                    </div>
+
+                </el-form-item>
+
+
+                <el-form-item label="以选中入库产品(变体)">
+                    <el-table
+                            :data="form.items"
+                    >
+                        <el-table-column
+                                prop="variant.code"
+                                label="变体编码"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="variant.variantName"
+                                label="变体名称"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="variant.stock"
+                                label="当前库存数量">
+                        </el-table-column>
+                        <el-table-column
+                                label="供货数量">
+                            <template slot-scope="{row}">
+                                <el-input v-model="row.quantity" placeholder="请输入数量"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="操作">
+                            <template slot-scope="{row}">
+                                <el-popover
+                                        placement="top"
+                                        width="160"
+                                        v-model="visible">
+                                    <p>确定删除吗？</p>
+                                    <div style="text-align: right; margin: 0">
+                                        <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                                        <el-button type="primary" size="mini" @click="removeSelection(row)">确定</el-button>
+                                    </div>
+                                    <el-button size="small" slot="reference" type="danger">移 除</el-button>
+                                </el-popover>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-form-item>
+
+                <el-form-item label="运输方式">
+                    <el-radio-group v-model="form.has_ship">
+                        <el-radio :label="true">物流运输</el-radio>
+                        <el-radio disabled :label="false">无需物流</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="bg-30 flex px-8 py-4">
+            <div class="ml-auto"
             >
-                <el-table-column
-                        prop="code"
-                        label="变体编码"
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="variantName"
-                        label="变体名称"
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="stock"
-                        label="当前库存数量">
-                </el-table-column>
-                <el-table-column
-                        label="操作">
-                    <template slot-scope="{row}">
-                        <el-button type="primary" @click="handleSelectionChange(row)" size="mini">添加</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <div class="flex my-3">
-                <el-pagination
-                        background
-                        :current-page.sync="currentPage"
-                        :page-size="perPage"
-                        layout="prev, pager, next"
-                        :total="total">
-                </el-pagination>
+                <button @click="onSubmit" type="button"
+                        class="btn btn-default btn-primary inline-flex items-center relative">
+                    <span class="">
+                        {{btnTitle}}
+                    </span>
+                </button>
             </div>
-
-        </el-form-item>
-
-
-        <el-form-item label="以选中入库产品(变体)">
-            <el-table
-                    :data="form.items"
-            >
-                <el-table-column
-                        prop="variant.code"
-                        label="变体编码"
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="variant.variantName"
-                        label="变体名称"
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="variant.stock"
-                        label="当前库存数量">
-                </el-table-column>
-                <el-table-column
-                        label="供货数量">
-                    <template slot-scope="{row}">
-                        <el-input v-model="row.quantity" placeholder="请输入数量"></el-input>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        label="操作">
-                    <template slot-scope="{row}">
-                        <el-popover
-                                placement="top"
-                                width="160"
-                                v-model="visible">
-                            <p>确定删除吗？</p>
-                            <div style="text-align: right; margin: 0">
-                                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-                                <el-button type="primary" size="mini" @click="removeSelection(row)">确定</el-button>
-                            </div>
-                            <el-button size="small" slot="reference" type="danger">移 除</el-button>
-                        </el-popover>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-form-item>
-
-        <el-form-item label="运输方式">
-            <el-radio-group v-model="form.has_ship">
-                <el-radio :label="true">物流运输</el-radio>
-                <el-radio :label="false">无需物流</el-radio>
-            </el-radio-group>
-        </el-form-item>
-
-        <el-form-item>
-            <el-button type="primary" @click="onSubmit">{{btnTitle}}</el-button>
-            <el-button>返回</el-button>
-        </el-form-item>
+        </div>
 
         <el-dialog
                 title="填写供货数量"
@@ -139,12 +149,13 @@
                 </div>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="centerDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="pushToSelections">确 定</el-button>
-            </span>
+                        <el-button @click="centerDialogVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="pushToSelections">确 定</el-button>
+                    </span>
         </el-dialog>
 
-    </el-form>
+    </div>
+
 </template>
 
 <script>

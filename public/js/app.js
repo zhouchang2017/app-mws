@@ -80814,7 +80814,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -80849,6 +80849,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'index',
   props: {
+    uriKey: {
+      type: String
+    },
+    label: {
+      type: String
+    },
+    singularLabel: {
+      type: String
+    },
     resourceName: {
       type: String,
       required: true
@@ -85439,7 +85448,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -85459,6 +85468,17 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -85805,243 +85825,297 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "el-form",
-    {
-      ref: "form",
-      attrs: {
-        model: _vm.form,
-        "label-position": "left",
-        "label-width": "180px"
-      }
-    },
+    "div",
     [
       _c(
-        "el-form-item",
-        { attrs: { label: "入库计划描述" } },
-        [
-          _c("el-input", {
-            attrs: { type: "textarea" },
-            model: {
-              value: _vm.form.description,
-              callback: function($$v) {
-                _vm.$set(_vm.form, "description", $$v)
-              },
-              expression: "form.description"
-            }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-form-item",
-        { attrs: { label: "选择即将入库产品(变体)" } },
+        "div",
+        { staticClass: "p-6" },
         [
           _c(
-            "el-table",
+            "el-form",
             {
-              directives: [
-                {
-                  name: "loading",
-                  rawName: "v-loading",
-                  value: _vm.loading,
-                  expression: "loading"
-                }
-              ],
-              attrs: { data: _vm.variants }
+              ref: "form",
+              attrs: {
+                model: _vm.form,
+                "label-position": "left",
+                "label-width": "180px"
+              }
             },
             [
-              _c("el-table-column", {
-                attrs: { prop: "code", label: "变体编码" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "variantName", label: "变体名称" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "stock", label: "当前库存数量" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { label: "操作" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(ref) {
-                      var row = ref.row
-                      return [
-                        _c(
-                          "el-button",
-                          {
-                            attrs: { type: "primary", size: "mini" },
-                            on: {
-                              click: function($event) {
-                                _vm.handleSelectionChange(row)
-                              }
-                            }
-                          },
-                          [_vm._v("添加")]
-                        )
-                      ]
+              _c(
+                "el-form-item",
+                { attrs: { label: "入库计划描述" } },
+                [
+                  _c("el-input", {
+                    attrs: { type: "textarea" },
+                    model: {
+                      value: _vm.form.description,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "description", $$v)
+                      },
+                      expression: "form.description"
                     }
-                  }
-                ])
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "flex my-3" },
-            [
-              _c("el-pagination", {
-                attrs: {
-                  background: "",
-                  "current-page": _vm.currentPage,
-                  "page-size": _vm.perPage,
-                  layout: "prev, pager, next",
-                  total: _vm.total
-                },
-                on: {
-                  "update:currentPage": function($event) {
-                    _vm.currentPage = $event
-                  }
-                }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-form-item",
-        { attrs: { label: "以选中入库产品(变体)" } },
-        [
-          _c(
-            "el-table",
-            { attrs: { data: _vm.form.items } },
-            [
-              _c("el-table-column", {
-                attrs: { prop: "variant.code", label: "变体编码" }
-              }),
+                  })
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "variant.variantName", label: "变体名称" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "variant.stock", label: "当前库存数量" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { label: "供货数量" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(ref) {
-                      var row = ref.row
-                      return [
-                        _c("el-input", {
-                          attrs: { placeholder: "请输入数量" },
-                          model: {
-                            value: row.quantity,
-                            callback: function($$v) {
-                              _vm.$set(row, "quantity", $$v)
-                            },
-                            expression: "row.quantity"
-                          }
-                        })
-                      ]
-                    }
-                  }
-                ])
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { label: "操作" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(ref) {
-                      var row = ref.row
-                      return [
-                        _c(
-                          "el-popover",
+              _c(
+                "el-form-item",
+                { attrs: { label: "选择即将入库产品(变体)" } },
+                [
+                  _c(
+                    "el-table",
+                    {
+                      directives: [
+                        {
+                          name: "loading",
+                          rawName: "v-loading",
+                          value: _vm.loading,
+                          expression: "loading"
+                        }
+                      ],
+                      attrs: { data: _vm.variants }
+                    },
+                    [
+                      _c("el-table-column", {
+                        attrs: { prop: "code", label: "变体编码" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { prop: "variantName", label: "变体名称" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { prop: "stock", label: "当前库存数量" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { label: "操作" },
+                        scopedSlots: _vm._u([
                           {
-                            attrs: { placement: "top", width: "160" },
-                            model: {
-                              value: _vm.visible,
-                              callback: function($$v) {
-                                _vm.visible = $$v
-                              },
-                              expression: "visible"
-                            }
-                          },
-                          [
-                            _c("p", [_vm._v("确定删除吗？")]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticStyle: {
-                                  "text-align": "right",
-                                  margin: "0"
-                                }
-                              },
-                              [
-                                _c(
-                                  "el-button",
-                                  {
-                                    attrs: { size: "mini", type: "text" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.visible = false
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("取消")]
-                                ),
-                                _vm._v(" "),
+                            key: "default",
+                            fn: function(ref) {
+                              var row = ref.row
+                              return [
                                 _c(
                                   "el-button",
                                   {
                                     attrs: { type: "primary", size: "mini" },
                                     on: {
                                       click: function($event) {
-                                        _vm.removeSelection(row)
+                                        _vm.handleSelectionChange(row)
                                       }
                                     }
                                   },
-                                  [_vm._v("确定")]
+                                  [_vm._v("添加")]
                                 )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "el-button",
-                              {
-                                attrs: {
-                                  slot: "reference",
-                                  size: "small",
-                                  type: "danger"
-                                },
-                                slot: "reference"
-                              },
-                              [_vm._v("移 除")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    }
-                  }
-                ])
-              })
+                              ]
+                            }
+                          }
+                        ])
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "flex my-3" },
+                    [
+                      _c("el-pagination", {
+                        attrs: {
+                          background: "",
+                          "current-page": _vm.currentPage,
+                          "page-size": _vm.perPage,
+                          layout: "prev, pager, next",
+                          total: _vm.total
+                        },
+                        on: {
+                          "update:currentPage": function($event) {
+                            _vm.currentPage = $event
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "以选中入库产品(变体)" } },
+                [
+                  _c(
+                    "el-table",
+                    { attrs: { data: _vm.form.items } },
+                    [
+                      _c("el-table-column", {
+                        attrs: { prop: "variant.code", label: "变体编码" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: {
+                          prop: "variant.variantName",
+                          label: "变体名称"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { prop: "variant.stock", label: "当前库存数量" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { label: "供货数量" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var row = ref.row
+                              return [
+                                _c("el-input", {
+                                  attrs: { placeholder: "请输入数量" },
+                                  model: {
+                                    value: row.quantity,
+                                    callback: function($$v) {
+                                      _vm.$set(row, "quantity", $$v)
+                                    },
+                                    expression: "row.quantity"
+                                  }
+                                })
+                              ]
+                            }
+                          }
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { label: "操作" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var row = ref.row
+                              return [
+                                _c(
+                                  "el-popover",
+                                  {
+                                    attrs: { placement: "top", width: "160" },
+                                    model: {
+                                      value: _vm.visible,
+                                      callback: function($$v) {
+                                        _vm.visible = $$v
+                                      },
+                                      expression: "visible"
+                                    }
+                                  },
+                                  [
+                                    _c("p", [_vm._v("确定删除吗？")]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticStyle: {
+                                          "text-align": "right",
+                                          margin: "0"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "el-button",
+                                          {
+                                            attrs: {
+                                              size: "mini",
+                                              type: "text"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                _vm.visible = false
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("取消")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "el-button",
+                                          {
+                                            attrs: {
+                                              type: "primary",
+                                              size: "mini"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                _vm.removeSelection(row)
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("确定")]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "el-button",
+                                      {
+                                        attrs: {
+                                          slot: "reference",
+                                          size: "small",
+                                          type: "danger"
+                                        },
+                                        slot: "reference"
+                                      },
+                                      [_vm._v("移 除")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "运输方式" } },
+                [
+                  _c(
+                    "el-radio-group",
+                    {
+                      model: {
+                        value: _vm.form.has_ship,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "has_ship", $$v)
+                        },
+                        expression: "form.has_ship"
+                      }
+                    },
+                    [
+                      _c("el-radio", { attrs: { label: true } }, [
+                        _vm._v("物流运输")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "el-radio",
+                        { attrs: { disabled: "", label: false } },
+                        [_vm._v("无需物流")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           )
@@ -86049,45 +86123,28 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "el-form-item",
-        { attrs: { label: "运输方式" } },
-        [
+      _c("div", { staticClass: "bg-30 flex px-8 py-4" }, [
+        _c("div", { staticClass: "ml-auto" }, [
           _c(
-            "el-radio-group",
+            "button",
             {
-              model: {
-                value: _vm.form.has_ship,
-                callback: function($$v) {
-                  _vm.$set(_vm.form, "has_ship", $$v)
-                },
-                expression: "form.has_ship"
-              }
+              staticClass:
+                "btn btn-default btn-primary inline-flex items-center relative",
+              attrs: { type: "button" },
+              on: { click: _vm.onSubmit }
             },
             [
-              _c("el-radio", { attrs: { label: true } }, [_vm._v("物流运输")]),
-              _vm._v(" "),
-              _c("el-radio", { attrs: { label: false } }, [_vm._v("无需物流")])
-            ],
-            1
+              _c("span", {}, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.btnTitle) +
+                    "\n                "
+                )
+              ])
+            ]
           )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-form-item",
-        [
-          _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
-            [_vm._v(_vm._s(_vm.btnTitle))]
-          ),
-          _vm._v(" "),
-          _c("el-button", [_vm._v("返回")])
-        ],
-        1
-      ),
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "el-dialog",

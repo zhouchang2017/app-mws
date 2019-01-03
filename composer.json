@@ -16,6 +16,7 @@
         "laravel-frontend-presets/tailwindcss": "^0.7.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
+        "lavary/laravel-menu": "^1.7",
         "moneyphp/money": "^3.2",
         "spatie/laravel-model-status": "^1.6"
     },

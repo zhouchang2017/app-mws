@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 class WarehouseController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +16,10 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        return response()->json(Warehouse::all());
+        if (request()->ajax()) {
+            return response()->json(Warehouse::all());
+        }
+        return view('index');
     }
 
     /**

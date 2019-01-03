@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\HttpResource;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\View;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, HttpResource;
+
+
+    public function __construct()
+    {
+        View::share('uriKey', $this->getUriKey());
+        View::share('label', $this->getLabel());
+        View::share('singularLabel', $this->getSingularLabel());
+    }
 
     public function created($data, $message = null)
     {

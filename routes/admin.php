@@ -64,5 +64,5 @@ Route::resource('/product-options', 'ProductOptionController');
 Route::get('/inventories/search', 'InventoryController@search')->name('inventories.search');
 Route::resource('/inventories', 'InventoryController');
 
-
+// 价格调整类型
 Route::resource('/attachment-types', 'AttachmentTypeController');

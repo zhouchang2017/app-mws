@@ -64,7 +64,7 @@
         </el-header>
 
         <el-container>
-            @component('components.nav2')
+            @component('components.nav-menu')
             @endcomponent
             <el-main>
                 @yield('content')

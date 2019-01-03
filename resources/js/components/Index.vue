@@ -22,6 +22,15 @@
   export default {
     name: 'index',
     props: {
+      uriKey:{
+        type: String
+      },
+      label:{
+        type: String
+      },
+      singularLabel:{
+        type: String
+      },
       resourceName: {
         type: String,
         required: true
