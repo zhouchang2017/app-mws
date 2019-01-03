@@ -70,9 +70,17 @@
                         <el-input v-model="form.tracking_number" name="tracking_number"
                                   placeholder="请输入快递单号"></el-input>
                     </el-form-item>
-                    <el-form-item v-for="(type,index) in form.attachments" :key="type.id" :label="type.name" :prop="`attachments.${index}.price`">
+                    <el-form-item
+                            v-for="(type,index) in form.attachments"
+                            :key="type.id"
+                            :label="type.name"
+                            :rules="{
+                                      required: true, message: '调整金额不能为空', trigger: 'blur'
+                                    }"
+                            :prop="`attachments.${index}.price`">
                         <el-input v-model="type.price"
-                                  placeholder="请输入调整金额"></el-input>
+                                  placeholder="请输入调整金额"
+                        ></el-input>
                     </el-form-item>
                 </el-form>
             </div>
