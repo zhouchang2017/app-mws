@@ -66,9 +66,13 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="费用调整比率" prop="tracking_number">
+                    <el-form-item label="快递单号" prop="tracking_number">
                         <el-input v-model="form.tracking_number" name="tracking_number"
                                   placeholder="请输入快递单号"></el-input>
+                    </el-form-item>
+                    <el-form-item label="快递费" prop="price">
+                        <el-input v-model="form.price" name="price"
+                                  placeholder="请输入快递费"></el-input>
                     </el-form-item>
                     <el-form-item
                             v-for="(type,index) in form.attachments"
@@ -139,6 +143,7 @@
         form: {
           logistic_id: null,
           tracking_number: null,
+          price:null,
           attachments: []
         },
         rules: {

@@ -81926,7 +81926,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -81943,6 +81943,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -82086,6 +82090,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       form: {
         logistic_id: null,
         tracking_number: null,
+        price: null,
         attachments: []
       },
       rules: {
@@ -82471,10 +82476,7 @@ var render = function() {
                       _c(
                         "el-form-item",
                         {
-                          attrs: {
-                            label: "费用调整比率",
-                            prop: "tracking_number"
-                          }
+                          attrs: { label: "快递单号", prop: "tracking_number" }
                         },
                         [
                           _c("el-input", {
@@ -82488,6 +82490,27 @@ var render = function() {
                                 _vm.$set(_vm.form, "tracking_number", $$v)
                               },
                               expression: "form.tracking_number"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "快递费", prop: "price" } },
+                        [
+                          _c("el-input", {
+                            attrs: {
+                              name: "price",
+                              placeholder: "请输入快递费"
+                            },
+                            model: {
+                              value: _vm.form.price,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "price", $$v)
+                              },
+                              expression: "form.price"
                             }
                           })
                         ],
