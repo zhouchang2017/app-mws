@@ -2,7 +2,7 @@
     <div class="flex items-center mb-3">
         <h4 class="text-90 font-normal text-2xl flex-no-shrink">
             <slot name="title">
-                {{ labelName }}
+                {{ label }}
             </slot>
         </h4>
         <slot/>
@@ -12,7 +12,7 @@
 <script>
   export default {
     name: 'card-title',
-    props: ['labelName']
+    props: ['label']
   }
 </script>
 

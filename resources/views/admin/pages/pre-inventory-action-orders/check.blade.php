@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
     <resource-detail-header
-            label-name="{{$resource->type->name}}(检测入库)"
+            uri-key="{{$uriKey}}"
+            label-name="{{$resource->type->name}}"
             resource-name="pre-inventory-action-orders"
             resource-id="{{$resource->id}}"
             :can-destroy="false"
@@ -17,5 +17,7 @@
         <form-item title="最后更新时间" value="{{$resource->updated_at}}"></form-item>
     </div>
 
-    <pre-inventory-action-order-check :resource='@json($resource)'></pre-inventory-action-order-check>
+    <pre-inventory-action-order-check
+            resource-id="{{$resource->id}}"
+            :resource='@json($resource)'></pre-inventory-action-order-check>
 @endsection

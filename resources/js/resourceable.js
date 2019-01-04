@@ -1,5 +1,5 @@
 export default {
-  props: ['resourceName', 'resourceId', 'dataPath'],
+  props: ['uriKey', 'resourceId', 'dataPath'],
   data () {
     return {
       response: {},
@@ -9,7 +9,7 @@ export default {
   methods: {
     fetchResources () {
       this.loading = true
-      return axios.get(`/${this.resourceName}/${this.resourceId}`).then(({data}) => {
+      return axios.get(`/${this.uriKey}/${this.resourceId}`).then(({data}) => {
         this.response = data
         this.loading = false
       })

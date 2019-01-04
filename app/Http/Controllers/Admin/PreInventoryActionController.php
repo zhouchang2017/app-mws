@@ -9,19 +9,11 @@ use App\Http\Controllers\Controller;
 
 class PreInventoryActionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $resources = PreInventoryAction::withType()->latest('updated_at')->paginate(15);
-        if (request()->ajax()) {
-            return $resources;
-        }
-        return view('admin.pages.pre-inventory-actions.index');
-    }
+
+    public static $resource = \App\Resources\PreInventoryAction::class;
+
+    public static $indexViewName = 'admin.pages.pre-inventory-actions.index';
+
 
     /**
      * Show the form for creating a new resource.
@@ -56,6 +48,7 @@ class PreInventoryActionController extends Controller
         if (request()->ajax()) {
             return response()->json($resource);
         }
+        $this->viewShare();
         return view('admin.pages.pre-inventory-actions.detail', compact('resource'));
     }
 
@@ -104,6 +97,7 @@ class PreInventoryActionController extends Controller
         if (request()->ajax()) {
             return $this->updated([], '审核完成');
         } else {
+            $this->viewShare();
             return redirect()->route('admin.pre-inventory-actions.show',
                 [ 'pre-inventory-action' => $preInventoryAction->id ]);
         }
@@ -112,6 +106,7 @@ class PreInventoryActionController extends Controller
     public function assign(PreInventoryAction $preInventoryAction)
     {
         $resource = $preInventoryAction->loadOrders()->loadStatuses()->loadOriginItems();
+        $this->viewShare();
         return view('admin.pages.pre-inventory-actions.assign', compact('resource'));
     }
 

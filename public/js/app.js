@@ -12331,6 +12331,13 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(193);
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -12472,20 +12479,13 @@ var isEdge = exports.isEdge = function isEdge() {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
 module.exports = function (it, key) {
   return hasOwnProperty.call(it, key);
 };
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(193);
 
 
 /***/ }),
@@ -14084,7 +14084,7 @@ var global = __webpack_require__(8);
 var core = __webpack_require__(19);
 var ctx = __webpack_require__(136);
 var hide = __webpack_require__(13);
-var has = __webpack_require__(10);
+var has = __webpack_require__(11);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -14243,7 +14243,7 @@ module.exports = {};
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(14).f;
-var has = __webpack_require__(10);
+var has = __webpack_require__(11);
 var TAG = __webpack_require__(17)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -14920,7 +14920,7 @@ module.exports = __webpack_require__(12);
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 /* 3 */
@@ -47732,7 +47732,7 @@ module.exports = __webpack_require__(37);
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -48110,7 +48110,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 exports.isVNode = isVNode;
 exports.getFirstComponentChild = getFirstComponentChild;
 
-var _util = __webpack_require__(9);
+var _util = __webpack_require__(10);
 
 function isVNode(node) {
   return node !== null && (typeof node === 'undefined' ? 'undefined' : _typeof(node)) === 'object' && (0, _util.hasOwn)(node, 'componentOptions');
@@ -48518,7 +48518,7 @@ module.exports = function (it) {
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(10);
+var has = __webpack_require__(11);
 var toIObject = __webpack_require__(16);
 var arrayIndexOf = __webpack_require__(139)(false);
 var IE_PROTO = __webpack_require__(43)('IE_PROTO');
@@ -48793,7 +48793,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
     },
     perTotal: function perTotal() {
-      return _.get(this, 'pageOption.to');
+      return _.get(this, 'pageOption.to', 0);
     },
     perPage: function perPage() {
       return _.get(this, 'pageOption.per_page');
@@ -67558,7 +67558,7 @@ exports.default = function (Vue) {
   return template;
 };
 
-var _util = __webpack_require__(9);
+var _util = __webpack_require__(10);
 
 var RE_NARGS = /(%|)\{([0-9a-zA-Z_]+)\}/g;
 /**
@@ -70997,7 +70997,7 @@ module.exports = __webpack_require__(36);
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -73561,7 +73561,7 @@ module.exports = __webpack_require__(38);
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -74051,7 +74051,7 @@ exports.default = _option2.default;
 /***/ 2:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(10);
 
 /***/ }),
 
@@ -76297,7 +76297,7 @@ module.exports = document && document.documentElement;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(10);
+var has = __webpack_require__(11);
 var toObject = __webpack_require__(73);
 var IE_PROTO = __webpack_require__(43)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -76418,7 +76418,7 @@ module.exports = __webpack_require__(19).Symbol;
 
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(8);
-var has = __webpack_require__(10);
+var has = __webpack_require__(11);
 var DESCRIPTORS = __webpack_require__(15);
 var $export = __webpack_require__(39);
 var redefine = __webpack_require__(75);
@@ -76657,7 +76657,7 @@ setToStringTag(global.JSON, 'JSON', true);
 
 var META = __webpack_require__(26)('meta');
 var isObject = __webpack_require__(20);
-var has = __webpack_require__(10);
+var has = __webpack_require__(11);
 var setDesc = __webpack_require__(14).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
@@ -76775,7 +76775,7 @@ var pIE = __webpack_require__(27);
 var createDesc = __webpack_require__(23);
 var toIObject = __webpack_require__(16);
 var toPrimitive = __webpack_require__(40);
-var has = __webpack_require__(10);
+var has = __webpack_require__(11);
 var IE8_DOM_DEFINE = __webpack_require__(68);
 var gOPD = Object.getOwnPropertyDescriptor;
 
@@ -78460,7 +78460,7 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__resourceable__ = __webpack_require__(195);
 
@@ -78598,7 +78598,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
     fetchWarehouses: function fetchWarehouses() {
       var _this = this;
 
-      return axios.get('/warehouses').then(function (_ref) {
+      return axios.get('/warehouses?withoutPage').then(function (_ref) {
         var data = _ref.data;
 
         _this.warehouses = data;
@@ -78632,12 +78632,12 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
       var _this3 = this;
 
       this.loading = true;
-      axios.post('/' + this.resourceName + '/' + this.resourceId + '/assigned', this.requestFormFormat).then(function (_ref2) {
+      axios.post('/' + this.uriKey + '/' + this.resourceId + '/assigned', this.requestFormFormat).then(function (_ref2) {
         var data = _ref2.data;
 
         _this3.notify(data);
         _this3.loading = false;
-        _this3.go('/' + _this3.resourceName + '/' + _this3.resourceId);
+        _this3.go('/' + _this3.uriKey + '/' + _this3.resourceId);
       });
     }
   },
@@ -79467,14 +79467,14 @@ if (hadRuntime) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  props: ['resourceName', 'resourceId', 'dataPath'],
+  props: ['uriKey', 'resourceId', 'dataPath'],
   data: function data() {
     return {
       response: {},
@@ -79487,7 +79487,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       var _this = this;
 
       this.loading = true;
-      return axios.get('/' + this.resourceName + '/' + this.resourceId).then(function (_ref) {
+      return axios.get('/' + this.uriKey + '/' + this.resourceId).then(function (_ref) {
         var data = _ref.data;
 
         _this.response = data;
@@ -79877,7 +79877,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
 
@@ -79917,7 +79917,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     resourceId: {
       type: [String, Number]
     },
-    resourceName: {
+    uriKey: {
       type: String,
       default: 'products'
     },
@@ -79979,7 +79979,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             data = _ref3.data;
 
                             _this.notify(data);
-                            _this.go('/' + _this.resourceName + '/' + data.data.id);
+                            _this.go('/' + _this.uriKey + '/' + data.data.id);
                             _context.next = 18;
                             break;
 
@@ -79992,7 +79992,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             _data = _ref4.data;
 
                             _this.notify(_data);
-                            _this.go('/' + _this.resourceName + '/' + _this.resourceId);
+                            _this.go('/' + _this.uriKey + '/' + _this.resourceId);
 
                           case 18:
                             _context.next = 23;
@@ -80045,14 +80045,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
      * Send a create request for this resource
      */
     createRequest: function createRequest() {
-      return axios.post('/' + this.resourceName, this.createResourceFormData());
+      return axios.post('/' + this.uriKey, this.createResourceFormData());
     },
 
     /**
      * Send a update request for this resource
      */
     updateRequest: function updateRequest() {
-      return axios.patch('/' + this.resourceName + '/' + this.resourceId, this.createResourceFormData());
+      return axios.patch('/' + this.uriKey + '/' + this.resourceId, this.createResourceFormData());
     },
     createResourceFormData: function createResourceFormData() {
       return _.tap(_.cloneDeep(this.form), function (formData) {});
@@ -80303,7 +80303,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'card-title',
-  props: ['labelName']
+  props: ['label']
 });
 
 /***/ }),
@@ -80323,7 +80323,7 @@ var render = function() {
         { staticClass: "text-90 font-normal text-2xl flex-no-shrink" },
         [
           _vm._t("title", [
-            _vm._v("\n            " + _vm._s(_vm.labelName) + "\n        ")
+            _vm._v("\n            " + _vm._s(_vm.label) + "\n        ")
           ])
         ],
         2
@@ -80814,7 +80814,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -80845,52 +80845,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'index',
   props: {
+    // api资源地址
     uriKey: {
       type: String
     },
+    // 复数名称
     label: {
       type: String
     },
+    // 单数名称
     singularLabel: {
       type: String
     },
-    resourceName: {
-      type: String,
-      required: true
-    },
-    labelName: {
-      type: String,
-      default: '创建'
-    },
+    // 是否可搜索
     canSearch: {
       type: [Number, Boolean],
       default: false
     },
+    // 是否可创建
     canCreate: {
       type: [Boolean, Number],
       default: false
     },
+    // 是否可更新
     canUpdate: {
       type: [Boolean, Number],
       default: false
     },
+    // 是否可删除
     canDestroy: {
       type: [Boolean, Number],
       default: false
     },
+    // 是否可看详情
     canView: {
       type: [Boolean, Number],
       default: false
-    },
-    viaRelationName: {
-      type: String
-    },
-    viaRelationId: {
-      type: [Number, String]
     }
   }
 });
@@ -80910,19 +80907,24 @@ var render = function() {
         attrs: {
           "can-create": _vm.canCreate,
           "can-search": _vm.canSearch,
-          "can-view": _vm.canView,
-          "can-update": _vm.canUpdate,
-          "can-destroy": _vm.canDestroy,
-          "resource-name": _vm.resourceName,
-          "label-name": _vm.labelName,
-          "via-relation-name": _vm.viaRelationName,
-          "via-relation-id": _vm.viaRelationId
+          "uri-key": _vm.uriKey,
+          label: _vm.label,
+          "singular-label": _vm.singularLabel
         }
       }),
       _vm._v(" "),
       _c(
         "resources-table",
-        { attrs: { "resource-name": _vm.resourceName } },
+        {
+          attrs: {
+            "can-view": _vm.canView,
+            "can-update": _vm.canUpdate,
+            "can-destroy": _vm.canDestroy,
+            "uri-key": _vm.uriKey,
+            label: _vm.label,
+            "singular-label": _vm.singularLabel
+          }
+        },
         [_vm._t("default")],
         2
       )
@@ -81206,7 +81208,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -81217,6 +81219,12 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -81236,7 +81244,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       type: Object,
       default: function _default() {}
     },
-    resourceName: {
+    uriKey: {
       type: String,
       default: 'pre-inventory-action-orders'
     },
@@ -81247,13 +81255,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   provide: function provide() {
     return {
       type: this.resource.type,
-      resourceName: this.resourceName,
+      uriKey: this.uriKey,
       resourceId: this.resourceId
     };
   },
   data: function data() {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      attachmentTypes: []
     };
   },
 
@@ -81261,13 +81270,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     check: function check(item) {
       console.log(item);
       this.dialogVisible = true;
+    },
+    fetchAttachmentTypes: function fetchAttachmentTypes() {
+      var _this = this;
+
+      axios.get('/attachment-types?withoutPage').then(function (_ref) {
+        var data = _ref.data;
+
+        _this.attachmentTypes = data;
+      });
     }
   },
   computed: {
     items: function items() {
       return _.get(this, 'resource.items', []);
     }
-  }
+  },
+  mounted: function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return this.fetchAttachmentTypes();
+
+            case 2:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function mounted() {
+      return _ref2.apply(this, arguments);
+    }
+
+    return mounted;
+  }()
 });
 
 /***/ }),
@@ -81283,7 +81324,7 @@ var render = function() {
     _vm._l(_vm.items, function(item) {
       return _c("pre-inventory-action-order-check-item", {
         key: item.id,
-        attrs: { item: item }
+        attrs: { item: item, attachmentTypes: _vm.attachmentTypes }
       })
     }),
     1
@@ -81385,7 +81426,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -81396,6 +81437,117 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -81484,6 +81636,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     item: {
       type: Object,
       default: function _default() {}
+    },
+    attachmentTypes: {
+      type: Array,
+      default: []
     }
   },
   inject: ['type'],
@@ -81509,41 +81665,91 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
     return {
       dialogVisible: false,
+      attacheDialogVisible: false,
       form: {
         quantity: 0,
-        warehouse_area: 'good'
+        warehouse_area: 'good',
+        attachments: []
       },
       rules: {
         quantity: [{ validator: checkQuantity, trigger: 'blur' }]
       },
-      state: []
+      state: [],
+      attacheForm: {
+        attaches: []
+      },
+      currentEditState: null
     };
   },
 
   methods: {
-    addCheck: function addCheck() {
+    showAttacheDialog: function showAttacheDialog(state) {
+      this.attacheForm.attaches = [];
+      this.attacheDialogVisible = true;
+      this.currentEditState = state;
+    },
+    addAttache: function addAttache() {
       var _this2 = this;
+
+      this.$refs['attacheForm'].validate(function (valid) {
+        if (valid) {
+          var from = _this2.attacheForm.attaches.map(function (attach) {
+            return {
+              attachment_type_id: attach.id,
+              price: attach.price
+            };
+          });
+          axios.post(_this2.createAttachApi, from).then(function (_ref) {
+            var data = _ref.data;
+
+            _this2.currentEditState.attachments = [].concat(_toConsumableArray(data.data), _toConsumableArray(_this2.currentEditState.attachments));
+            _this2.notify(data);
+            _this2.attacheDialogVisible = false;
+          }).cache(function (err) {
+            _this2.notify({ type: 'error', title: 'error', message: err.response });
+          });
+        }
+      });
+    },
+    addCheck: function addCheck() {
+      var _this3 = this;
 
       this.$refs['form'].validate(function (valid) {
         if (valid) {
-          axios.post(_this2.api, _this2.form).then(function (_ref) {
-            var data = _ref.data;
+          axios.post(_this3.api, _this3.createResourceFormData()).then(function (_ref2) {
+            var data = _ref2.data;
 
-            _this2.notify(data);
-            _this2.state.push(data.data);
-            _this2.resetForm();
-            _this2.dialogVisible = false;
+            _this3.notify(data);
+            _this3.state.push(data.data);
+            if (!_.has(_this3.state, 'attachments')) {
+              _this3.state.attachments = [];
+            }
+            _this3.resetForm();
+            _this3.dialogVisible = false;
           }).catch(function (err) {
-            _this2.notify({ type: 'error', title: 'error', message: err.response });
+            _this3.notify({ type: 'error', title: 'error', message: err.response });
           });
         } else {
-          _this2.notify({ type: 'error', title: '表单数据不合法' });
+          _this3.notify({ type: 'error', title: '表单数据不合法' });
           return false;
         }
       });
     },
+    createResourceFormData: function createResourceFormData() {
+      return _.tap(_.cloneDeep(this.form), function (formData) {
+        formData.attachments = formData.attachments.map(function (attach) {
+          return {
+            attachment_type_id: attach.id,
+            price: attach.price
+          };
+        });
+      });
+    },
     resetForm: function resetForm() {
       this.$refs['form'].resetFields();
+    },
+    findAttachmentType: function findAttachmentType(id) {
+      return _.get(_.find(this.attachmentTypes, ['id', id]), 'name', 'N/A');
     }
   },
   computed: {
@@ -81556,11 +81762,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     api: function api() {
       return '/pre-inventory-action-order-items/' + this.item.id + '/check';
     },
+    createAttachApi: function createAttachApi() {
+      return '/pre-item-states/' + this.currentEditState.id;
+    },
     canAddMax: function canAddMax() {
       return this.max - this.checkCount - this.form.quantity;
     },
     checked: function checked() {
       return this.checkCount === this.max;
+    },
+    isTake: function isTake() {
+      return this.type.action === 'take';
     }
   },
   created: function created() {
@@ -81579,7 +81791,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("card-title", { attrs: { "label-name": _vm.item.variant.code } }, [
+      _c("card-title", { attrs: { label: _vm.item.variant.code } }, [
         _c("div", { staticClass: "ml-3 w-full flex items-center" }, [
           _c("div", { staticClass: "flex w-full justify-end items-center" }),
           _vm._v(" "),
@@ -81650,12 +81862,15 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("form-item", {
-                attrs: { title: "应到货数量", value: _vm.item.quantity }
+                attrs: {
+                  title: _vm.isTake ? "出库数量" : "应到货数量",
+                  value: _vm.item.quantity
+                }
               }),
               _vm._v(" "),
               _c(
                 "form-item",
-                { attrs: { title: "入仓记录" } },
+                { attrs: { title: _vm.isTake ? "出库记录" : "入库记录" } },
                 [
                   _c(
                     "el-table",
@@ -81665,7 +81880,78 @@ var render = function() {
                     },
                     [
                       _c("el-table-column", {
-                        attrs: { prop: "quantity", label: "批次到货数量" }
+                        attrs: { type: "expand" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var row = ref.row
+                              return [
+                                row.attachments.length > 0
+                                  ? _c(
+                                      "div",
+                                      _vm._l(row.attachments, function(attach) {
+                                        return _c(
+                                          "div",
+                                          {
+                                            key: attach.id,
+                                            staticClass: "flex items-center m-1"
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "w-2/5 font-semibold text-grey-darker"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                        " +
+                                                    _vm._s(
+                                                      _vm.findAttachmentType(
+                                                        attach.attachment_type_id
+                                                      )
+                                                    ) +
+                                                    "\n                                    "
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "w-3/5 font-semibold text-primary"
+                                              },
+                                              [_vm._v(_vm._s(attach.price))]
+                                            )
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    )
+                                  : _c(
+                                      "div",
+                                      { staticClass: "flex items-center" },
+                                      [
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass:
+                                              "font-semibold text-center text-grey-darker"
+                                          },
+                                          [_vm._v("暂无任何附加费用")]
+                                        )
+                                      ]
+                                    )
+                              ]
+                            }
+                          }
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { prop: "quantity", label: "数量" }
                       }),
                       _vm._v(" "),
                       _c("el-table-column", {
@@ -81693,6 +81979,32 @@ var render = function() {
                       _vm._v(" "),
                       _c("el-table-column", {
                         attrs: { prop: "updated_at", label: "更新时间" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { align: "right", label: "操作" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var row = ref.row
+                              return [
+                                _c(
+                                  "el-button",
+                                  {
+                                    attrs: { size: "mini" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.showAttacheDialog(row)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("添加附加费用")]
+                                )
+                              ]
+                            }
+                          }
+                        ])
                       })
                     ],
                     1
@@ -81728,10 +82040,16 @@ var render = function() {
                     rules: _vm.rules,
                     "status-icon": "",
                     "label-position": "left",
-                    "label-width": "80px"
+                    "label-width": "120px"
                   }
                 },
                 [
+                  _c("p", { staticClass: "text-xs font-semibold text-50" }, [
+                    _vm._v("基本信息")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "border-30 border-b mb-3" }),
+                  _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "mb-3" },
@@ -81796,9 +82114,88 @@ var render = function() {
                       )
                     ],
                     1
-                  )
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-xs font-semibold text-50" }, [
+                    _vm._v("附加费用")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "border-30 border-b mb-3" }),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "附加费用类型" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          staticClass: "w-full",
+                          attrs: {
+                            multiple: "",
+                            "value-key": "id",
+                            placeholder: "请选择附加费用类型"
+                          },
+                          model: {
+                            value: _vm.form.attachments,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "attachments", $$v)
+                            },
+                            expression: "form.attachments"
+                          }
+                        },
+                        _vm._l(_vm.attachmentTypes, function(item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            attrs: { label: item.name, value: item }
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.form.attachments, function(attach, index) {
+                    return _c(
+                      "el-form-item",
+                      {
+                        key: attach.id,
+                        attrs: {
+                          label: attach.name,
+                          prop: "attachments." + index + ".price",
+                          rules: [
+                            {
+                              required: true,
+                              message: attach.name + "金额不能为空",
+                              trigger: "blur"
+                            },
+                            {
+                              type: "number",
+                              message: "请输入正确金额",
+                              trigger: "blur"
+                            }
+                          ]
+                        }
+                      },
+                      [
+                        _c("el-input", {
+                          attrs: {
+                            placeholder: "请输入" + attach.name + "金额"
+                          },
+                          model: {
+                            value: attach.price,
+                            callback: function($$v) {
+                              _vm.$set(attach, "price", _vm._n($$v))
+                            },
+                            expression: "attach.price"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  })
                 ],
-                1
+                2
               ),
               _vm._v(" "),
               _c(
@@ -81818,13 +82215,157 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("取 消")]
+                    [_vm._v("取消")]
                   ),
                   _vm._v(" "),
                   _c(
                     "el-button",
                     { attrs: { type: "primary" }, on: { click: _vm.addCheck } },
-                    [_vm._v("确 定")]
+                    [_vm._v("确定")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-dialog",
+            {
+              attrs: {
+                title: "添加附加费用",
+                visible: _vm.attacheDialogVisible,
+                width: "50%"
+              },
+              on: {
+                "update:visible": function($event) {
+                  _vm.attacheDialogVisible = $event
+                }
+              }
+            },
+            [
+              _c(
+                "el-form",
+                {
+                  ref: "attacheForm",
+                  attrs: {
+                    model: _vm.attacheForm,
+                    "status-icon": "",
+                    "label-position": "left",
+                    "label-width": "120px"
+                  }
+                },
+                [
+                  _c("p", { staticClass: "text-xs font-semibold text-50" }, [
+                    _vm._v("附加费用")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "border-30 border-b mb-3" }),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "附加费用类型" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          staticClass: "w-full",
+                          attrs: {
+                            multiple: "",
+                            "value-key": "id",
+                            placeholder: "请选择附加费用类型"
+                          },
+                          model: {
+                            value: _vm.attacheForm.attaches,
+                            callback: function($$v) {
+                              _vm.$set(_vm.attacheForm, "attaches", $$v)
+                            },
+                            expression: "attacheForm.attaches"
+                          }
+                        },
+                        _vm._l(_vm.attachmentTypes, function(item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            attrs: { label: item.name, value: item }
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.attacheForm.attaches, function(attach, index) {
+                    return _c(
+                      "el-form-item",
+                      {
+                        key: attach.id,
+                        attrs: {
+                          label: attach.name,
+                          prop: "attaches." + index + ".price",
+                          rules: [
+                            {
+                              required: true,
+                              message: attach.name + "金额不能为空",
+                              trigger: "blur"
+                            },
+                            {
+                              type: "number",
+                              message: "请输入正确金额",
+                              trigger: "blur"
+                            }
+                          ]
+                        }
+                      },
+                      [
+                        _c("el-input", {
+                          attrs: {
+                            placeholder: "请输入" + attach.name + "金额"
+                          },
+                          model: {
+                            value: attach.price,
+                            callback: function($$v) {
+                              _vm.$set(attach, "price", _vm._n($$v))
+                            },
+                            expression: "attach.price"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "dialog-footer",
+                  attrs: { slot: "footer" },
+                  slot: "footer"
+                },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.attacheDialogVisible = false
+                        }
+                      }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.addAttache }
+                    },
+                    [_vm._v("确定")]
                   )
                 ],
                 1
@@ -81935,7 +82476,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -81946,45 +82487,12 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -82100,78 +82608,68 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         logistic_id: null,
         tracking_number: null,
         price: null,
-        attachments: []
+        description: null
       },
       rules: {
         logistic_id: [{ required: true, message: '请选择物流公司', trigger: 'change' }],
-        tracking_number: [{ required: true, message: '请输入物流单号', trigger: 'blur' }]
-      },
-      attachmentTypes: [],
-      isOk: false,
-      dialogVisible: false
+        tracking_number: [{ required: true, message: '请输入物流单号', trigger: 'blur' }],
+        price: [{ type: 'number', message: '请输入正确金额', trigger: 'blur' }],
+        description: [{ type: 'string', max: 255, message: '内容长度溢出', trigger: 'blur' }]
+      }
     };
   },
 
   methods: {
-    // 添加附加费用
-    addAttachment: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (this.isOk) {
-                  _context.next = 4;
-                  break;
-                }
-
-                _context.next = 3;
-                return this.fetchAttachmentTypes();
-
-              case 3:
-                this.isOk = true;
-
-              case 4:
-                this.dialogVisible = true;
-
-              case 5:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function addAttachment() {
-        return _ref.apply(this, arguments);
-      }
-
-      return addAttachment;
-    }(),
-    fetchAttachmentTypes: function fetchAttachmentTypes() {
+    shipment: function shipment() {
       var _this = this;
 
-      axios.get('/attachment-types?all=1').then(function (_ref2) {
-        var data = _ref2.data;
+      this.$refs['form'].validate(function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(valid) {
+          return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  if (!valid) {
+                    _context.next = 6;
+                    break;
+                  }
 
-        _this.attachmentTypes = data;
-      });
+                  _this.loading = true;
+
+                  axios.post(_this.postApi, _this.form).then(function (_ref2) {
+                    var data = _ref2.data;
+
+                    _this.notify(data);
+                    _this.staticResource = data.data;
+                    _this.routeName = 'detail';
+                  }).catch(function (e) {
+                    _this.notify({ type: 'error', title: 'ERROR', message: e.response });
+                  });
+                  _this.loading = false;
+                  // this.state.push(data.data)
+                  // this.resetForm()
+                  _context.next = 8;
+                  break;
+
+                case 6:
+                  _this.notify({ type: 'error', title: '表单数据不合法' });
+                  return _context.abrupt('return', false);
+
+                case 8:
+                case 'end':
+                  return _context.stop();
+              }
+            }
+          }, _callee, _this);
+        }));
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }());
     },
-    shipment: function shipment() {
-      var _this2 = this;
-
-      this.loading = true;
-      axios.post(this.postApi, {
-        logistic_id: this.logistic_id,
-        tracking_number: this.tracking_number
-      }).then(function (_ref3) {
-        var data = _ref3.data;
-
-        _this2.notify(data);
-        _this2.staticResource = data.data;
-        _this2.routeName = 'detail';
-      });
-      this.loading = false;
+    resetForm: function resetForm() {
+      this.$refs['form'].resetFields();
     },
     getLogistic: function getLogistic(id) {
       return _.find(this.logistic, ['id', +id]);
@@ -82337,54 +82835,7 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("card-title", { attrs: { "label-name": "物流信息" } }, [
-        _vm.routeName === "create"
-          ? _c("div", { staticClass: "ml-3 w-full flex items-center" }, [
-              _c("div", {
-                staticClass: "flex w-full justify-end items-center"
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "ml-3" }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default btn-icon btn-primary",
-                  attrs: { title: "Update", type: "button" },
-                  on: { click: _vm.addAttachment }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "fill-current text-white",
-                      staticStyle: {
-                        "margin-top": "-2px",
-                        "margin-left": "3px"
-                      },
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "20",
-                        height: "20",
-                        viewBox: "0 0 20 20",
-                        "aria-labelledby": "edit",
-                        role: "presentation"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M4.3 10.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM6 14h2.59l9-9L15 2.41l-9 9V14zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6a1 1 0 1 1 0 2H2v14h14v-6z"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              )
-            ])
-          : _vm._e()
-      ]),
+      _c("card-title", { attrs: { label: "物流信息" } }),
       _vm._v(" "),
       _c(
         "div",
@@ -82420,6 +82871,14 @@ var render = function() {
                             title: "物流单号",
                             value: track.tracking_number
                           }
+                        }),
+                        _vm._v(" "),
+                        _c("form-item", {
+                          attrs: { title: "快递费", value: track.price }
+                        }),
+                        _vm._v(" "),
+                        _c("form-item", {
+                          attrs: { title: "备注", value: track.description }
                         })
                       ]
                     })
@@ -82446,12 +82905,7 @@ var render = function() {
                     [
                       _c(
                         "el-form-item",
-                        {
-                          attrs: {
-                            label: "费用调整类型名称",
-                            prop: "logistic_id"
-                          }
-                        },
+                        { attrs: { label: "物流公司", prop: "logistic_id" } },
                         [
                           _c(
                             "el-select",
@@ -82517,7 +82971,7 @@ var render = function() {
                             model: {
                               value: _vm.form.price,
                               callback: function($$v) {
-                                _vm.$set(_vm.form, "price", $$v)
+                                _vm.$set(_vm.form, "price", _vm._n($$v))
                               },
                               expression: "form.price"
                             }
@@ -82526,38 +82980,29 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _vm._l(_vm.form.attachments, function(type, index) {
-                        return _c(
-                          "el-form-item",
-                          {
-                            key: type.id,
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "备注", prop: "description" } },
+                        [
+                          _c("el-input", {
                             attrs: {
-                              label: type.name,
-                              rules: {
-                                required: true,
-                                message: "调整金额不能为空",
-                                trigger: "blur"
+                              name: "description",
+                              type: "textarea",
+                              placeholder: "可输入物流备注"
+                            },
+                            model: {
+                              value: _vm.form.description,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "description", $$v)
                               },
-                              prop: "attachments." + index + ".price"
+                              expression: "form.description"
                             }
-                          },
-                          [
-                            _c("el-input", {
-                              attrs: { placeholder: "请输入调整金额" },
-                              model: {
-                                value: type.price,
-                                callback: function($$v) {
-                                  _vm.$set(type, "price", $$v)
-                                },
-                                expression: "type.price"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      })
+                          })
+                        ],
+                        1
+                      )
                     ],
-                    2
+                    1
                   )
             ],
             2
@@ -82581,86 +83026,6 @@ var render = function() {
                 )
               ])
             : _vm._e()
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: {
-            title: "添加附加费用",
-            visible: _vm.dialogVisible,
-            width: "40%"
-          },
-          on: {
-            "update:visible": function($event) {
-              _vm.dialogVisible = $event
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            [
-              _c(
-                "el-checkbox-group",
-                {
-                  model: {
-                    value: _vm.form.attachments,
-                    callback: function($$v) {
-                      _vm.$set(_vm.form, "attachments", $$v)
-                    },
-                    expression: "form.attachments"
-                  }
-                },
-                _vm._l(_vm.attachmentTypes, function(type) {
-                  return _c(
-                    "el-checkbox",
-                    { key: type.id, attrs: { label: type, border: "" } },
-                    [_vm._v(_vm._s(type.name))]
-                  )
-                }),
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.dialogVisible = false
-                    }
-                  }
-                },
-                [_vm._v("取 消")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary" },
-                  on: {
-                    click: function($event) {
-                      _vm.dialogVisible = false
-                    }
-                  }
-                },
-                [_vm._v("确 定")]
-              )
-            ],
-            1
-          )
         ]
       )
     ],
@@ -82774,7 +83139,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__translatable__ = __webpack_require__(246);
 
@@ -82877,7 +83242,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     resourceId: {
       type: [String, Number]
     },
-    resourceName: {
+    uriKey: {
       type: String,
       default: 'products'
     },
@@ -82988,7 +83353,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             data = _ref4.data;
 
                             _this.notify(data);
-                            _this.go(_this.resourceName + '/' + data.data.id);
+                            _this.go(_this.uriKey + '/' + data.data.id);
                             _context2.next = 18;
                             break;
 
@@ -83001,7 +83366,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             _data = _ref5.data;
 
                             _this.notify(_data);
-                            _this.go('/' + _this.resourceName + '/' + _data.data.id);
+                            _this.go('/' + _this.uriKey + '/' + _data.data.id);
 
                           case 18:
                             _context2.next = 23;
@@ -83057,14 +83422,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
      * Send a create request for this resource
      */
     createRequest: function createRequest() {
-      return axios.post('/' + this.resourceName, this.createResourceFormData());
+      return axios.post('/' + this.uriKey, this.createResourceFormData());
     },
 
     /**
      * Send a update request for this resource
      */
     updateRequest: function updateRequest() {
-      return axios.patch('/' + this.resourceName + '/' + this.resourceId, this.createResourceFormData());
+      return axios.patch('/' + this.uriKey + '/' + this.resourceId, this.createResourceFormData());
     },
     createResourceFormData: function createResourceFormData() {
       var _this2 = this;
@@ -83090,7 +83455,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       var _this4 = this;
 
       this.form.attributes = [];
-      return axios.get('/product-attributes?taxon=' + this.taxon).then(function (_ref7) {
+      return axios.get('/product-attributes?taxon_id=' + this.taxon + '&withoutPage=1').then(function (_ref7) {
         var data = _ref7.data;
 
         _this4.attributes = data;
@@ -83117,7 +83482,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     fetchOptions: function fetchOptions() {
       var _this5 = this;
 
-      return axios.get('/product-options?taxon=' + this.taxon).then(function (_ref8) {
+      return axios.get('/product-options?taxon_id=' + this.taxon + '&withoutPage=1').then(function (_ref8) {
         var data = _ref8.data;
 
         _this5.options = data;
@@ -84378,7 +84743,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -84439,11 +84804,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'resource-detail-header',
   props: {
-    labelName: {
+    singularLabel: {
       type: String,
       default: '详情页'
     },
-    resourceName: {
+    uriKey: {
       type: String,
       required: true
     },
@@ -84461,6 +84826,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     canView: {
       type: [Boolean, Number],
       default: false
+    },
+    labelName: {
+      type: String
     }
   },
   data: function data() {
@@ -84478,26 +84846,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.delete(this.delApi).then(function (_ref) {
         var data = _ref.data;
 
-        _this.go('/' + _this.resourceName);
+        _this.go('/' + _this.uriKey);
       });
       this.loading = false;
     }
   },
   computed: {
     delApi: function delApi() {
-      return '/' + this.resourceName + '/' + this.resourceId;
+      return '/' + this.uriKey + '/' + this.resourceId;
     },
     toEdit: function toEdit() {
-      return '/' + this.resourceName + '/' + this.resourceId + '/edit';
+      return '/' + this.uriKey + '/' + this.resourceId + '/edit';
     },
     toView: function toView() {
-      return '/' + this.resourceName + '/' + this.resourceId;
+      return '/' + this.uriKey + '/' + this.resourceId;
     },
     delMr: function delMr() {
       return this.canView || this.canUpdate;
     },
     viewMr: function viewMr() {
       return this.canUpdate;
+    },
+    label: function label() {
+      return _.get(this, 'labelName', this.singularLabel + '详情页');
     }
   }
 });
@@ -84510,7 +84881,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("card-title", { attrs: { "label-name": _vm.labelName } }, [
+  return _c("card-title", { attrs: { label: _vm.label } }, [
     _c(
       "div",
       { staticClass: "ml-3 w-full flex items-center" },
@@ -84786,7 +85157,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -84831,21 +85202,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'resource-index-header',
   props: {
+    // api资源地址
+    uriKey: {
+      type: String
+    },
+    // 复数名称
+    label: {
+      type: String
+    },
+    // 单数名称
+    singularLabel: {
+      type: String
+    },
+    // 是否可搜索
     canSearch: {
       type: [Number, Boolean],
       default: false
     },
+    // 是否可创建
     canCreate: {
       type: [Boolean, Number],
-      default: true
-    },
-    resourceName: {
-      type: String,
-      required: true
-    },
-    labelName: {
-      type: String,
-      default: '创建'
+      default: false
     },
     viaRelationName: {
       type: String,
@@ -84859,9 +85236,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     createLink: function createLink() {
       if (!this.viaRelationName && !this.viaRelationId) {
-        return '/' + this.resourceName + '/create';
+        return '/' + this.uriKey + '/create';
       }
-      return '/' + this.resourceName + '/create?viaRelationName=' + this.viaRelationName + '&viaRelationId=' + this.viaRelationId;
+      return '/' + this.uriKey + '/create?viaRelationName=' + this.viaRelationName + '&viaRelationId=' + this.viaRelationId;
     }
   }
 });
@@ -84878,7 +85255,7 @@ var render = function() {
     "div",
     [
       _vm.canSearch
-        ? _c("card-title", { attrs: { "label-name": _vm.labelName } })
+        ? _c("card-title", { attrs: { label: _vm.label } })
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "flex" }, [
@@ -84909,7 +85286,7 @@ var render = function() {
                       _vm._t("title", [
                         _vm._v(
                           "\n                        " +
-                            _vm._s(_vm.labelName) +
+                            _vm._s(_vm.label) +
                             "\n                    "
                         )
                       ])
@@ -84929,7 +85306,7 @@ var render = function() {
                     staticClass: "btn btn-default btn-primary",
                     attrs: { href: _vm.createLink }
                   },
-                  [_vm._v(_vm._s("创建" + _vm.labelName))]
+                  [_vm._v(_vm._s("创建" + _vm.singularLabel))]
                 )
               ])
             ])
@@ -85035,7 +85412,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -85046,13 +85423,14 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pageable__ = __webpack_require__(79);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
 //
 //
 //
@@ -85108,21 +85486,42 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   mixins: [__WEBPACK_IMPORTED_MODULE_1__pageable__["a" /* default */]],
 
   props: {
-    resourceName: {
-      type: String,
-      required: true
+    // api资源地址
+    uriKey: {
+      type: String
     },
+    // 复数名称
+    label: {
+      type: String
+    },
+    // 单数名称
+    singularLabel: {
+      type: String
+    },
+    // 是否可搜索
+    canSearch: {
+      type: [Number, Boolean],
+      default: false
+    },
+    // 是否可创建
+    canCreate: {
+      type: [Boolean, Number],
+      default: false
+    },
+    // 是否可更新
     canUpdate: {
       type: [Boolean, Number],
-      default: true
+      default: false
     },
+    // 是否可删除
     canDestroy: {
       type: [Boolean, Number],
       default: false
     },
+    // 是否可看详情
     canView: {
       type: [Boolean, Number],
-      default: true
+      default: false
     }
   },
 
@@ -85139,7 +85538,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       var _this = this;
 
       this.loading = true;
-      return axios.get('/' + this.resourceName + '?page=' + this.currentPage).then(function (_ref) {
+      return axios.get('/' + this.uriKey + '?page=' + this.currentPage).then(function (_ref) {
         var data = _ref.data;
 
         _this.response = data;
@@ -85177,6 +85576,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   computed: {
     resources: function resources() {
       return _.get(this, 'response.data', []);
+    },
+    showActionCol: function showActionCol() {
+      return this.canUpdate || this.canDestroy || this.canView;
     }
   },
   mounted: function () {
@@ -85232,92 +85634,92 @@ var render = function() {
         [
           _vm._t("default"),
           _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { align: "right", fixed: "right", label: "操作" },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(ref) {
-                  var row = ref.row
-                  return [
-                    _vm.canView
-                      ? _c(
-                          "a",
-                          {
-                            staticClass:
-                              "cursor-pointer text-70 hover:text-primary",
-                            class: { "mr-3": _vm.canUpdate },
-                            attrs: {
-                              href: "/" + _vm.resourceName + "/" + row.id
-                            }
-                          },
-                          [
-                            _c(
-                              "svg",
+          _vm.showActionCol
+            ? _c("el-table-column", {
+                attrs: { align: "right", fixed: "right", label: "操作" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _vm.canView
+                          ? _c(
+                              "a",
                               {
-                                staticClass: "fill-current",
+                                staticClass:
+                                  "cursor-pointer text-70 hover:text-primary",
+                                class: { "mr-3": _vm.canUpdate },
+                                attrs: { href: "/" + _vm.uriKey + "/" + row.id }
+                              },
+                              [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass: "fill-current",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      viewBox: "0 0 24 24",
+                                      width: "24",
+                                      height: "24"
+                                    }
+                                  },
+                                  [
+                                    _c("path", {
+                                      staticClass: "heroicon-ui",
+                                      attrs: {
+                                        d:
+                                          "M17.56 17.66a8 8 0 0 1-11.32 0L1.3 12.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95zm-9.9-1.42a6 6 0 0 0 8.48 0L20.38 12l-4.24-4.24a6 6 0 0 0-8.48 0L3.4 12l4.25 4.24zM11.9 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.canUpdate
+                          ? _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "cursor-pointer text-70 hover:text-primary",
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  viewBox: "0 0 24 24",
-                                  width: "24",
-                                  height: "24"
+                                  href:
+                                    "/" + _vm.uriKey + "/" + row.id + "/edit"
                                 }
                               },
                               [
-                                _c("path", {
-                                  staticClass: "heroicon-ui",
-                                  attrs: {
-                                    d:
-                                      "M17.56 17.66a8 8 0 0 1-11.32 0L1.3 12.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95zm-9.9-1.42a6 6 0 0 0 8.48 0L20.38 12l-4.24-4.24a6 6 0 0 0-8.48 0L3.4 12l4.25 4.24zM11.9 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
-                                  }
-                                })
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass: "fill-current",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      viewBox: "0 0 24 24",
+                                      width: "24",
+                                      height: "24"
+                                    }
+                                  },
+                                  [
+                                    _c("path", {
+                                      staticClass: "heroicon-ui",
+                                      attrs: {
+                                        d:
+                                          "M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1 1 0 0 1 0 2H4v14h14v-6z"
+                                      }
+                                    })
+                                  ]
+                                )
                               ]
                             )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.canUpdate
-                      ? _c(
-                          "a",
-                          {
-                            staticClass:
-                              "cursor-pointer text-70 hover:text-primary",
-                            attrs: {
-                              href:
-                                "/" + _vm.resourceName + "/" + row.id + "/edit"
-                            }
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "fill-current",
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  viewBox: "0 0 24 24",
-                                  width: "24",
-                                  height: "24"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  staticClass: "heroicon-ui",
-                                  attrs: {
-                                    d:
-                                      "M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1 1 0 0 1 0 2H4v14h14v-6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        )
-                      : _vm._e()
-                  ]
-                }
-              }
-            ])
-          })
+                          : _vm._e()
+                      ]
+                    }
+                  }
+                ])
+              })
+            : _vm._e()
         ],
         2
       ),
@@ -85459,7 +85861,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pageable__ = __webpack_require__(79);
 

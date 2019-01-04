@@ -9,18 +9,7 @@ use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        if (request()->ajax()) {
-            return response()->json(Product::latest('updated_at')->paginate(15));
-        }
-        return view('products.index');
-    }
+    public static $resource = \App\Resources\Product::class;
 
     /**
      * Show the form for creating a new resource.

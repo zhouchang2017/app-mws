@@ -16,7 +16,7 @@ use App\Models\PreInventoryActionOrderItem;
 use App\Models\PreInventoryActionOrderItemState;
 use Illuminate\Http\Request;
 
-class InventoryService
+class  InventoryService
 {
     /*
      * 创建 预出\入库(入库单\出货单)
@@ -91,6 +91,15 @@ class InventoryService
      */
     public static function preActionOrderItemCheck(PreInventoryActionOrderItem $item, Request $request)
     {
-        return $item->addCheck($request->get('quantity'), $request->get('warehouse_area'));
+        return tap($item->addCheck($request->get('quantity'), $request->get('warehouse_area')),
+            function ($state) use ($request) {
+                if ($request->has('attachments') && count($request->get('attachments')) > 0) {
+                    collect($request->get('attachments'))->each(function ($data) use ($state) {
+                        /** @var PreInventoryActionOrderItemState $state */
+                        $state->addAttachment($data);
+                    });
+                    $state->loadMissing(['attachments']);
+                }
+            });
     }
 }

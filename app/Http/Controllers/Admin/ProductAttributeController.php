@@ -8,17 +8,10 @@ use App\Http\Controllers\Controller;
 
 class ProductAttributeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return ProductAttribute::when(request()->taxon, function ($query, $taxon) {
-            $query->whereTaxon($taxon);
-        })->get();
-    }
+
+    public static $resource = \App\Resources\ProductAttribute::class;
+
+
 
     /**
      * Show the form for creating a new resource.

@@ -71,7 +71,7 @@ class PreInventoryActionOrder extends Model
 
     public function loadItemState()
     {
-        $this->loadMissing(['items.state.type']);
+        $this->loadMissing(['items.state.type','items.state.attachments']);
         return $this;
     }
 

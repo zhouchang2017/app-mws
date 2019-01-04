@@ -6,13 +6,14 @@
         >
             <slot/>
             <el-table-column
+                    v-if="showActionCol"
                     align="right"
                     fixed="right"
                     label="操作"
             >
                 <template slot-scope="{row}">
                     <a v-if="canView" class="cursor-pointer text-70 hover:text-primary" :class="{'mr-3':canUpdate}"
-                       :href="`/${resourceName}/${row.id}`">
+                       :href="`/${uriKey}/${row.id}`">
                         <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
                              height="24">
                             <path class="heroicon-ui"
@@ -20,7 +21,7 @@
                         </svg>
                     </a>
                     <a v-if="canUpdate" class="cursor-pointer text-70 hover:text-primary"
-                       :href="`/${resourceName}/${row.id}/edit`">
+                       :href="`/${uriKey}/${row.id}/edit`">
                         <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
                              height="24">
                             <path class="heroicon-ui"
@@ -53,22 +54,43 @@
     mixins: [Pageable],
 
     props: {
-      resourceName: {
-        type: String,
-        required: true
+      // api资源地址
+      uriKey: {
+        type: String
       },
+      // 复数名称
+      label: {
+        type: String
+      },
+      // 单数名称
+      singularLabel: {
+        type: String
+      },
+      // 是否可搜索
+      canSearch: {
+        type: [Number, Boolean],
+        default: false
+      },
+      // 是否可创建
+      canCreate: {
+        type: [Boolean, Number],
+        default: false
+      },
+      // 是否可更新
       canUpdate: {
         type: [Boolean, Number],
-        default: true
+        default: false
       },
+      // 是否可删除
       canDestroy: {
         type: [Boolean, Number],
         default: false
       },
+      // 是否可看详情
       canView: {
         type: [Boolean, Number],
-        default: true
-      }
+        default: false
+      },
     },
 
     data () {
@@ -81,7 +103,7 @@
     methods: {
       fetchResources () {
         this.loading = true
-        return axios.get(`/${this.resourceName}?page=${this.currentPage}`).then(({data}) => {
+        return axios.get(`/${this.uriKey}?page=${this.currentPage}`).then(({data}) => {
           this.response = data
           this.setOptions(data)
           this.loading = false
@@ -98,6 +120,9 @@
       resources () {
         return _.get(this, 'response.data', [])
       },
+      showActionCol () {
+        return this.canUpdate || this.canDestroy || this.canView
+      }
     },
     async mounted () {
       await this.fetchResources()

@@ -32,7 +32,7 @@
       resourceId: {
         type: [String, Number]
       },
-      resourceName: {
+      uriKey: {
         type: String,
         default: 'products'
       },
@@ -66,11 +66,11 @@
               if (this.createPage) {
                 const {data} = await this.createRequest()
                 this.notify(data)
-                this.go(`/${this.resourceName}/${data.data.id}`)
+                this.go(`/${this.uriKey}/${data.data.id}`)
               } else {
                 const {data} = await this.updateRequest()
                 this.notify(data)
-                this.go(`/${this.resourceName}/${this.resourceId}`)
+                this.go(`/${this.uriKey}/${this.resourceId}`)
               }
 
             } catch (e) {
@@ -88,7 +88,7 @@
        */
       createRequest () {
         return axios.post(
-          `/${this.resourceName}`,
+          `/${this.uriKey}`,
           this.createResourceFormData()
         )
       },
@@ -97,7 +97,7 @@
        */
       updateRequest () {
         return axios.patch(
-          `/${this.resourceName}/${this.resourceId}`,
+          `/${this.uriKey}/${this.resourceId}`,
           this.createResourceFormData()
         )
       },

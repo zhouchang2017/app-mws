@@ -1,8 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <card-title label-name="预出\入库(入库单\出货单)"></card-title>
-    <resources-table :can-create="false"  :can-update="false"  label-name="创建预出\入库(入库单\出货单)" resource-name="pre-inventory-actions">
+    <index
+            uri-key="{{$uriKey}}"
+            label="{{$label}}"
+            singular-label="{{$singularLabel}}"
+            can-view
+            can-update
+            can-destroy
+    >
+        <el-table-column
+                prop="id"
+                label="ID"
+        >
+        </el-table-column>
         <el-table-column
                 prop="description"
                 label="计划描述"
@@ -20,8 +31,8 @@
         </el-table-column>
         <el-table-column
                 prop="updated_at"
-                label="最后更新时间"
+                label="更新时间"
         >
         </el-table-column>
-    </resources-table>
+    </index>
 @endsection

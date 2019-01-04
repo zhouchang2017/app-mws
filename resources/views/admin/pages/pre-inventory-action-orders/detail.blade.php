@@ -3,6 +3,7 @@
 @section('content')
 
     <resource-detail-header
+            uri-key="{{$uriKey}}"
             label-name="操作单({{$resource->type->name}})"
             resource-name="pre-inventory-action-orders"
             resource-id="{{$resource->id}}"
@@ -19,18 +20,18 @@
         <form-item title="最后更新时间" value="{{$resource->updated_at}}"></form-item>
     </div>
 
-    <card-title label-name="{{$resource->type->name.'列表'}}"></card-title>
+    <card-title label="{{$resource->type->name.'列表'}}"></card-title>
     <div class="card w-full mb-6">
         <div class="p-6">
-            <product-variant-list :items='@json($resource->items)' ></product-variant-list>
+            <product-variant-list :items='@json($resource->items)'></product-variant-list>
         </div>
         {{-- 已发货，显示到货检测按钮--}}
-        @if ($resource->hasTracks() && $resource->type->isPut())
+        @if ($resource->hasTracks())
             <div class="bg-30 flex px-8 py-4 ">
-                <a  href="{{ route($domain.'.pre-inventory-action-orders.check',['pre-inventory-action-order'=>$resource->id]) }}"
-                    class="btn btn-a btn-default ml-auto cursor-pointer text-white bg-primary"
-                    title="Assign">
-                    货品检测
+                <a href="{{ route($domain.'.pre-inventory-action-orders.check',['pre-inventory-action-order'=>$resource->id]) }}"
+                   class="btn btn-a btn-default ml-auto cursor-pointer text-white bg-primary"
+                   title="Assign">
+                    {{$resource->type->isPut() ? '货品检测' :'货品核对出库'}}
                 </a>
             </div>
         @endif

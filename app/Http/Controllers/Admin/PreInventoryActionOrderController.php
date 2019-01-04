@@ -13,21 +13,11 @@ use App\Http\Controllers\Controller;
 
 class PreInventoryActionOrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $resources = PreInventoryActionOrder::with(['warehouse', 'type'])
-            ->latest('updated_at')
-            ->paginate(15);
-        if (request()->ajax()) {
-            return $resources;
-        }
-        return view('admin.pages.pre-inventory-action-orders.index');
-    }
+
+    public static $resource = \App\Resources\PreInventoryActionOrder::class;
+
+    public static $indexViewName = 'admin.pages.pre-inventory-action-orders.index';
+
 
     /**
      * Show the form for creating a new resource.
@@ -62,6 +52,7 @@ class PreInventoryActionOrderController extends Controller
         if (request()->ajax()) {
             return response()->json($resource);
         }
+        $this->viewShare();
         return view('admin.pages.pre-inventory-action-orders.detail', compact('resource'));
     }
 
@@ -105,6 +96,7 @@ class PreInventoryActionOrderController extends Controller
         if (request()->ajax()) {
             return response()->json($resource);
         }
+        $this->viewShare();
         return view('admin.pages.pre-inventory-action-orders.check', compact('resource'));
     }
 
@@ -112,6 +104,7 @@ class PreInventoryActionOrderController extends Controller
     {
         $preInventoryActionOrder->loadDetailAttribute()->loadType()->append('simple_address');
         $logistic = Logistic::all();
+        $this->viewShare();
         return view('admin.pages.pre-inventory-action-orders.shipment',
             ['resource' => $preInventoryActionOrder, 'logistic' => $logistic]
         );
@@ -133,7 +126,7 @@ class PreInventoryActionOrderController extends Controller
         $preInventoryActionOrder->loadDetailAttribute()->loadType()->append('simple_address');
 
         return $this->updated(
-            ['resource' => $preInventoryActionOrder],
+            $preInventoryActionOrder,
             '发货成功'
         );
     }

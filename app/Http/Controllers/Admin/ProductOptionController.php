@@ -8,17 +8,8 @@ use App\Http\Controllers\Controller;
 
 class ProductOptionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return ProductOption::when(request()->taxon, function ($query, $taxon) {
-            $query->whereTaxon($taxon);
-        })->with('values')->get();
-    }
+
+    public static $resource = \App\Resources\ProductOption::class;
 
     /**
      * Show the form for creating a new resource.

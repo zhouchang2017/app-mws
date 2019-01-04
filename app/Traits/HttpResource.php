@@ -9,10 +9,39 @@
 namespace App\Traits;
 
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 trait HttpResource
 {
+    /**
+     * The underlying model resource instance.
+     *
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    public $resource;
+
+    /**
+     * Get the underlying model instance for the resource.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function model()
+    {
+        return $this->resource;
+    }
+
+    /**
+     * Determine if this resource is available for navigation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public static function availableForNavigation(Request $request)
+    {
+        return true;
+    }
+
     public function getUriKey()
     {
         return static::uriKey();

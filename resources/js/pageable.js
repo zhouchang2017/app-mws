@@ -38,7 +38,7 @@ export default {
 
     },
     perTotal () {
-      return _.get(this, 'pageOption.to')
+      return _.get(this, 'pageOption.to',0)
     },
     perPage () {
       return _.get(this, 'pageOption.per_page')

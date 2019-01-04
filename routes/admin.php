@@ -44,6 +44,10 @@ Route::post('/pre-inventory-action-orders/{pre_inventory_action_order}/shipment'
 Route::post('/pre-inventory-action-order-items/{pre_inventory_action_order_item}/check',
     'PreInventoryActionOrderItemController@addCheck')
     ->name('pre-inventory-action-order-items.check.create');
+
+Route::post('/pre-item-states/{id}',
+    'PreInventoryActionOrderItemStateController@createAttachment')
+    ->name('pre-item-states.attachment.create');
 // 变体
 Route::resource('/product-variants', 'ProductVariantController');
 // 仓库

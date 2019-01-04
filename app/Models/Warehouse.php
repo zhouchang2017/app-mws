@@ -42,4 +42,9 @@ class Warehouse extends Model implements Addressable
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
+    }
 }

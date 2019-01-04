@@ -8,25 +8,9 @@ use App\Http\Controllers\Controller;
 
 class AttachmentTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        if (request()->ajax()) {
-            if (request()->all) {
-                return response()->json(
-                    AttachmentType::latest('updated_at')->get()
-                );
-            }
-            return response()->json(
-                AttachmentType::latest('updated_at')->paginate(15)
-            );
-        }
-        return view('attachment-types.index');
-    }
+
+    public static $resource = \App\Resources\AttachmentType::class;
+
 
     /**
      * Show the form for creating a new resource.

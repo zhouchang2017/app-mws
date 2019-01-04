@@ -94,7 +94,7 @@
       resourceId: {
         type: [String, Number]
       },
-      resourceName: {
+      uriKey: {
         type: String,
         default: 'products'
       },
@@ -161,11 +161,11 @@
               if (this.createPage) {
                 const {data} = await this.createRequest()
                 this.notify(data)
-                this.go(`${this.resourceName}/${data.data.id}`)
+                this.go(`${this.uriKey}/${data.data.id}`)
               } else {
                 const {data} = await this.updateRequest()
                 this.notify(data)
-                this.go(`/${this.resourceName}/${data.data.id}`)
+                this.go(`/${this.uriKey}/${data.data.id}`)
               }
 
             } catch (e) {
@@ -186,7 +186,7 @@
        */
       createRequest () {
         return axios.post(
-          `/${this.resourceName}`,
+          `/${this.uriKey}`,
           this.createResourceFormData()
         )
       },
@@ -195,7 +195,7 @@
        */
       updateRequest () {
         return axios.patch(
-          `/${this.resourceName}/${this.resourceId}`,
+          `/${this.uriKey}/${this.resourceId}`,
           this.createResourceFormData()
         )
       },
@@ -216,7 +216,7 @@
       },
       fetchAttributes () {
         this.form.attributes = []
-        return axios.get('/product-attributes?taxon=' + this.taxon).then(({data}) => {
+        return axios.get('/product-attributes?taxon_id=' + this.taxon +'&withoutPage=1').then(({data}) => {
           this.attributes = data
           this.form.attributes = data.map(item => {
             const attribute_id = item.id
@@ -237,7 +237,7 @@
         })
       },
       fetchOptions () {
-        return axios.get('/product-options?taxon=' + this.taxon).then(({data}) => {
+        return axios.get('/product-options?taxon_id=' + this.taxon+'&withoutPage=1').then(({data}) => {
           this.options = data
         })
       },

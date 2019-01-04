@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\DP\ProductVariant;
 use App\Observers\PreInventoryActionOrderItemStateObserver;
+use App\Traits\AttachmentableTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PreInventoryActionOrderItemState extends Model
 {
+    use AttachmentableTrait;
     /**
      * @var array
      */
@@ -71,6 +73,16 @@ class PreInventoryActionOrderItemState extends Model
     public function getOriginAttribute()
     {
         return $this->item->preOrder->PreInventoryAction->origin->origin;
+    }
+
+    public function addAttachment(array $data)
+    {
+        return $this->attachments()->create($data);
+    }
+
+    public function addAttachments(array $data)
+    {
+        return $this->attachments()->createMany($data);
     }
 
 }

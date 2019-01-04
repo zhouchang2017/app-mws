@@ -3,8 +3,9 @@
 @section('content')
 
     <resource-detail-header
-            label-name="入库计划详情"
-            resource-name="supplies"
+            uri-key="{{$uriKey}}"
+            label="{{$label}}"
+            singular-label="{{$singularLabel}}"
             resource-id="{{$resource->id}}"
     ></resource-detail-header>
     <div class="form-list mb-6">
@@ -14,7 +15,7 @@
         <form-item title="更新时间" value="{{$resource->updated_at }}"></form-item>
     </div>
 
-    <card-title label-name="计划来源供应商"></card-title>
+    <card-title label="计划来源供应商"></card-title>
     <div class="form-list mb-6">
         <form-item title="名称" value="{{$resource->origin->name}}"></form-item>
         <form-item title="编码" value="{{$resource->origin->code}}"></form-item>
@@ -23,11 +24,11 @@
     </div>
 
 
-    <card-title label-name="状态记录"></card-title>
+    <card-title label="状态记录"></card-title>
     @component('components.statuses',['statuses'=>$resource->statuses])
     @endcomponent
 
-    <card-title label-name="入库商品列表"></card-title>
+    <card-title label="入库商品列表"></card-title>
 
     <div class="card w-full">
         <div class="p-6">

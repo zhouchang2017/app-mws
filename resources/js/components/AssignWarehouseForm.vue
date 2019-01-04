@@ -124,7 +124,7 @@
         console.log(query)
       },
       fetchWarehouses () {
-        return axios.get('/warehouses').then(({data}) => {
+        return axios.get('/warehouses?withoutPage').then(({data}) => {
           this.warehouses = data
         })
       },
@@ -148,10 +148,10 @@
       },
       submit () {
         this.loading = true
-        axios.post(`/${this.resourceName}/${this.resourceId}/assigned`, this.requestFormFormat).then(({data}) => {
+        axios.post(`/${this.uriKey}/${this.resourceId}/assigned`, this.requestFormFormat).then(({data}) => {
           this.notify(data)
           this.loading = false
-          this.go(`/${this.resourceName}/${this.resourceId}`)
+          this.go(`/${this.uriKey}/${this.resourceId}`)
         })
       }
     },

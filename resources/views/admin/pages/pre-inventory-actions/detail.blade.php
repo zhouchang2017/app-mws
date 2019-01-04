@@ -3,8 +3,9 @@
 @section('content')
 
     <resource-detail-header
-            label-name="{{$resource->type->name}}"
-            resource-name="pre-inventory-actions"
+            label="{{$resource->type->name}}"
+            uri-key="{{$uriKey}}"
+            singular-label="{{$singularLabel}}"
             resource-id="{{$resource->id}}"
     ></resource-detail-header>
 
@@ -16,11 +17,11 @@
         @endif
     </div>
 
-    <card-title label-name="状态记录"></card-title>
+    <card-title label="状态记录"></card-title>
     @component('components.statuses',['statuses'=>$resource->statuses])
     @endcomponent
 
-    <card-title label-name="{{$resource->type->name.'列表'}}"></card-title>
+    <card-title label="{{$resource->type->name.'列表'}}"></card-title>
     <div class="card w-full mb-6">
         <div class="p-6">
             <product-variant-list :items='@json($resource->origin->items)'></product-variant-list>
@@ -55,10 +56,9 @@
     </div>
 
     @foreach ($resource->orders as $order)
-
         <resource-detail-header
                 label-name="操作单[id:{{$order->id}}]"
-                resource-name="pre-inventory-action-orders"
+                uri-key="pre-inventory-action-orders"
                 :can-destroy="false"
                 :can-update="false"
                 :can-view="true"

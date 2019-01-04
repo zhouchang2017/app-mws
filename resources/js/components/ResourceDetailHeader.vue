@@ -1,5 +1,5 @@
 <template>
-    <card-title :label-name="labelName">
+    <card-title :label="label">
         <div class="ml-3 w-full flex items-center">
             <div class="flex w-full justify-end items-center"></div>
             <div class="ml-3"><!----> <!----></div>
@@ -48,11 +48,11 @@
   export default {
     name: 'resource-detail-header',
     props: {
-      labelName: {
+      singularLabel: {
         type: String,
         default: '详情页'
       },
-      resourceName: {
+      uriKey: {
         type: String,
         required: true
       },
@@ -70,6 +70,9 @@
       canView: {
         type: [Boolean, Number],
         default: false
+      },
+      labelName:{
+        type:String
       }
     },
     data () {
@@ -82,26 +85,29 @@
       requestDelApi () {
         this.loading = true
         axios.delete(this.delApi).then(({data}) => {
-          this.go(`/${this.resourceName}`)
+          this.go(`/${this.uriKey}`)
         })
         this.loading = false
       }
     },
     computed: {
       delApi () {
-        return `/${this.resourceName}/${this.resourceId}`
+        return `/${this.uriKey}/${this.resourceId}`
       },
       toEdit () {
-        return `/${this.resourceName}/${this.resourceId}/edit`
+        return `/${this.uriKey}/${this.resourceId}/edit`
       },
       toView () {
-        return `/${this.resourceName}/${this.resourceId}`
+        return `/${this.uriKey}/${this.resourceId}`
       },
       delMr () {
         return this.canView || this.canUpdate
       },
       viewMr () {
         return this.canUpdate
+      },
+      label () {
+        return _.get(this, 'labelName', this.singularLabel + '详情页')
       }
     }
   }

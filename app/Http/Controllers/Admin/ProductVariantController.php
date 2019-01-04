@@ -8,23 +8,11 @@ use App\Http\Controllers\Controller;
 
 class ProductVariantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        if (request()->ajax()) {
-            return response()->json(
-                ProductVariant::when($request->get('supplier', false), function ($query, $supplier) {
-                    $query->filterSupplier($supplier);
-                })->paginate(15)
-            );
-        }
-        return view('supplier.pages.variants.index');
-    }
+
+    public static $resource = \App\Resources\ProductVariant::class;
+
+
+
 
     /**
      * Show the form for creating a new resource.

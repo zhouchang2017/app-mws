@@ -29,21 +29,7 @@
             </div>
         </div>
 
-        <card-title label-name="物流信息">
-            <div v-if="routeName==='create'" class="ml-3 w-full flex items-center">
-                <div class="flex w-full justify-end items-center"></div>
-                <div class="ml-3"><!----> <!----></div>
-                <button title="Update" type="button"
-                        @click="addAttachment"
-                        class="btn btn-default btn-icon btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                         aria-labelledby="edit" role="presentation" class="fill-current text-white"
-                         style="margin-top: -2px; margin-left: 3px;">
-                        <path d="M4.3 10.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM6 14h2.59l9-9L15 2.41l-9 9V14zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6a1 1 0 1 1 0 2H2v14h14v-6z"></path>
-                    </svg>
-                </button>
-
-            </div>
+        <card-title label="物流信息">
         </card-title>
         <div class="form-list  p-0" v-loading="loading">
             <div class="p-6">
@@ -51,11 +37,13 @@
                     <template v-for="track in staticResource.tracks">
                         <form-item title="物流公司" :value="getLogistic(track.id).name"></form-item>
                         <form-item title="物流单号" :value="track.tracking_number"></form-item>
+                        <form-item title="快递费" :value="track.price"></form-item>
+                        <form-item title="备注" :value="track.description"></form-item>
                     </template>
                 </template>
                 <el-form v-else v-loading="loading" ref="form" :rules="rules" :model="form" label-position="left"
                          label-width="180px">
-                    <el-form-item label="费用调整类型名称" prop="logistic_id">
+                    <el-form-item label="物流公司" prop="logistic_id">
                         <el-select v-model="form.logistic_id" name="logistic_id" value="id" filterable
                                    placeholder="请选择物流公司">
                             <el-option
@@ -71,20 +59,14 @@
                                   placeholder="请输入快递单号"></el-input>
                     </el-form-item>
                     <el-form-item label="快递费" prop="price">
-                        <el-input v-model="form.price" name="price"
+                        <el-input v-model.number="form.price" name="price"
                                   placeholder="请输入快递费"></el-input>
                     </el-form-item>
-                    <el-form-item
-                            v-for="(type,index) in form.attachments"
-                            :key="type.id"
-                            :label="type.name"
-                            :rules="{
-                                      required: true, message: '调整金额不能为空', trigger: 'blur'
-                                    }"
-                            :prop="`attachments.${index}.price`">
-                        <el-input v-model="type.price"
-                                  placeholder="请输入调整金额"
-                        ></el-input>
+                    <el-form-item label="备注" prop="description">
+                        <el-input v-model="form.description"
+                                  name="description"
+                                  type="textarea"
+                                  placeholder="可输入物流备注"></el-input>
                     </el-form-item>
                 </el-form>
             </div>
@@ -97,21 +79,6 @@
                 </button>
             </div>
         </div>
-        <el-dialog
-                title="添加附加费用"
-                :visible.sync="dialogVisible"
-                width="40%"
-                >
-            <div>
-                <el-checkbox-group v-model="form.attachments">
-                    <el-checkbox v-for="type in attachmentTypes" :label="type" :key="type.id"  border>{{type.name}}</el-checkbox>
-                </el-checkbox-group>
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-              </span>
-        </el-dialog>
     </div>
 </template>
 
@@ -144,7 +111,7 @@
           logistic_id: null,
           tracking_number: null,
           price:null,
-          attachments: []
+          description:null
         },
         rules: {
           logistic_id: [
@@ -152,39 +119,40 @@
           ],
           tracking_number: [
             {required: true, message: '请输入物流单号', trigger: 'blur'},
+          ],
+          price:[
+            {type:'number',message: '请输入正确金额', trigger: 'blur'}
+          ],
+          description:[
+            {type:'string',max:255,message: '内容长度溢出', trigger: 'blur'}
           ]
-        },
-        attachmentTypes: [],
-        isOk: false,
-        dialogVisible:false
+        }
       }
     },
     methods: {
-      // 添加附加费用
-      async addAttachment () {
-        if (!this.isOk) {
-          await this.fetchAttachmentTypes()
-          this.isOk = true
-        }
-        this.dialogVisible =true
-
-      },
-      fetchAttachmentTypes () {
-        axios.get('/attachment-types?all=1').then(({data}) => {
-          this.attachmentTypes = data
-        })
-      },
       shipment () {
-        this.loading = true
-        axios.post(this.postApi, {
-          logistic_id: this.logistic_id,
-          tracking_number: this.tracking_number
-        }).then(({data}) => {
-          this.notify(data)
-          this.staticResource = data.data
-          this.routeName = 'detail'
+        this.$refs['form'].validate(async (valid) => {
+          if (valid) {
+            this.loading = true
+
+            axios.post(this.postApi, this.form).then(({data}) => {
+              this.notify(data)
+              this.staticResource = data.data
+              this.routeName = 'detail'
+            }).catch (e=>{
+              this.notify({type: 'error', title: 'ERROR',message:e.response})
+            })
+            this.loading = false
+            // this.state.push(data.data)
+            // this.resetForm()
+          } else {
+            this.notify({type: 'error', title: '表单数据不合法'})
+            return false
+          }
         })
-        this.loading = false
+      },
+      resetForm () {
+        this.$refs['form'].resetFields()
       },
       getLogistic (id) {
         return _.find(this.logistic, ['id', +id])

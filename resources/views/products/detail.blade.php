@@ -2,11 +2,14 @@
 
 @section('content')
     <resource-detail-header
-            label-name="产品详情"
-            resource-name="products"
+            uri-key="{{$uriKey}}"
+            label="{{$label}}"
+            singular-label="{{$singularLabel}}"
             resource-id="{{$resource->id}}"
+
             :can-destroy="true"
             :can-update="true"
+
     ></resource-detail-header>
 
     <div class="form-list mb-6">
@@ -16,24 +19,24 @@
         <form-item title="最后更新时间" value="{{$resource->updated_at}}"></form-item>
     </div>
 
-    <card-title label-name="产品属性"></card-title>
+    <card-title label="产品属性"></card-title>
     <div class="form-list mb-6">
         @foreach($resource->attributeValues as $attribute)
             <form-item title="{{$attribute->attribute->name . '('.$attribute->locale_code.')'}}" value="{{$attribute->text_value}}"></form-item>
         @endforeach
     </div>
 
-    <card-title label-name="产品销售属性"></card-title>
+    <card-title label="产品销售属性"></card-title>
     <div class="form-list mb-6">
         <form-item title="OPTIONS" value="{{$resource->options->map->name->implode(',')}}"></form-item>
     </div>
 
     <resource-index-header
             via-relation-name="product"
-            resource-name="product-variants"
+            uri-key="product-variants"
             via-relation-id="{{$resource->id}}"
             can-create
-            label-name="变体"
+            label="变体"
     ></resource-index-header>
     <div class="form-list mb-6">
         @if($resource->variants->count() === 0)

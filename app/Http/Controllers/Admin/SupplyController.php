@@ -10,20 +10,10 @@ use App\Http\Controllers\Controller;
 
 class SupplyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        if (request()->ajax()) {
-            return response()->json(
-                Supply::with('origin')->latest('updated_at')->paginate(15)
-            );
-        }
-        return view('admin.pages.supplies.index');
-    }
+    public static $resource = \App\Resources\Supply::class;
+
+    public static $indexViewName = 'admin.pages.supplies.index';
+
 
     /**
      * Show the form for creating a new resource.
@@ -63,6 +53,7 @@ class SupplyController extends Controller
         if (request()->ajax()) {
             return response()->json($resource);
         } else {
+            $this->viewShare(['resourceId'=>$supply->id]);
             return view('admin.pages.supplies.detail', compact('resource'));
         }
     }

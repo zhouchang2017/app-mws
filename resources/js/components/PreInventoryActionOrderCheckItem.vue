@@ -1,6 +1,6 @@
 <template>
     <div>
-        <card-title :label-name="item.variant.code">
+        <card-title :label="item.variant.code">
             <div class="ml-3 w-full flex items-center">
                 <div class="flex w-full justify-end items-center"></div>
                 <div class="ml-3"><!----> <!----></div>
@@ -20,15 +20,31 @@
             <div class="form-list">
                 <form-item title="商品名称" :value="item.variant.variantName"></form-item>
                 <form-item title="商品编码" :value="item.variant.code"></form-item>
-                <form-item title="应到货数量" :value="item.quantity"></form-item>
-                <form-item title="入仓记录">
+                <form-item :title="isTake ? '出库数量':'应到货数量'" :value="item.quantity"></form-item>
+                <form-item :title="isTake ? '出库记录':'入库记录'">
                     <el-table
                             slot="value"
                             :data="state"
                     >
+                        <el-table-column type="expand">
+                            <template slot-scope="{row}">
+                                <div v-if="row.attachments.length > 0">
+                                    <div class="flex items-center m-1" v-for="attach in row.attachments"
+                                         :key="attach.id">
+                                        <div class="w-2/5 font-semibold text-grey-darker">
+                                            {{findAttachmentType(attach.attachment_type_id)}}
+                                        </div>
+                                        <div class="w-3/5 font-semibold text-primary">{{attach.price}}</div>
+                                    </div>
+                                </div>
+                                <div v-else class="flex items-center">
+                                    <p class="font-semibold text-center text-grey-darker">暂无任何附加费用</p>
+                                </div>
+                            </template>
+                        </el-table-column>
                         <el-table-column
                                 prop="quantity"
-                                label="批次到货数量"
+                                label="数量"
                         >
                         </el-table-column>
                         <el-table-column
@@ -43,6 +59,14 @@
                                 label="更新时间"
                         >
                         </el-table-column>
+                        <el-table-column
+                                align="right"
+                                label="操作"
+                        >
+                            <template slot-scope="{row}">
+                                <el-button size="mini" @click="showAttacheDialog(row)">添加附加费用</el-button>
+                            </template>
+                        </el-table-column>
                     </el-table>
                 </form-item>
             </div>
@@ -51,7 +75,9 @@
                     :visible.sync="dialogVisible"
                     width="50%"
             >
-                <el-form ref="form" :model="form" :rules="rules" status-icon label-position="left" label-width="80px">
+                <el-form ref="form" :model="form" :rules="rules" status-icon label-position="left" label-width="120px">
+                    <p class="text-xs font-semibold text-50">基本信息</p>
+                    <div class="border-30 border-b mb-3"></div>
                     <div class="mb-3">
                         <el-alert
                                 :title="`最大还能添加${canAddMax}个`"
@@ -69,10 +95,93 @@
                             <el-radio label="bad">不良品</el-radio>
                         </el-radio-group>
                     </el-form-item>
+                    <p class="text-xs font-semibold text-50">附加费用</p>
+                    <div class="border-30 border-b mb-3"></div>
+                    <el-form-item label="附加费用类型">
+                        <el-select
+                                class="w-full"
+                                v-model="form.attachments"
+                                multiple
+                                value-key="id"
+                                placeholder="请选择附加费用类型">
+                            <el-option
+                                    v-for="item in attachmentTypes"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item
+                            v-for="(attach,index) in form.attachments"
+                            :key="attach.id"
+                            :label="attach.name"
+                            :prop="`attachments.${index}.price`"
+                            :rules="[
+                                {
+                                  required: true, message:`${attach.name}金额不能为空`, trigger: 'blur'
+                                },
+                                {
+                                  type: 'number', message:'请输入正确金额', trigger: 'blur'
+                                }
+                            ]"
+                    >
+                        <el-input :placeholder="`请输入${attach.name}金额`"
+                                  v-model.number="attach.price"></el-input>
+                    </el-form-item>
+
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="addCheck">确 定</el-button>
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="addCheck">确定</el-button>
+              </span>
+            </el-dialog>
+
+            <el-dialog
+                    title="添加附加费用"
+                    :visible.sync="attacheDialogVisible"
+                    width="50%"
+            >
+                <el-form ref="attacheForm" :model="attacheForm" status-icon label-position="left" label-width="120px">
+                    <p class="text-xs font-semibold text-50">附加费用</p>
+                    <div class="border-30 border-b mb-3"></div>
+                    <el-form-item label="附加费用类型">
+                        <el-select
+                                class="w-full"
+                                v-model="attacheForm.attaches"
+                                multiple
+                                value-key="id"
+                                placeholder="请选择附加费用类型">
+                            <el-option
+                                    v-for="item in attachmentTypes"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item
+                            v-for="(attach,index) in attacheForm.attaches"
+                            :key="attach.id"
+                            :label="attach.name"
+                            :prop="`attaches.${index}.price`"
+                            :rules="[
+                                {
+                                  required: true, message:`${attach.name}金额不能为空`, trigger: 'blur'
+                                },
+                                {
+                                  type: 'number', message:'请输入正确金额', trigger: 'blur'
+                                }
+                            ]"
+                    >
+                        <el-input :placeholder="`请输入${attach.name}金额`"
+                                  v-model.number="attach.price"></el-input>
+                    </el-form-item>
+
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                <el-button @click="attacheDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="addAttache">确定</el-button>
               </span>
             </el-dialog>
         </div>
@@ -86,6 +195,10 @@
       item: {
         type: Object,
         default: () => {}
+      },
+      attachmentTypes: {
+        type: Array,
+        default: []
       }
     },
     inject: ['type'],
@@ -109,25 +222,59 @@
       }
       return {
         dialogVisible: false,
+        attacheDialogVisible: false,
         form: {
           quantity: 0,
-          warehouse_area: 'good'
+          warehouse_area: 'good',
+          attachments: []
         },
         rules: {
           quantity: [
             {validator: checkQuantity, trigger: 'blur'}
           ]
         },
-        state:[]
+        state: [],
+        attacheForm: {
+          attaches: []
+        },
+        currentEditState: null
       }
     },
     methods: {
+      showAttacheDialog (state) {
+        this.attacheForm.attaches = []
+        this.attacheDialogVisible = true
+        this.currentEditState = state
+      },
+      addAttache () {
+        this.$refs['attacheForm'].validate((valid) => {
+          if (valid) {
+            const from = this.attacheForm.attaches.map(attach => {
+              return {
+                attachment_type_id: attach.id,
+                price: attach.price
+              }
+            })
+            axios.post(this.createAttachApi, from).then(({data}) => {
+              this.currentEditState.attachments = [...data.data, ...this.currentEditState.attachments]
+              this.notify(data)
+              this.attacheDialogVisible = false
+            }).cache(err => {
+              this.notify({type: 'error', title: 'error', message: err.response})
+            })
+
+          }
+        })
+      },
       addCheck () {
         this.$refs['form'].validate((valid) => {
           if (valid) {
-            axios.post(this.api, this.form).then(({data}) => {
+            axios.post(this.api, this.createResourceFormData()).then(({data}) => {
               this.notify(data)
               this.state.push(data.data)
+              if (!_.has(this.state, 'attachments')) {
+                this.state.attachments = []
+              }
               this.resetForm()
               this.dialogVisible = false
             }).catch(err => {
@@ -139,8 +286,21 @@
           }
         })
       },
+      createResourceFormData () {
+        return _.tap(_.cloneDeep(this.form), formData => {
+          formData.attachments = formData.attachments.map(attach => {
+            return {
+              attachment_type_id: attach.id,
+              price: attach.price
+            }
+          })
+        })
+      },
       resetForm () {
         this.$refs['form'].resetFields()
+      },
+      findAttachmentType (id) {
+        return _.get(_.find(this.attachmentTypes, ['id', id]), 'name', 'N/A')
       }
     },
     computed: {
@@ -153,14 +313,20 @@
       api () {
         return `/pre-inventory-action-order-items/${this.item.id}/check`
       },
+      createAttachApi () {
+        return `/pre-item-states/${this.currentEditState.id}`
+      },
       canAddMax () {
         return this.max - this.checkCount - this.form.quantity
       },
       checked () {
         return this.checkCount === this.max
+      },
+      isTake () {
+        return this.type.action === 'take'
       }
     },
-    created(){
+    created () {
       this.state = this.item.state
     }
   }
