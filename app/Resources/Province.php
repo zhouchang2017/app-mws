@@ -3,6 +3,8 @@
 namespace App\Resources;
 
 
+use Illuminate\Http\Request as NovaRequest;
+
 class Province extends Resource
 {
     public static $model = \App\Models\Divisions\Province::class;
@@ -28,6 +30,5 @@ class Province extends Resource
     {
         return '省份';
     }
-
 
 }

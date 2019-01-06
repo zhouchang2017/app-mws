@@ -20,12 +20,12 @@
             <el-input placeholder="请输入邮编"
                       v-model="address.zip"></el-input>
         </el-form-item>
-        <el-form-item label="国家" prop="address.country">
-            <el-input placeholder="请输入国家"
-                      v-model="address.country"></el-input>
-        </el-form-item>
+        <!--<el-form-item label="国家" prop="address.country">-->
+            <!--<el-input disabled placeholder="请输入国家"-->
+                      <!--v-model="address.country"></el-input>-->
+        <!--</el-form-item>-->
 
-        <el-form-item label="省份" prop="address.province">
+        <el-form-item label="省市区" prop="address.province">
             <el-cascader
                     class="w-full"
                     v-model="local"
@@ -37,14 +37,14 @@
             <!--<el-input placeholder="请输入省份"-->
             <!--v-model="address.province"></el-input>-->
         </el-form-item>
-        <el-form-item label="城市" prop="address.city">
-            <el-input placeholder="请输入城市"
-                      v-model="address.city"></el-input>
-        </el-form-item>
-        <el-form-item label="行政区" prop="address.district">
-            <el-input placeholder="请输入行政区"
-                      v-model="address.district"></el-input>
-        </el-form-item>
+        <!--<el-form-item label="城市" prop="address.city">-->
+            <!--<el-input placeholder="请输入城市"-->
+                      <!--v-model="address.city"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item label="行政区" prop="address.district">-->
+            <!--<el-input placeholder="请输入行政区"-->
+                      <!--v-model="address.district"></el-input>-->
+        <!--</el-form-item>-->
         <el-form-item label="详细地址" prop="address.address">
             <el-input placeholder="请输入详细地址"
                       v-model="address.address"></el-input>
@@ -65,7 +65,7 @@
             phone: null,
             fax: null,
             zip: null,
-            country: null,
+            country: '中国',
             province: null,
             city: null,
             district: null,
@@ -100,13 +100,13 @@
 
     methods: {
       fetchProvinces (params = null) {
-        return axios.get('/divisions/provinces', {params})
+        return axios.get('/divisions/provinces?orderBy=id', {params})
       },
       fetchCities (params = null) {
-        return axios.get('/divisions/cities', {params})
+        return axios.get('/divisions/cities?orderBy=id', {params})
       },
       fetchAreas (params = null) {
-        return axios.get('/divisions/areas', {params})
+        return axios.get('/divisions/areas?orderBy=id', {params})
       },
       getArea (local) {
         if (local.length === 3) {
