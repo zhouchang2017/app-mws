@@ -9,6 +9,8 @@ window._ = require('lodash');
 import axios from './util/axios'
 window.axios = axios;
 
+import dayjs from './util/dayjs'
+window.dayjs = dayjs
 // window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

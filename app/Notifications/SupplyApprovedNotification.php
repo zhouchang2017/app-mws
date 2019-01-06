@@ -14,6 +14,8 @@ class SupplyApprovedNotification extends Notification
 
     public $supply;
 
+    public static $typeName = '供货计划审核通过';
+
     /**
      * Create a new notification instance.
      *
@@ -58,7 +60,14 @@ class SupplyApprovedNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'description' => $this->supply->preInventoryAction->description,
+            'supply_id' => $this->supply->id,
+            'supplier_id' => $this->supply->origin->id,
+            'supplier_name' => $this->supply->origin->name,
+            'supplier_user_name' => $this->supply->latestStatus(Supply::PENDING)->user->name,
+            'user_id' => $this->supply->latestStatus(Supply::APPROVED)->user->id,
+            'user_name' => $this->supply->latestStatus(Supply::APPROVED)->user->name,
+            'created_at' => $this->supply->latestStatus(Supply::PENDING)->created_at,
         ];
     }
 }

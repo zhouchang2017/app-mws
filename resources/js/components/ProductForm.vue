@@ -145,7 +145,6 @@
     },
     methods: {
       checkName (rule, value, callback) {
-        console.log(rule)
         _.each(this.appConfig.locales, (locale, key) => {
           if (!value[key]) {
             return callback(new Error(`${locale}名称不能为空`))
@@ -305,7 +304,7 @@
       await this.fetchTaxons()
       if (this.updatePage) {
 
-        this.fillAttribute('name', _.get(this, 'resource.translations'), 'form.name')
+        this.fillTranslationField('name', _.get(this, 'resource.translations'), 'form.name')
         this.form.code = _.get(this, 'resource.code')
         this.fillTaxon()
         this.fillOptions()

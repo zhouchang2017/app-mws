@@ -19,6 +19,8 @@ class PreInventoryActionRejectedNotification extends Notification
 
     public $action;
 
+    public static $typeName = '(入库单\出货单)拒绝';
+
     /**
      * Create a new notification instance.
      *

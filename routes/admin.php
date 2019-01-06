@@ -13,6 +13,9 @@ Route::resource('/supplies', 'SupplyController');
 // 供货计划审核
 Route::patch('/supplies/{supply}/approved', 'SupplyController@approved')
     ->name('supplies.approved');
+// 供货计划确认完成
+Route::patch('/supplies/{supply}/completed', 'SupplyController@completed')
+    ->name('supplies.completed');
 
 // 预出\入库(入库单\出货单)
 Route::resource('/pre-inventory-actions', 'PreInventoryActionController');
@@ -48,13 +51,24 @@ Route::post('/pre-inventory-action-order-items/{pre_inventory_action_order_item}
 Route::post('/pre-item-states/{id}',
     'PreInventoryActionOrderItemStateController@createAttachment')
     ->name('pre-item-states.attachment.create');
+
+// 检测code唯一
+Route::get('/product-variants/check/code/{code}', 'ProductVariantController@checkCode')
+    ->name('product-variants.check.code');
+
 // 变体
 Route::resource('/product-variants', 'ProductVariantController');
+
 // 仓库
 Route::resource('warehouses', 'WarehouseController');
+
+// 仓库类型
+Route::resource('warehouse-types', 'WarehouseTypeController');
+
 // 产品
 Route::resource('/products', 'ProductController');
-
+// 产品包含的销售属性
+Route::get('/products/{product}/options', 'ProductController@options')->name('products.options');
 // 产品分类
 Route::get('/taxons', 'TaxonController@index')->name('taxons.index');
 
@@ -70,3 +84,19 @@ Route::resource('/inventories', 'InventoryController');
 
 // 价格调整类型
 Route::resource('/attachment-types', 'AttachmentTypeController');
+
+// 消息通知
+Route::get('/notifications', 'HomeController@notifications')->name('notifications.index');
+// 标记已读
+Route::patch('/notifications/{id}', 'HomeController@notificationMakeAsRead')->name('notifications.read');
+
+Route::get('/users', 'UserController@index')->name('users.index');
+
+// 地址
+Route::get('/addresses/create', 'AddressController@create')->name('addresses.create');
+
+// 中华人民共和国行政区划（五级）：省级、地级、县级、乡级和村级
+
+Route::get('/divisions/provinces', 'DivisionController@provinces')->name('divisions.provinces.search');
+Route::get('/divisions/cities', 'DivisionController@cities')->name('divisions.cities.search');
+Route::get('/divisions/areas', 'DivisionController@areas')->name('divisions.areas.search');

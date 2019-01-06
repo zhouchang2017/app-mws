@@ -26,12 +26,24 @@ trait PerformsQueries
         array $filters = [],
         array $orderings = [],
         $withTrashed = TrashedStatus::DEFAULT
-    ) {
+    )
+    {
         return static::applyOrderings(static::applyFilters(
             $request, static::initializeQuery($request, $query, $search, $withTrashed), $filters
         ), $orderings)->tap(function ($query) use ($request) {
-            static::indexQuery($request, $query->with(static::$with)->withCount(static::$count));
+            static::indexQuery($request, $query->with(static::resolveWith())->withCount(static::$count));
         });
+    }
+
+    public static function resolveWith()
+    {
+        $with = request()->get('include', []);
+        if ($with) {
+            $with = explode(',', $with);
+        } else {
+            $with = [];
+        }
+        return array_merge(static::$with, $with);
     }
 
     /**
@@ -64,7 +76,7 @@ trait PerformsQueries
     protected static function applySearch($query, $search)
     {
         return $query->where(function ($query) use ($search) {
-            if (is_numeric($search) && in_array($query->getModel()->getKeyType(), ['int', 'integer'])) {
+            if (is_numeric($search) && in_array($query->getModel()->getKeyType(), [ 'int', 'integer' ])) {
                 $query->orWhere($query->getModel()->getQualifiedKeyName(), $search);
             }
 

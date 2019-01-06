@@ -61,12 +61,19 @@
       viaRelationId: {
         type: [Number, String],
         default: null
+      },
+      morphType:{
+        type: String,
+        default: null
       }
     },
     computed: {
       createLink () {
         if (!this.viaRelationName && !this.viaRelationId) {
           return `/${this.uriKey}/create`
+        }
+        if(this.viaRelationName && this.viaRelationId && this.morphType){
+          return `/${this.uriKey}/create?morphType=${this.morphType}&viaRelationName=${this.viaRelationName}&viaRelationId=${this.viaRelationId}`
         }
         return `/${this.uriKey}/create?viaRelationName=${this.viaRelationName}&viaRelationId=${this.viaRelationId}`
       }

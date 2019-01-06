@@ -8,13 +8,10 @@ export default {
       type: [Number, String],
       default: null
     },
-    resourceName: {
-      type: String,
-      default: null
-    },
-    viaRelationResource: {
-      type: Object,
-      default: null
-    }
   },
+  computed: {
+    viaRelationship () {
+      return !!(this.viaRelationName && this.viaRelationId)
+    }
+  }
 }

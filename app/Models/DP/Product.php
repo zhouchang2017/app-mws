@@ -43,7 +43,7 @@ class Product extends Model
 
     public function taxon()
     {
-        return $this->belongsTo(Taxon::class);
+        return $this->belongsTo(Taxon::class)->withDefault(['name'=>'暂无分类']);
     }
 
 

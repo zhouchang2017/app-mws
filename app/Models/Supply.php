@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Events\SupplyApprovedEvent;
 use App\Notifications\SupplyApprovedNotification;
+use App\Notifications\SupplyCompletedNotification;
 use App\Notifications\SupplyPendingNotification;
+use App\Notifications\SupplyShippedNotification;
 use App\Notifications\SupplyUnShipNotification;
 use App\Observers\SupplyObserver;
 use App\Scopes\WithStateScope;
@@ -38,7 +40,7 @@ class Supply extends Model
 
     protected $appends = [ 'current_state' ];
 
-    protected $touches = ['statuses'];
+    protected $touches = [ 'statuses' ];
 
     protected $casts = [
         'has_ship' => 'bool',
@@ -49,6 +51,17 @@ class Supply extends Model
         parent::boot();
         static::observe(SupplyObserver::class);
         static::addGlobalScope(new WithStateScope());
+
+        // 如果供应商登录到系统，仅能看到自己发布的供货计划
+        static::addGlobalScope('filterBySupplier', function (Builder $builder) {
+            if (auth()->user() instanceof SupplierUser) {
+                $supplier = auth()->user()->supplier;
+                $builder->where([
+                    [ 'origin_type', get_class($supplier) ],
+                    [ 'origin_id', $supplier->id ],
+                ]);
+            }
+        });
     }
 
 
@@ -99,7 +112,7 @@ class Supply extends Model
 
     public function loadOrders()
     {
-        $this->loadMissing(['preInventoryAction.orders']);
+        $this->loadMissing([ 'preInventoryAction.orders' ]);
         $this->preInventoryAction->orders->each->loadDetailAttribute();
     }
 
@@ -115,6 +128,12 @@ class Supply extends Model
     public function preInventoryAction()
     {
         return $this->morphOne(PreInventoryAction::class, 'origin');
+    }
+
+    // 是否全部确认收货
+    public function isAllChecked()
+    {
+        return $this->preInventoryAction->orders->map->items->flatten(1)->every->isAllChecked();
     }
 
     public function notify(Notification $notification)
@@ -138,5 +157,21 @@ class Supply extends Model
     public function pendingNotify()
     {
         $this->origin->admin->notify(new SupplyPendingNotification($this));
+    }
+
+    // 已发货通知
+    public function shippedNotify()
+    {
+        $this->origin->admin->notify(new SupplyShippedNotification($this));
+        $this->preInventoryAction->orders->each(function ($order) {
+            // 发送通知给每个仓库
+            $order->warehouse->admin->notify(new SupplyShippedNotification($this));
+        });
+    }
+
+    // 完成通知
+    public function completedNotify()
+    {
+        $this->origin->users->each->notify(new SupplyCompletedNotification($this));
     }
 }

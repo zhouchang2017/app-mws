@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use App\Supports\ERP;
 use Closure;
+use Illuminate\Support\Facades\View;
 
 class ErpMiddleware
 {
@@ -20,6 +22,7 @@ class ErpMiddleware
             return __($value);
         }, config('translatable.locales'));
 
+        View::share('notifyTypes',User::getTypes());
         ERP::provideToScript([
             'locales'     => $locales,
             'indexLocale' => app()->getLocale()

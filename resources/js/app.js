@@ -30,7 +30,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  */
 import notifyable from './notifyable'
 import helper from './helper'
-
+require('./filters')
 Vue.mixin(notifyable)
 Vue.mixin(helper)
 const erpConfig = _.cloneDeep(config)

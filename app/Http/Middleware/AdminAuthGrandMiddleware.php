@@ -4,8 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 
 class AdminAuthGrandMiddleware
@@ -19,7 +18,7 @@ class AdminAuthGrandMiddleware
      */
     public function handle($request, Closure $next)
     {
-        View::share('domain', 'admin');
+        View::share('domain', array_first(explode('.',$request->getHost())));
         $this->generateMenus();
         return $next($request);
     }
@@ -32,6 +31,7 @@ class AdminAuthGrandMiddleware
             $menu->add('入库单\出货单','pre-inventory-actions');
             $menu->add('操作单','pre-inventory-action-orders');
             $menu->add('仓库','warehouses');
+            $menu->add('仓库类型','warehouse-types');
             $menu->add('库存','inventories');
             $product = $menu->add('产品','products');
             $product->add('产品属性','product-attributes');
@@ -39,6 +39,7 @@ class AdminAuthGrandMiddleware
             $product->add('产品销售属性','product-options');
             $product->add('变体','product-variants');
             $menu->add('价格调整类型','attachment-types');
+            $menu->add('站内消息','notifications');
         });
     }
 }

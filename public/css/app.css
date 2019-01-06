@@ -1034,6 +1034,12 @@ a {
   border-style: none;
 }
 
+.line-limit-length {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /**
  * This injects all of Tailwind's utility classes, generated based on your
  * config file.

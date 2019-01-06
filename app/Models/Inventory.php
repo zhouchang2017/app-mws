@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inventory extends Model
 {
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'product_id',
         'variant_id',
@@ -40,8 +42,8 @@ class Inventory extends Model
     public function scopeFindWarehouseVariants($query, $warehouseId, $variantId, $productId = null)
     {
         return $query->where([
-            ['warehouse_id', $warehouseId],
-            ['variant_id', $variantId],
+            [ 'warehouse_id', $warehouseId ],
+            [ 'variant_id', $variantId ],
         ])->when($productId, function ($query, $productId) {
             return $query->where('product_id', $productId);
         });
@@ -49,10 +51,10 @@ class Inventory extends Model
 
     public function scopeSearch(Builder $query)
     {
-        return $query->when(request()->variant_id,function($query,$variantId){
-            return $query->where('variant_id',$variantId);
-        })->when(request()->warehouse_id,function($query,$warehouseId){
-           return $query->where('warehouse_id',$warehouseId);
+        return $query->when(request()->variant_id, function ($query, $variantId) {
+            return $query->where('variant_id', $variantId);
+        })->when(request()->warehouse_id, function ($query, $warehouseId) {
+            return $query->where('warehouse_id', $warehouseId);
         });
     }
 

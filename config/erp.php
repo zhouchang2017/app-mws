@@ -10,7 +10,7 @@ return [
         'router' => [
             'domain' => env('SUPPLIER_DOMAIN', 'supplier') . '.' . config('app.url'),
             'as' => 'supplier.',
-            'namespace' => 'App\Http\Controllers\Supplier',
+            'namespace' => 'App\Http\Controllers',
 //    'prefix' => 'supplier-api',
             'middleware' => ['web', 'erp', 'supplier', 'auth:supplier_web'],
         ],
@@ -20,7 +20,7 @@ return [
         'router' => [
             'domain' => env('ADMIN_DOMAIN', 'admin') . '.' . config('app.url'),
             'as' => 'admin.',
-            'namespace' => 'App\Http\Controllers\Admin',
+            'namespace' => 'App\Http\Controllers',
 //    'prefix' => 'admin-api',
             'middleware' => ['web', 'erp', 'admin', 'auth:admin'],
         ],

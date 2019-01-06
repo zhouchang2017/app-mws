@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\SupplyPendingNotification;
-use Illuminate\Notifications\Notifiable;
+use App\Traits\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -31,6 +31,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
 
     public function scopeSupplyPendingNotify($query)
     {

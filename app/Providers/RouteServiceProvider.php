@@ -64,7 +64,8 @@ class RouteServiceProvider extends ServiceProvider
         Route::group(config('erp.admin.router'), function () {
             require base_path('routes/admin.php');
         });
-        Route::group(array_merge(array_except(config('erp.admin.router'), ['middleware']), ['middleware' => 'web']),
+        Route::group(array_merge(array_except(config('erp.admin.router'), ['middleware']),
+            ['middleware' => 'web','namespace'=>'App\Http\Controllers\Admin']),
             function () {
                 $this->auth();
             });
@@ -75,7 +76,8 @@ class RouteServiceProvider extends ServiceProvider
         Route::group(config('erp.supplier.router'), function () {
             require base_path('routes/supplier.php');
         });
-        Route::group(array_merge(array_except(config('erp.supplier.router'), ['middleware']), ['middleware' => 'web']),
+        Route::group(array_merge(array_except(config('erp.supplier.router'),
+            ['middleware']), ['middleware' => 'web','namespace'=>'App\Http\Controllers\Supplier']),
             function () {
                 $this->auth();
             });

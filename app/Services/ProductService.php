@@ -10,8 +10,13 @@ namespace App\Services;
 
 
 use App\Models\DP\Product;
+use App\Models\DP\ProductAttribute;
+use App\Models\DP\ProductOption;
+use App\Models\DP\ProductVariant;
+use App\Models\DP\ProductVariantOptionValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
@@ -74,9 +79,68 @@ class ProductService
         $product->options()->sync($options);
     }
 
-    public function createProductVariant(Request $request)
+    public function updateOrCreateProductVariant(Request $request, ProductVariant $productVariant = null)
     {
+        return DB::transaction(function () use ($request, $productVariant) {
+            return tap($productVariant ?? new ProductVariant(), function ($variant) use ($request) {
+                /** @var ProductVariant $variant */
+                $variant->fill($request->all());
+                $variant->product()->associate($this->product);
+                TranslationService::createTranslation($variant, 'name', $request->get('name'));
+                $variant->save();
 
+                $this->updateOrCreateVariantOption($variant, $request->get('options'));
+
+                $variant->price()->updateOrCreate([
+                    'price' => $request->get('price'),
+                ]);
+            });
+        });
+    }
+
+
+    public function updateOrCreateVariantOption(ProductVariant $variant, array $options)
+    {
+        /*
+         * [[
+         *    option_id=>1,
+         *    value=>[
+         *          en-US=>"foo",
+         *          zh-CN=>"bar"
+         *    ]
+         * ...
+         * ]]*/
+        collect($options)->each(function ($option) use ($variant) {
+            $productVariantOptionValue = $variant->optionValues()->updateOrCreate([ 'id' => isset($option['id']) ? $option['id'] : null ], [ 'option_id' => $option['option_id'] ]);
+            /** @var ProductVariantOptionValue $productVariantOptionValue */
+            TranslationService::createTranslation($productVariantOptionValue, 'value', $option['value']);
+            $productVariantOptionValue->save();
+        });
+
+    }
+
+    public static function updateOrCreateProductAttribute(Request $request, ProductAttribute $attribute = null)
+    {
+        return DB::transaction(function () use ($request, $attribute) {
+            return tap($attribute ?? new ProductAttribute(), function ($productAttribute) use ($request) {
+                /** @var ProductAttribute $productAttribute */
+                $productAttribute->fill($request->all());
+                TranslationService::createTranslation($productAttribute, 'name', $request->get('name'));
+                $productAttribute->save();
+            });
+        });
+    }
+
+    public static function updateOrCreateProductOption(Request $request, ProductOption $option = null)
+    {
+        return DB::transaction(function () use ($request, $option) {
+            return tap($option ?? new ProductOption(), function ($productOption) use ($request) {
+                /** @var ProductOption $productOption */
+                $productOption->fill($request->all());
+                TranslationService::createTranslation($productOption, 'name', $request->get('name'));
+                $productOption->save();
+            });
+        });
     }
 
 }

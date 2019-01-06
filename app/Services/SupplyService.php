@@ -5,7 +5,9 @@ namespace App\Services;
 
 
 use App\Events\SupplyApprovedEvent;
+use App\Events\SupplyCompletedEvent;
 use App\Events\SupplyPendingEvent;
+use App\Events\SupplyShippedEvent;
 use App\Events\SupplyUnShipEvent;
 use App\Models\InventoryActionType;
 use App\Models\PreInventoryActionOrder;
@@ -35,6 +37,11 @@ class SupplyService
         $this->supply = $supply;
     }
 
+    public function updatedNow()
+    {
+        $this->supply->update([ 'updated_at' => now() ]);
+    }
+
 
     /**
      * 标记审核操作
@@ -44,6 +51,7 @@ class SupplyService
     public function statusToApproved($reason = '审核通过，等待分配接收仓库')
     {
         $this->supply->setStatus($this->supply::APPROVED, $reason);
+        $this->updatedNow();
         event(new SupplyApprovedEvent($this->supply));
     }
 
@@ -54,6 +62,7 @@ class SupplyService
     public function statusToUnShip($reason = '等待发货')
     {
         $this->supply->setStatus($this->supply::UN_SHIP, $reason);
+        $this->updatedNow();
         event(new SupplyUnShipEvent($this->supply));
     }
 
@@ -66,6 +75,7 @@ class SupplyService
     public function statusToCancel($reason = '取消')
     {
         $this->supply->setStatus($this->supply::CANCEL, $reason);
+        $this->updatedNow();
     }
 
 
@@ -77,6 +87,7 @@ class SupplyService
     public function statusToPending($reason = '待审核')
     {
         $this->supply->setStatus($this->supply::PENDING, $reason);
+        $this->updatedNow();
         event(new SupplyPendingEvent($this->supply));
     }
 
@@ -89,6 +100,7 @@ class SupplyService
     {
         try {
             $this->supply->setStatus($this->supply::UN_COMMIT, $reason);
+            $this->updatedNow();
         } catch (InvalidStatus $e) {
         }
     }
@@ -102,6 +114,7 @@ class SupplyService
     public function statusToPartShipped($reason = '部分发货')
     {
         $this->supply->setStatus($this->supply::PART_SHIPPED, $reason);
+        $this->updatedNow();
     }
 
 
@@ -113,6 +126,8 @@ class SupplyService
     public function statusToShipped($reason = '已发货')
     {
         $this->supply->setStatus($this->supply::SHIPPED, $reason);
+        $this->updatedNow();
+        event(new SupplyShippedEvent($this->supply));
     }
 
 
@@ -124,6 +139,8 @@ class SupplyService
     public function statusToCompleted($reason = '已完成')
     {
         $this->supply->setStatus($this->supply::COMPLETED, $reason);
+        $this->updatedNow();
+        event(new SupplyCompletedEvent($this->supply));
     }
 
     /**
@@ -228,9 +245,9 @@ class SupplyService
     public function shipment(PreInventoryActionOrder $order, Request $request)
     {
         InventoryService::preActionOrderShipment($order, $request, true);
-        if($this->isShipped()){
+        if ($this->isShipped()) {
             $this->statusToShipped();
-        }else{
+        } else {
             $this->statusToPartShipped();
         }
     }

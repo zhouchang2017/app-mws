@@ -19,6 +19,8 @@ class PreInventoryActionAssignedNotification extends Notification
 
     public $action;
 
+    public static $typeName = '(入库单\出货单)出货已分配';
+
     /**
      * Create a new notification instance.
      *
@@ -37,7 +39,7 @@ class PreInventoryActionAssignedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return [ 'database' ];
     }
 
     /**
@@ -63,7 +65,7 @@ class PreInventoryActionAssignedNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'action_id' => $this->action->id,
         ];
     }
 }

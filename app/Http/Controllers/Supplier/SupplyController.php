@@ -13,19 +13,7 @@ use App\Http\Controllers\Controller;
 
 class SupplyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $resources = Supply::latest('updated_at')->paginate(15);
-        if (request()->ajax()) {
-            return $resources;
-        }
-        return view('supplier.pages.supplies.index');
-    }
+    public static $resource = \App\Resources\Supply::class;
 
     /**
      * Show the form for creating a new resource.

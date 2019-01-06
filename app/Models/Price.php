@@ -9,7 +9,9 @@ class Price extends Model
 {
     use MoneyFormatableTrait;
 
-    protected $fillable = ['price'];
+    protected $fillable = [ 'price' ];
+
+    protected $connection = 'mysql';
 
     public function priceable()
     {

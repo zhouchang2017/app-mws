@@ -19,6 +19,8 @@ class PreInventoryActionPendingNotification extends Notification
 
     public $action;
 
+    public static $typeName = '(入库单\出货单)等待审核';
+
     /**
      * Create a new notification instance.
      *

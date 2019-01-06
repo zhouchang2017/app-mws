@@ -3,6 +3,8 @@
 namespace App\Resources;
 
 
+use App\Models\User;
+
 class Supply extends Resource
 {
     public static $model = \App\Models\Supply::class;
@@ -16,7 +18,9 @@ class Supply extends Resource
         'id',
     ];
 
-    public static $with = [];
+    public static $with = [
+        'origin'
+    ];
 
 
     public static $count = [];
@@ -25,7 +29,10 @@ class Supply extends Resource
 
     public static function label()
     {
-        return '供应商入库';
+        if(auth()->user() instanceof User){
+            return '供应商入库';
+        };
+        return '供货计划';
     }
 
 

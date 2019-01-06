@@ -8,3 +8,8 @@
         label="仓库类型"
 >
 </el-table-column>
+<el-table-column
+        prop="inventories_count"
+        label="库存总计"
+>
+</el-table-column>

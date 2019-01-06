@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\ErpRequest;
 use App\Http\Requests\SupplyRequest;
 use App\Models\Supply;
 use App\Services\SupplyService;
@@ -11,9 +12,6 @@ use App\Http\Controllers\Controller;
 class SupplyController extends Controller
 {
     public static $resource = \App\Resources\Supply::class;
-
-    public static $indexViewName = 'admin.pages.supplies.index';
-
 
     /**
      * Show the form for creating a new resource.
@@ -47,14 +45,15 @@ class SupplyController extends Controller
      * @param Supply $supply
      * @return \Illuminate\Http\Response
      */
-    public function show(Supply $supply)
+    public function show(Supply $supply,ErpRequest $request)
     {
+
         $resource = $supply->loadMissing(['origin', 'items.variant','statuses.user']);
         if (request()->ajax()) {
             return response()->json($resource);
         } else {
             $this->viewShare(['resourceId'=>$supply->id]);
-            return view('admin.pages.supplies.detail', compact('resource'));
+            return view('supplies.detail', compact('resource'));
         }
     }
 

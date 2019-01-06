@@ -38,6 +38,25 @@ class SupplyEventSubscriber
         $event->supply->unShipNotify();
     }
 
+    /*
+     * 发货完成
+     * */
+    public function onShipped($event)
+    {
+        // 通知平台
+        $event->supply->shippedNotify();
+    }
+
+    /*
+     * 确认完成
+     * */
+    public function onCompleted($event)
+    {
+        // 通知供应商
+        $event->supply->completedNotify();
+    }
+
+
     /**
      * 为订阅者注册监听器。
      *
@@ -60,5 +79,14 @@ class SupplyEventSubscriber
             'App\Listeners\SupplyEventSubscriber@onUnShip'
         );
 
+        $events->listen(
+            'App\Events\SupplyShippedEvent',
+            'App\Listeners\SupplyEventSubscriber@onShipped'
+        );
+
+        $events->listen(
+            'App\Events\SupplyCompletedEvent',
+            'App\Listeners\SupplyEventSubscriber@onCompleted'
+        );
     }
 }

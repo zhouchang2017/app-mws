@@ -8,11 +8,13 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class newPreInventoryActionOrderNotification extends Notification
+class NewPreInventoryActionOrderNotification extends Notification
 {
     use Queueable;
 
     public $order;
+
+    public static $typeName = '新操作单';
 
     /**
      * Create a new notification instance.
@@ -32,7 +34,7 @@ class newPreInventoryActionOrderNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [ 'mail' ];
+        return [ 'database' ];
     }
 
     /**
@@ -58,7 +60,7 @@ class newPreInventoryActionOrderNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'order_id' => $this->order->id,
         ];
     }
 }

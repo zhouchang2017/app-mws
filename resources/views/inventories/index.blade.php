@@ -23,8 +23,3 @@
         label="仓库区域"
 >
 </el-table-column>
-<el-table-column
-        prop="updated_at"
-        label="更新时间"
->
-</el-table-column>

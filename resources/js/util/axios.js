@@ -29,7 +29,7 @@ instance.interceptors.response.use(
         title:'Unauthorized',
         message:error.response.data.message
       })
-      // window.location.href = '/'
+      window.location.href = '/login'
     }
 
     // Handle Forbidden

@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 
-class SupplyRequest extends FormRequest
+class SupplyRequest extends ErpRequest
 {
     /**
      * Determine if the user is authorized to make this request.

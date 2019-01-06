@@ -80,8 +80,8 @@ class ProductVariant extends Model
 
     public function supplier()
     {
-        $database = $this->getConnection()->getDatabaseName();
-        return $this->belongsToMany(Supplier::class, $database . '.supplier_variants', 'variant_id', 'supplier_id')
+//        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany(Supplier::class, 'supplier_variants', 'variant_id', 'supplier_id')
             ->using(SupplierVariant::class);
     }
 

@@ -14,6 +14,8 @@ class SupplyPendingNotification extends Notification
 
     public $supply;
 
+    public static $typeName = '供货单等待审核';
+
     /**
      * Create a new notification instance.
      *

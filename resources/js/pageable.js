@@ -18,11 +18,14 @@ export default {
   },
   methods: {
     setCurrentPage (page = 1) {
-      this.$set(this, 'pageOption', page)
+      this.$set(this, 'pageOption.current_page', page)
     },
     setOptions (options) {
       const {data, ...option} = options
       this.pageOption = Object.assign({}, this.pageOption, option)
+    },
+    incPage () {
+      this.setCurrentPage(this.currentPage + 1)
     }
   },
   computed: {
@@ -38,7 +41,7 @@ export default {
 
     },
     perTotal () {
-      return _.get(this, 'pageOption.to',0)
+      return _.get(this, 'pageOption.to', 0)
     },
     perPage () {
       return _.get(this, 'pageOption.per_page')

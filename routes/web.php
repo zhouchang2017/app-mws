@@ -14,30 +14,9 @@
 Route::view('/', 'welcome');
 
 Route::get('/test',function (){
-//    $namespace = app()->getNamespace();
-//
-//    $resources = [];
-//    $directory = app_path('Http/Controllers');
-//    foreach ((new \Symfony\Component\Finder\Finder())->in($directory)->files() as $resource) {
-//        $resource = $namespace.str_replace(
-//                ['/', '.php'],
-//                ['\\', ''],
-//                \Illuminate\Support\Str::after($resource->getPathname(), app_path().DIRECTORY_SEPARATOR)
-//            );
-//        $resources[] = $resource;
-//        if (is_subclass_of($resource, Resource::class) &&
-//            ! (new ReflectionClass($resource))->isAbstract()) {
-//            $resources[] = $resource;
-//        }
-//    }
-
-    $build = \App\Resources\Warehouse::buildIndexQuery(
-        request(),
-        \App\Resources\Warehouse::newModel()->newQuery(),
-        request()->search,
-        [],[]
-    );
-    return $build->paginate();
+    $province =  \App\Models\Divisions\Province::find(43);
+    $province->loadMissing('cities.areas');
+    return $province;
 });
 //Route::get('/home', 'HomeController@index')->name('home');
 

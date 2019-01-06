@@ -62,7 +62,7 @@ class PreInventoryActionOrderItem extends Model
                 'quantity'       => $quantity,
                 'warehouse_area' => $warehouseArea,
                 'type_id'        => $this->preOrder->type->id,
-                'variant_id'     => $this->variant_id
+                'variant_id'     => $this->variant_id,
             ]);
         } else {
             throw new \Exception('超出实际数量');
@@ -73,6 +73,12 @@ class PreInventoryActionOrderItem extends Model
     public function getConfirmCountAttribute()
     {
         return $this->state()->sum('quantity');
+    }
+
+    // 全部确认完成
+    public function isAllChecked()
+    {
+        return (integer)$this->confirmCount === $this->quantity;
     }
 
     // 是否需要物流

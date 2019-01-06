@@ -16,7 +16,7 @@ class Warehouse extends Model implements Addressable
     /**
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = [ 'name', 'type_id', 'user_id' ];
 
     /**
      * @var array

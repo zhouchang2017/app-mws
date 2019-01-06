@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Requests\ErpRequest;
 use Illuminate\Http\Request;
+use App\Resources\User as UserResource;
 
 class UserController extends Controller
 {
-    public function show(User $user)
-    {
+    public static $resource = UserResource::class;
 
-    }
-
-    public function profile()
+    public function notifications(ErpRequest $request)
     {
-        
+        return response()->json(
+            $request->user()->notifications,
+            204
+        );
     }
 }

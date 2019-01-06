@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 class Supplier extends Model
 {
     use AddressableTrait;
+
+    protected $connection = 'mysql';
     /**
      * @var array
      */

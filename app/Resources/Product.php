@@ -13,11 +13,10 @@ class Product extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'code',
     ];
 
     public static $with = [];
-
 
     public static $count = [];
 

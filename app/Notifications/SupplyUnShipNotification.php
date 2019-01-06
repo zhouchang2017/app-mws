@@ -14,6 +14,8 @@ class SupplyUnShipNotification extends Notification
 
     public $supply;
 
+    public static $typeName = '供货计划已分配仓库，等待发货';
+
     /**
      * Create a new notification instance.
      *

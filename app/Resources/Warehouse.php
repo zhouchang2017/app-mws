@@ -3,6 +3,8 @@
 namespace App\Resources;
 
 
+use Illuminate\Http\Request as NovaRequest;
+
 class Warehouse extends Resource
 {
     public static $model = \App\Models\Warehouse::class;
@@ -20,13 +22,12 @@ class Warehouse extends Resource
     public static $with = ['type'];
 
 
-    public static $count = ['inventories'];
+    public static $count = ['inventories:quantity'];
 
 
     public static function label()
     {
         return '仓库';
     }
-
 
 }
