@@ -15,6 +15,8 @@ class Market extends Model
 
     protected $connection = 'mysql';
 
+    protected $appends = ['type_name'];
+
     public static $marketables = [
         Channel::class,
     ];
@@ -23,4 +25,16 @@ class Market extends Model
     {
         return $this->morphTo();
     }
+
+    public function getTypeNameAttribute()
+    {
+        return app($this->{$this->marketable()->getMorphType()})::$marketName;
+    }
+
+    public function marketableUrl()
+    {
+
+    }
+
+
 }

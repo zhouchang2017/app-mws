@@ -32,6 +32,7 @@ class ProductService
     }
 
 
+
     public static function updateOrCreateProduct(Request $request, Product $product = null)
     {
         return tap($product ?? new Product(), function ($product) use ($request) {
@@ -97,7 +98,6 @@ class ProductService
             });
         });
     }
-
 
     public function updateOrCreateVariantOption(ProductVariant $variant, array $options)
     {

@@ -76,7 +76,11 @@ a{
 }
 
 .card {
-    @apply .bg-white  .rounded-lg;
+    @apply .bg-white .shadow .overflow-hidden  .rounded-lg;
+}
+
+.card-no-shadow {
+    @apply .bg-white .overflow-hidden  .rounded-lg;
 }
 
 .card-panel {
@@ -89,6 +93,10 @@ a{
 
 .card-refresh:hover {
     @apply text-primary;
+}
+
+.el-alert__content{
+    @apply w-full
 }
 
 /**

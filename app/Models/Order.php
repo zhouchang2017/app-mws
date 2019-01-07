@@ -41,13 +41,17 @@ class Order extends Model
         'updated_at',
     ];
 
+    protected $appends = [
+        'type_name',
+    ];
+
     protected static function boot()
     {
         parent::boot();
         static::created(function ($model) {
             $service = new OrderService($model);
             $service->createOrderItems();
-            $service->createPreInventoryAction();
+            // $service->createPreInventoryAction();
         });
     }
 
@@ -94,6 +98,11 @@ class Order extends Model
     public function getSimpleAddressAttribute()
     {
         return $this->origin->address->simple_address;
+    }
+
+    public function getTypeNameAttribute()
+    {
+        return app($this->{$this->origin()->getMorphType()})::$orderTypeName;
     }
 
     // ====================================================================================== //

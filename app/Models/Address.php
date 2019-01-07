@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Divisions\Area;
+use App\Models\Divisions\City;
+use App\Models\Divisions\Province;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -39,6 +42,15 @@ class Address extends Model
     public function addressable()
     {
         return $this->morphTo();
+    }
+
+    public function getCascaderAttribute()
+    {
+        return [
+            Province::query()->where('name', $this->province)->select(['id'])->pluck('id')->first(),
+            City::query()->where('name', $this->city)->select(['id'])->pluck('id')->first(),
+            Area::query()->where('name', $this->district)->select(['id'])->pluck('id')->first(),
+        ];
     }
 
     public function simple()

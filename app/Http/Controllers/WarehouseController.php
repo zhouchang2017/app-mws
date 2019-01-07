@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Warehouse;
 use App\Resources\Warehouse as WarehouseResource;
+use App\Services\AddressService;
 use Illuminate\Http\Request;
+
 
 class WarehouseController extends Controller
 {
 
     public static $resource = WarehouseResource::class;
-
 
 
     /**
@@ -32,8 +33,13 @@ class WarehouseController extends Controller
      */
     public function store(Request $request)
     {
+        $warehouse = Warehouse::create($request->all());
+        if ($request->has('address')) {
+            AddressService::updateOrCreateAddress($warehouse, $request->get('address'));
+        }
+
         return $this->created(
-            Warehouse::create($request->all())
+            $warehouse
         );
     }
 
@@ -45,7 +51,7 @@ class WarehouseController extends Controller
      */
     public function show(Warehouse $warehouse)
     {
-        $resource = $warehouse->loadMissing(['type','admin']);
+        $resource = $warehouse->loadMissing(['type', 'admin', 'address']);
         if (request()->ajax()) {
             return response()->json($resource);
         }
@@ -61,7 +67,11 @@ class WarehouseController extends Controller
      */
     public function edit(Warehouse $warehouse)
     {
-        $resource = $warehouse->loadMissing(['type','admin']);
+        /** @var Warehouse $resource */
+        $resource = $warehouse->loadMissing(['type', 'admin', 'address']);
+        if ($resource->address) {
+            $resource->address->append('cascader');
+        }
         $this->viewShare();
         return view(static::$resource::uriKey() . '.update', compact('resource'));
     }
@@ -76,7 +86,12 @@ class WarehouseController extends Controller
     public function update(Request $request, Warehouse $warehouse)
     {
         $warehouse->fill($request->all());
+
         $warehouse->save();
+        if ($request->has('address')) {
+             AddressService::updateOrCreateAddress($warehouse, $request->get('address'), $warehouse->address);
+        }
+
         return $this->updated(
             $warehouse
         );

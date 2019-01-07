@@ -3,7 +3,9 @@
 namespace App\Models\DP;
 
 
+use App\Models\Supplier;
 use App\Models\SupplierUser;
+use App\Observers\ProductObserver;
 use App\Scopes\SupplierProductScope;
 use App\Traits\ProductCheckStatus;
 use Dimsav\Translatable\Translatable;
@@ -28,22 +30,19 @@ class Product extends Model
         'meta_description',
     ];
 
-    protected $fillable = [ 'code', 'taxon_id', 'enabled' ];
+    protected $fillable = ['code', 'taxon_id', 'enabled'];
 
     protected static function boot()
     {
         parent::boot();
         static::addGlobalScope(new SupplierProductScope());
-        static::created(function ($model) {
-            if (auth()->user() instanceof SupplierUser) {
-                auth()->user()->supplier->products()->attach($model);
-            }
-        });
+        static::observe(ProductObserver::class);
     }
+
 
     public function taxon()
     {
-        return $this->belongsTo(Taxon::class)->withDefault(['name'=>'暂无分类']);
+        return $this->belongsTo(Taxon::class)->withDefault(['name' => '暂无分类']);
     }
 
 
@@ -63,12 +62,12 @@ class Product extends Model
 
     public function getAttributeValuesTranslationAttribute()
     {
-        return $this->attributeValues->groupBy('attribute_id')
-            ->map(function ($attr) {
-                return $attr->groupBy('locale_code')->map(function ($prop) {
-                    return $prop->first();
+        return $this->attributes()->get()->groupBy('id')
+            ->map(function ($attribute) {
+                return tap($attribute->first(), function ($attr) use ($attribute) {
+                    $attr->values = $attribute->map->value;
                 });
-            });
+            })->values();
     }
 
 
@@ -95,5 +94,10 @@ class Product extends Model
     public function variant()
     {
         return $this->hasOne(ProductVariant::class)->groupBy('product_id');
+    }
+
+    public function suppliers()
+    {
+        return $this->belongsToMany(Supplier::class, 'supplier_product');
     }
 }

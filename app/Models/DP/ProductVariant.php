@@ -7,6 +7,7 @@ use App\Models\Inventory;
 use App\Models\ProductPrice;
 use App\Models\Supplier;
 use App\Models\SupplierVariant;
+use App\Observers\ProductVariantObserver;
 use App\Scopes\SupplierProductVariantScope;
 use App\Traits\PriceableTrait;
 use Dimsav\Translatable\Translatable;
@@ -39,6 +40,7 @@ class ProductVariant extends Model
     {
         parent::boot();
         static::addGlobalScope(new SupplierProductVariantScope());
+        static::observe(ProductVariantObserver::class);
     }
 
     public function scopeFilterSupplier($query, $id)

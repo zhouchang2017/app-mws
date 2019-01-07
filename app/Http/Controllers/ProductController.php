@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ErpRequest;
 use App\Models\DP\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $resource = $product->loadMissing([ 'attributeValues.attribute', 'options', 'taxon', 'variants.price' ]);
+        $resource = $product->loadMissing(['attributeValues.attribute', 'options', 'taxon', 'variants.price']);
         if (request()->ajax()) {
             return response()->json($resource);
         }
@@ -57,7 +58,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $resource = $product->loadMissing([ 'taxon', 'attributeValues', 'options:option_id' ]);
+        $resource = $product->loadMissing(['taxon', 'attributeValues', 'options:option_id']);
         $product->taxon->append('ancestors');
         $this->viewShare();
         return view(static::$resource::uriKey() . '.update', compact('resource'));
@@ -94,4 +95,26 @@ class ProductController extends Controller
             $product->options()->with('values')->get()
         );
     }
+
+    public function submit(Product $product, ErpRequest $request)
+    {
+        $product->statusToPending();
+        if (request()->ajax()) {
+            return $this->updated([], '产品已提交审核', '您的提交会尽快处理,请耐心等待');
+        } else {
+            return redirect()->route($request->getSubDomain() . '.products.show', [$product]);
+        }
+    }
+
+    public function approved(Product $product, ErpRequest $request)
+    {
+        $flag = (int)$request->get('approved', 1);
+        $flag ? $product->statusToApproved() : $product->statusToRejected();
+        if (request()->ajax()) {
+            return $this->updated([], $flag ? '审核通过' : '审核拒绝');
+        } else {
+            return redirect()->route($request->getSubDomain() . '.products.show', [$product]);
+        }
+    }
+
 }

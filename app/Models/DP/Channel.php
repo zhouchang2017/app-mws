@@ -11,6 +11,8 @@ class Channel extends Model
 
     protected $fillable = ['code', 'enabled', 'locale_code', 'currency_code', 'name', 'description', 'email'];
 
+    public static $marketName = 'DP商店';
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'channel_product');

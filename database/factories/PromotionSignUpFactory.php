@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\DP\PromotionSignUp::class, function (Faker $faker) {
+$factory->define(App\Models\DP\PromotionPlan::class, function (Faker $faker) {
     return [
         //
     ];

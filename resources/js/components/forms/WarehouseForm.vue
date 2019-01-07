@@ -173,6 +173,7 @@
         this.form.name = _.get(this, 'resource.name')
         this.form.type_id = _.get(this, 'resource.type_id')
         this.form.user_id = _.get(this, 'resource.user_id')
+        this.form.address = _.get(this,'resource.address',{})
       }
     }
   }

@@ -25,6 +25,10 @@ Route::resource('/product-variants', 'ProductVariantController');
 
 Route::resource('/products', 'ProductController');
 
+// 产品提交审核
+Route::patch('/products/{product}/submit', 'ProductController@submit')->name('products.submit');
+
+
 // 产品包含的销售属性
 Route::get('/products/{product}/options', 'ProductController@options')->name('products.options');
 

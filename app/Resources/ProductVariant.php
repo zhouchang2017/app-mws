@@ -23,7 +23,9 @@ class ProductVariant extends Resource
 
     public static $count = [];
 
-    public static $filter = [];
+    public static $filter = [
+
+    ];
 
     public static function label()
     {

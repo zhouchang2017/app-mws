@@ -27,7 +27,9 @@
     <card-title label="变体销售属性"></card-title>
     <div class="form-list mb-6">
         @foreach($resource->optionValues as $optionValue)
-            <form-item title="{{$optionValue->option->name}}" value="{{$optionValue->value ?? 'N/A'}}"></form-item>
+            <translation-detail-item title="{{$optionValue->option->name}}" attribute="value" :translations='@json($optionValue->translations)'></translation-detail-item>
+
+            {{--<form-item title="{{$optionValue->option->name}}" value="{{$optionValue->value ?? 'N/A'}}"></form-item>--}}
         @endforeach
     </div>
 

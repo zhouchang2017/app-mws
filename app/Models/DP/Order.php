@@ -24,6 +24,8 @@ class Order extends Model implements Orderable
 
     protected $priceFields = ['items_total', 'adjustments_total', 'total'];
 
+    public static $orderTypeName = 'DP订单';
+
     protected $casts = [
         'rest' => 'array',
         'paid_at' => 'datetime',

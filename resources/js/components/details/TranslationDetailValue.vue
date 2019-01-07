@@ -9,7 +9,7 @@
         >
             {{ locale }}
         </a>
-        <p class="text-90 mt-1">{{ value[currentLocale] }}</p>
+        <p class="text-90 mt-1">{{ value[currentLocale] || '-' }}</p>
     </div>
 </template>
 

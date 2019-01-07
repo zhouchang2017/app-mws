@@ -160,7 +160,7 @@
               if (this.createPage) {
                 const {data} = await this.createRequest()
                 this.notify(data)
-                this.go(`${this.uriKey}/${data.data.id}`)
+                this.go(`/${this.uriKey}/${data.data.id}`)
               } else {
                 const {data} = await this.updateRequest()
                 this.notify(data)

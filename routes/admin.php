@@ -67,8 +67,15 @@ Route::resource('warehouse-types', 'WarehouseTypeController');
 
 // 产品
 Route::resource('/products', 'ProductController');
+
+// 产品提交审核
+Route::patch('/products/{product}/submit', 'ProductController@submit')->name('products.submit');
+// 产品审核通过
+Route::patch('/products/{product}/approved', 'ProductController@approved')->name('products.approved');
+
 // 产品包含的销售属性
 Route::get('/products/{product}/options', 'ProductController@options')->name('products.options');
+
 // 产品分类
 Route::get('/taxons', 'TaxonController@index')->name('taxons.index');
 
@@ -95,8 +102,23 @@ Route::get('/users', 'UserController@index')->name('users.index');
 // 地址
 Route::get('/addresses/create', 'AddressController@create')->name('addresses.create');
 
-// 中华人民共和国行政区划（五级）：省级、地级、县级、乡级和村级
 
+// 渠道
+Route::resource('/markets', 'MarketController');
+// 订单
+Route::get('/orders', 'OrderController@index');
+
+// 促销活动
+Route::get('/promotions', 'PromotionController@index')->name('promotions.index');
+Route::get('/promotions/{promotion}', 'PromotionController@show')->name('promotions.show');
+// 促销计划
+Route::resource('/promotion-plans', 'PromotionPlanController');
+
+// 供应商
+Route::resource('/suppliers', 'SupplierController');
+
+
+// 中华人民共和国行政区划（五级）：省级、地级、县级、乡级和村级
 Route::get('/divisions/provinces', 'DivisionController@provinces')->name('divisions.provinces.search');
 Route::get('/divisions/cities', 'DivisionController@cities')->name('divisions.cities.search');
 Route::get('/divisions/areas', 'DivisionController@areas')->name('divisions.areas.search');

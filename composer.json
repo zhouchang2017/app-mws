@@ -15,6 +15,7 @@
         "kalnoy/nestedset": "^4.3",
         "laravel-frontend-presets/tailwindcss": "^0.7.0",
         "laravel/framework": "5.7.*",
+        "laravel/telescope": "^1.0",
         "laravel/tinker": "^1.0",
         "lavary/laravel-menu": "^1.7",
         "moneyphp/money": "^3.2",

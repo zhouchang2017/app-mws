@@ -27,22 +27,8 @@
             uri-key="addresses"
             via-relation-id="{{$resource->id}}"
             singular-label="地址"
-            can-create
             label="地址"
     ></resource-index-header>
-    <div class="form-list mb-6">
-        @if($resource->address)
-            <empty-resources>
-                <h3 class="text-base text-80 font-normal mb-6">
-                    暂无地址
-                </h3>
-                <a href="{{route($domain.'.addresses.create').'?viaRelationName=addressable&morphType=warehouse&viaRelationId='.$resource->id}}"
-                   class="btn cursor-pointer btn-sm btn-outline inline-flex items-center">
-                    创建地址
-                </a>
-            </empty-resources>
-        @else
-            <form-item title="名称" value="{{$resource->name }}"></form-item>
-        @endif
-    </div>
+    @component('components.address-panel',['address'=>$resource->address])
+    @endcomponent
 @endsection

@@ -610,6 +610,15 @@ a {
 
 .card {
   background-color: #fff;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  overflow: hidden;
+  border-radius: .5rem;
+}
+
+.card-no-shadow {
+  background-color: #fff;
+  overflow: hidden;
   border-radius: .5rem;
 }
 
@@ -631,6 +640,10 @@ a {
 
 .card-refresh:hover {
   color: var(--primary);
+}
+
+.el-alert__content {
+  width: 100%;
 }
 
 /**
@@ -1016,6 +1029,9 @@ a {
 
 .form-list {
   background-color: #fff;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  overflow: hidden;
   border-radius: .5rem;
   padding: 1.5rem;
   width: 100%;

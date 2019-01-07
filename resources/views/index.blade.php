@@ -17,10 +17,10 @@
         >
         </el-table-column>
         @includeIf($uriKey.'.index')
-        <el-table-column
-                prop="updated_at"
-                label="更新时间"
-        >
-        </el-table-column>
+        {{--<el-table-column--}}
+                {{--prop="updated_at"--}}
+                {{--label="更新时间"--}}
+        {{-->--}}
+        {{--</el-table-column>--}}
     </index>
 @endsection

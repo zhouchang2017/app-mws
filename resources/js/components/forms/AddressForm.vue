@@ -21,8 +21,8 @@
                       v-model="address.zip"></el-input>
         </el-form-item>
         <!--<el-form-item label="国家" prop="address.country">-->
-            <!--<el-input disabled placeholder="请输入国家"-->
-                      <!--v-model="address.country"></el-input>-->
+        <!--<el-input disabled placeholder="请输入国家"-->
+        <!--v-model="address.country"></el-input>-->
         <!--</el-form-item>-->
 
         <el-form-item label="省市区" prop="address.province">
@@ -38,12 +38,12 @@
             <!--v-model="address.province"></el-input>-->
         </el-form-item>
         <!--<el-form-item label="城市" prop="address.city">-->
-            <!--<el-input placeholder="请输入城市"-->
-                      <!--v-model="address.city"></el-input>-->
+        <!--<el-input placeholder="请输入城市"-->
+        <!--v-model="address.city"></el-input>-->
         <!--</el-form-item>-->
         <!--<el-form-item label="行政区" prop="address.district">-->
-            <!--<el-input placeholder="请输入行政区"-->
-                      <!--v-model="address.district"></el-input>-->
+        <!--<el-input placeholder="请输入行政区"-->
+        <!--v-model="address.district"></el-input>-->
         <!--</el-form-item>-->
         <el-form-item label="详细地址" prop="address.address">
             <el-input placeholder="请输入详细地址"
@@ -141,6 +141,7 @@
     async mounted () {
       const {data} = await this.fetchProvinces()
       this.options = data.map(item => _.tap(item, item => {item.children = []}))
+      this.country = '中国'
     }
   }
 </script>

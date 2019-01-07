@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProvincesSeeder extends Seeder
 {
@@ -11,6 +12,7 @@ class ProvincesSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('provinces')->truncate();
         $data = collect(json_decode('[
   {
     "code": "11",

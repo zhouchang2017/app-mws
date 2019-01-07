@@ -9,6 +9,12 @@
 namespace App\Traits;
 
 
+use App\Events\ProductApprovedEvent;
+use App\Events\ProductPendingEvent;
+use App\Events\ProductRejectedEvent;
+use App\Http\Requests\ErpRequest;
+use App\Models\DP\Product;
+
 trait ProductCheckStatus
 {
     public static $checkState = 'check_state';
@@ -28,21 +34,26 @@ trait ProductCheckStatus
         $this->setCheckStatus(self::UN_COMMIT);
     }
 
-    public function statusToPadding()
+    public function statusToPending()
     {
         $this->setCheckStatus(self::PENDING);
+        /** @var Product $this */
+        event(new ProductPendingEvent($this));
     }
 
     public function statusToApproved()
     {
         $this->setCheckStatus(self::APPROVED);
-        // TODO update supplier_variants hidden field!
-        $this->variants->map->supplierVariant->each->updateHiddenField(0);
+        /** @var Product $this */
+        event(new ProductApprovedEvent($this));
     }
 
     public function statusToRejected()
     {
         $this->setCheckStatus(self::REJECTED);
+        /** @var Product $this */
+        event(new ProductRejectedEvent($this));
+        $this->statusToSaved();
     }
 
     public function statusToPostponed()
@@ -64,6 +75,11 @@ trait ProductCheckStatus
 
     public function canUpdate()
     {
+        $request = app(ErpRequest::class);
+        if ($request->isAdmin()) {
+            return true;
+        }
         return $this->{$this->getCheckStatusField()} === self::UN_COMMIT;
     }
+
 }

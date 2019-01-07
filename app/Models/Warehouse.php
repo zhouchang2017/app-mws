@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Warehouse
+ * @property mixed address
  * @package App\Models
  */
 class Warehouse extends Model implements Addressable

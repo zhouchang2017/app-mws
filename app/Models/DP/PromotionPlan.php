@@ -5,7 +5,7 @@ namespace App\Models\DP;
 
 use App\Models\Supplier;
 
-class PromotionSignUp extends Model
+class PromotionPlan extends Model
 {
     protected $fillable = [
         'supplier_id',

@@ -10,7 +10,7 @@ class Promotion extends Model
 {
     use SoftDeletes, Translatable;
 
-    public $translatedAttributes = ['name', 'description', 'rest', 'asset_url'];
+    public $translatedAttributes = ['name', 'description', 'rest', 'asset_url','asset_image'];
 
     protected $casts = [
         'configuration' => 'array',
@@ -83,9 +83,9 @@ class Promotion extends Model
         return $this->belongsToMany(ProductVariant::class, 'promotion_variants', 'promotion_id', 'variant_id');
     }
 
-    public function signUp()
+    public function plans()
     {
-        return $this->hasOne(PromotionSignUp::class, 'promotion_id')->groupBy('promotion_id');
+        return $this->hasMany(PromotionPlan::class, 'promotion_id');
     }
 
     public function promotionVariants()

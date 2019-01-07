@@ -36,8 +36,8 @@ class PromotionVariant extends Model
         return $this->belongsTo(Promotion::class);
     }
 
-    public function signUp()
+    public function plan()
     {
-        return $this->belongsTo(PromotionSignUp::class);
+        return $this->belongsTo(PromotionPlan::class);
     }
 }
