@@ -18,8 +18,35 @@ class PromotionVariant extends Model
         'began_at',
         'ended_at',
         'rest',
-        'sign_up_id',
+        'plan_id',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+    }
+
+
+    public function getSurrenderRateAttribute($value)
+    {
+        return $value * 100;
+    }
+
+    public function setSurrenderRateAttribute($value)
+    {
+        info('set surrender rate '.$value);
+        $this->attributes['surrender_rate'] = $value * 0.01;
+    }
+
+    public function getDiscountRateAttribute($value)
+    {
+        return $value * 100;
+    }
+
+    public function setDiscountRateAttribute($value)
+    {
+        $this->attributes['discount_rate'] = $value * 0.01;
+    }
 
     public function variant()
     {

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 
+use App\Models\DP\PromotionPlan;
+use App\Notifications\InvitePromotionPlanNotification;
 use App\Traits\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -46,5 +48,10 @@ class SupplierUser extends Authenticatable
     public function variants()
     {
         return $this->supplier->variants;
+    }
+
+    public function invitePromotionPlanNotify(PromotionPlan $promotionPlan,$title,$body)
+    {
+        $this->notify(new InvitePromotionPlanNotification($promotionPlan,$title,$body));
     }
 }

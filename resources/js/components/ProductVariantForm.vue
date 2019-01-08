@@ -77,6 +77,16 @@
                         <template slot="append">$(美元)</template>
                     </el-input>
                 </el-form-item>
+            <template v-if="isAdmin && updatePage">
+                <p class="text-xs font-semibold text-50">渠道销售价格(仅DP)</p>
+                <div class="border-30 border-b mb-3"></div>
+                <el-form-item label="渠道价格" >
+                    <edit-dp-channel-price
+                            :resource-id="resourceId"
+                            :default-value="resource.dp_prices"></edit-dp-channel-price>
+                </el-form-item>
+            </template>
+
 
             </el-form>
         </div>

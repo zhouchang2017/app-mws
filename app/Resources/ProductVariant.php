@@ -37,6 +37,10 @@ class ProductVariant extends Resource
         $query->when(request()->get('supplier', false), function ($query, $supplier) {
             $query->filterSupplier($supplier);
         });
+
+        $query->when(request()->get('channel', false), function ($query, $channel) {
+            $query->filterChannel($channel);
+        });
     }
 
 

@@ -59,6 +59,16 @@ Route::get('/product-variants/check/code/{code}', 'ProductVariantController@chec
 // 变体
 Route::resource('/product-variants', 'ProductVariantController');
 
+// 创建变体渠道价格
+Route::post('/product-variants/{productVariant}/prices',
+    'ProductVariantController@storeDpPrices')->name('product-variants.dp_prices.store');
+// 更新变体渠道价格
+Route::patch('/product-variants/{productVariant}/prices/{ProductVariantPrice}',
+    'ProductVariantController@updateDpPrices')->name('product-variants.dp_prices.update');
+// 删除变体渠道价格
+Route::delete('/product-variants/{productVariant}/prices/{ProductVariantPrice}',
+    'ProductVariantController@destroyDpPrices')->name('product-variants.dp_prices.destroy');
+
 // 仓库
 Route::resource('warehouses', 'WarehouseController');
 
@@ -114,9 +124,14 @@ Route::get('/promotions/{promotion}', 'PromotionController@show')->name('promoti
 // 促销计划
 Route::resource('/promotion-plans', 'PromotionPlanController');
 
+// 推送消息给供应商
+Route::post('/promotion-plans/{promotionPlan}/notify', 'PromotionPlanController@notify')
+    ->name('promotion-plans.notify.store');
 // 供应商
 Route::resource('/suppliers', 'SupplierController');
 
+// DP渠道
+Route::get('/channels', 'ChannelController@index')->name('channels.index');
 
 // 中华人民共和国行政区划（五级）：省级、地级、县级、乡级和村级
 Route::get('/divisions/provinces', 'DivisionController@provinces')->name('divisions.provinces.search');

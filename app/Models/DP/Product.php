@@ -100,4 +100,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Supplier::class, 'supplier_product');
     }
+
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class, 'channel_product');
+    }
 }

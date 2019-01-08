@@ -17,7 +17,7 @@ class Promotion extends Resource
     ];
 
     public static $with = [
-        'plans'
+        'plans','channels'
     ];
 
     public static $count = [];

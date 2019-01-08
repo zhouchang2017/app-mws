@@ -27,10 +27,45 @@
     <card-title label="变体销售属性"></card-title>
     <div class="form-list mb-6">
         @foreach($resource->optionValues as $optionValue)
-            <translation-detail-item title="{{$optionValue->option->name}}" attribute="value" :translations='@json($optionValue->translations)'></translation-detail-item>
-
-            {{--<form-item title="{{$optionValue->option->name}}" value="{{$optionValue->value ?? 'N/A'}}"></form-item>--}}
+            <translation-detail-item title="{{$optionValue->option->name}}" attribute="value"
+                                     :translations='@json($optionValue->translations)'></translation-detail-item>
         @endforeach
+    </div>
+
+    <card-title label="变体渠道价格"></card-title>
+    <div class="form-list mb-6">
+        @admin
+        <edit-dp-channel-price :default-value='@json($resource->dpPrices)' resource-id="{{$resource->id}}">
+
+        </edit-dp-channel-price>
+        @endadmin
+
+        @supplier
+            @if($resource->dpPrices()->count()>0)
+
+                <el-table
+                        :data='@json($resource->dpPrices)'
+                        style="width: 100%">
+                    <el-table-column
+                            label="吊牌价"
+                            prop="original_price">
+                    </el-table-column>
+                    <el-table-column
+                            label="售价"
+                            prop="price"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                            label="DP渠道"
+                            prop="channel.name"
+                    >
+                    </el-table-column>
+                </el-table>
+            @else
+                <empty-resources message="暂无渠道价格"/>
+            @endif
+        @endsupplier
+
     </div>
 
 @endsection

@@ -11,6 +11,8 @@ use App\Observers\ProductVariantObserver;
 use App\Scopes\SupplierProductVariantScope;
 use App\Traits\PriceableTrait;
 use Dimsav\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class ProductVariant extends Model
 {
@@ -47,6 +49,34 @@ class ProductVariant extends Model
     {
         $supplier = Supplier::find($id);
         $query->whereIn('id', $supplier->variant_ids);
+    }
+
+    public function scopeFilterChannel(Builder $query, $channel)
+    {
+        $tableName = config('database.connections.dealpaw.database');
+        $productIds = DB::table($tableName . '.channel_product')
+            ->where('channel_id', $channel)
+            ->pluck('product_id');
+        $query->whereIn('product_id', $productIds);
+    }
+
+    public function scopeWithDpPriceOfChannel(Builder $query, $channel)
+    {
+        $query->with([
+            'dpPrice' => function ($query) use ($channel) {
+                $query->filterChannel($channel);
+            },
+        ]);
+    }
+
+    public function dpPrices()
+    {
+        return $this->hasMany(ProductVariantPrice::class, 'variant_id');
+    }
+
+    public function dpPrice()
+    {
+        return $this->hasOne(ProductVariantPrice::class, 'variant_id');
     }
 
 

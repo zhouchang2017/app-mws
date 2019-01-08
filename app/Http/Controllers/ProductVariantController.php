@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ErpRequest;
 use App\Models\DP\Product;
 use App\Models\DP\ProductVariant;
+use App\Models\DP\ProductVariantPrice;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,14 @@ class ProductVariantController extends Controller
      */
     public function show(ProductVariant $productVariant)
     {
-        $resource = $productVariant->loadMissing([ 'product', 'optionValues.option', 'supplier', 'inventories', 'price' ]);
+        $resource = $productVariant->loadMissing([
+            'product',
+            'optionValues.option',
+            'supplier',
+            'inventories',
+            'price',
+            'dpPrices.channel'
+        ]);
         if (request()->ajax()) {
             return response()->json($resource);
         }
@@ -60,12 +68,16 @@ class ProductVariantController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param ProductVariant $productVariant
+     * @param ErpRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductVariant $productVariant)
+    public function edit(ProductVariant $productVariant, ErpRequest $request)
     {
-        $resource = $productVariant->loadMissing([ 'product', 'optionValues.option', 'supplier', 'price' ]);
-        $this->viewShare([ 'viaRelationName' => 'product', 'viaRelationId' => $resource->product->id ]);
+        $resource = $productVariant->loadMissing(['product', 'optionValues.option', 'supplier', 'price']);
+        if ($request->isAdmin()) {
+            $resource->loadMissing(['dpPrices.channel']);
+        }
+        $this->viewShare(['viaRelationName' => 'product', 'viaRelationId' => $resource->product->id]);
         return view(static::$resource::uriKey() . '.update', compact('resource'));
     }
 
@@ -103,5 +115,40 @@ class ProductVariantController extends Controller
     public function checkCode($code)
     {
         return response()->json(!(ProductVariant::query()->select('code')->where('code', $code)->exists()));
+    }
+
+    public function storeDpPrices(ProductVariant $productVariant, ErpRequest $request)
+    {
+        return $this->created(
+            ProductService::updateOrCreateDpPrices($request, $productVariant),
+            null,
+            '添加成功'
+        );
+    }
+
+    public function updateDpPrices(
+        ProductVariant $productVariant,
+        $productVariantPrice,
+        ErpRequest $request
+    ) {
+        $productVariantPrice = ProductVariantPrice::find($productVariantPrice);
+        return $this->updated(
+            ProductService::updateOrCreateDpPrices($request, $productVariant, $productVariantPrice),
+            '更新成功'
+        );
+    }
+
+    public function destroyDpPrices(ProductVariant $productVariant,
+        $productVariantPrice,
+        ErpRequest $request)
+    {
+        /** @var ProductVariantPrice $productVariantPrice */
+        $productVariantPrice = ProductVariantPrice::find($productVariantPrice);
+        try {
+            $productVariantPrice->delete();
+            return response()->noContent();
+        } catch (\Exception $e) {
+        }
+
     }
 }

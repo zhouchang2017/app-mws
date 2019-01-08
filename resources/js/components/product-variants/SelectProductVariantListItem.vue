@@ -1,20 +1,23 @@
 <template>
-    <div class="w-full flex rounded-lg overflow-hidden border border-50 h-24 text-80 bg-white variant-item cursor-pointer"
-         :class="{'variant-item__active':selected}"
-         @click="clickHandle"
-    >
-        <div class="h-auto w-24 flex-none bg-cover text-center overflow-hidden lazy-bg bg-center avatar"
-             v-lazy:background-image="bgUrl"
-        >
-        </div>
-        <div class="p-3 w-full">
-            <slot :title="resourceTitle" :price="price" :stock="stock">
-                <div class="flex flex-col justify-between leading-normal">
-                    <div class="font-semibold">{{resourceTitle}}</div>
-                    <p class="font-sans">售价 $<b>{{price}}</b></p>
-                    <span class="font-mono">库存 <b>{{stock}}</b></span>
-                </div>
-            </slot>
+    <div class="px-3 flex items-center h-full cursor-pointer" @click="clickHandle" :class="listItemClass">
+
+        <img class="h-12 w-12 rounded"
+             v-lazy="bgUrl"/>
+
+        <div class="ml-4 flex-1 p-1 overflow-hidden">
+            <div class="flex items-bottom justify-between">
+                <p class="text-grey-darkest font-semibold">
+                    {{ resourceTitle }}
+                </p>
+                <el-tooltip class="item" effect="dark" content="余量" placement="top-start">
+                    <p class="text-xs text-grey-darkest">
+                        {{ stock }}
+                    </p>
+                </el-tooltip>
+            </div>
+            <p class="mt-2 text-grey-darkest font-semibold">
+                售价:{{ price }}
+            </p>
         </div>
     </div>
 </template>
@@ -36,6 +39,9 @@
         type: Object,
         required: true
       },
+      channelId: {
+        type: [String, Number]
+      },
     },
 
     methods: {
@@ -48,6 +54,12 @@
       selected () {
         return this.selections.includes(this.resource)
       },
+      listItemClass () {
+        return {
+          'bg-grey-light': this.selected, // 选中高亮
+          'bg-white hover:bg-grey-lighter': !this.selected, // 未选中背景白色,鼠标经过变色
+        }
+      },
       bgUrl () {
         return 'https://media.wired.com/photos/5b22c5c4b878a15e9ce80d92/master/pass/iphonex-TA.jpg'
       },
@@ -55,7 +67,7 @@
         return _.get(this, 'resource.variantName', '-')
       },
       price () {
-        return _.get(this, 'resource.price.price', 'N/A')
+        return _.get(_.find(this.resource.dp_prices,['channel_id', this.channelId]), 'price', 'N/A')
       },
       stock () {
         return _.get(this, 'resource.stock')

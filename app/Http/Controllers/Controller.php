@@ -41,6 +41,7 @@ class Controller extends BaseController
     }
 
 
+
     /**
      * Display a listing of the resource.
      *
@@ -115,12 +116,13 @@ class Controller extends BaseController
     /**
      * @param $data
      * @param null $message
+     * @param string $title
      * @return \Illuminate\Http\JsonResponse
      */
-    public function created($data, $message = null)
+    public function created($data, $message = null, $title = '创建成功')
     {
         $json = [
-            'title' => '创建成功',
+            'title' => $title,
             'data' => $data,
             'type' => 'success',
         ];

@@ -13,6 +13,9 @@
                 :key="item[keyField]"
                 :label="item[labelField]"
                 :value="item[valueField]">
+            <slot :item="item">
+
+            </slot>
             <!--<div class="flex items-bottom justify-between">-->
             <!--<div class="font-semibold text-xs text-80">{{item.name}}</div>-->
             <!--<div class="text-xs  text-70">{{item.code}}</div>-->
@@ -128,6 +131,9 @@
             }
           })
       },
+      getSelectedObject () {
+        return this.selected
+      }
     },
 
     computed: {
@@ -136,6 +142,9 @@
           search: this.query,
           page: this.currentPage
         }, this.params)
+      },
+      selected () {
+        return _.find(this.options, [this.valueField, this.value])
       }
     },
 

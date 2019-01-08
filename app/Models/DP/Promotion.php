@@ -10,7 +10,7 @@ class Promotion extends Model
 {
     use SoftDeletes, Translatable;
 
-    public $translatedAttributes = ['name', 'description', 'rest', 'asset_url','asset_image'];
+    public $translatedAttributes = ['name', 'description', 'rest', 'asset_url', 'asset_image'];
 
     protected $casts = [
         'configuration' => 'array',
@@ -37,7 +37,7 @@ class Promotion extends Model
     const FULL_DISCOUNT = 'full_discount'; // 满减
     const CASH_COUPON = 'cash_coupon'; // 代金券
 
-    protected $appends = ['type_name'];
+    protected $appends = ['type_name','channel_id'];
 
     public static function typeMaps()
     {
@@ -76,6 +76,16 @@ class Promotion extends Model
         return $this->variants()
             ->wherePivot('began_at', '<', $this->freshTimestampString())
             ->wherePivot('ended_at', '>', $this->freshTimestampString());
+    }
+
+    public function getChannelIdAttribute()
+    {
+        return $this->channels()->first()->id;
+    }
+
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class, 'channel_promotion');
     }
 
     public function variants()

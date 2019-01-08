@@ -10,6 +10,9 @@ export default {
   computed: {
     appConfig () {
       return this.$root.erpConfig
+    },
+    isAdmin(){
+      return this.appConfig.userType === 'App\\Models\\User'
     }
   }
 }

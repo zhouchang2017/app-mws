@@ -14,6 +14,7 @@ use App\Models\DP\ProductAttribute;
 use App\Models\DP\ProductOption;
 use App\Models\DP\ProductVariant;
 use App\Models\DP\ProductVariantOptionValue;
+use App\Models\DP\ProductVariantPrice;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +33,6 @@ class ProductService
     }
 
 
-
     public static function updateOrCreateProduct(Request $request, Product $product = null)
     {
         return tap($product ?? new Product(), function ($product) use ($request) {
@@ -41,7 +41,8 @@ class ProductService
             $product->fill($request->all());
 
             // save translation field
-            collect($request->all())->only($product->translatedAttributes)->each(function ($translation, $attribute) use (
+            collect($request->all())->only($product->translatedAttributes)->each(function ($translation, $attribute) use
+            (
                 $product
             ) {
 
@@ -68,8 +69,8 @@ class ProductService
                     'id' => array_get($attribute, 'value.id'),
                 ], [
                     'attribute_id' => $attribute['attribute_id'],
-                    'locale_code'  => $locale,
-                    'text_value'   => $value,
+                    'locale_code' => $locale,
+                    'text_value' => $value,
                 ]);
             });
         });
@@ -111,7 +112,8 @@ class ProductService
          * ...
          * ]]*/
         collect($options)->each(function ($option) use ($variant) {
-            $productVariantOptionValue = $variant->optionValues()->updateOrCreate([ 'id' => isset($option['id']) ? $option['id'] : null ], [ 'option_id' => $option['option_id'] ]);
+            $productVariantOptionValue = $variant->optionValues()->updateOrCreate(['id' => isset($option['id']) ? $option['id'] : null],
+                ['option_id' => $option['option_id']]);
             /** @var ProductVariantOptionValue $productVariantOptionValue */
             TranslationService::createTranslation($productVariantOptionValue, 'value', $option['value']);
             $productVariantOptionValue->save();
@@ -139,6 +141,22 @@ class ProductService
                 $productOption->fill($request->all());
                 TranslationService::createTranslation($productOption, 'name', $request->get('name'));
                 $productOption->save();
+            });
+        });
+    }
+
+    public static function updateOrCreateDpPrices(
+        Request $request,
+        ProductVariant $variant,
+        ProductVariantPrice $price = null
+    ) {
+        return DB::transaction(function () use ($request, $variant, $price) {
+            return tap($price ?? new ProductVariantPrice(), function ($price) use ($request, $variant) {
+                /** @var ProductVariantPrice $price */
+                $price->fill($request->all());
+                /** @var ProductVariant $variant */
+                $price->variant()->associate($variant);
+                $price->save();
             });
         });
     }

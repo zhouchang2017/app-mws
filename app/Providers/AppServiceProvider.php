@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\SupplierUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
@@ -18,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::if('admin', function () {
             return auth()->user() instanceof User;
+        });
+
+        Blade::if('supplier', function () {
+            return auth()->user() instanceof SupplierUser;
         });
     }
 

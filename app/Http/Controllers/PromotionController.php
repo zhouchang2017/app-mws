@@ -20,7 +20,7 @@ class PromotionController extends Controller
      */
     public function show(Promotion $promotion)
     {
-        $resource = $promotion;
+        $resource = $promotion->loadMissing(['channels']);
         if (request()->ajax()) {
             return response()->json($resource);
         }
