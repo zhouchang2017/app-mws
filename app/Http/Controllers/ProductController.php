@@ -15,9 +15,11 @@ class ProductController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create',Product::class);
         return view(static::$resource::uriKey() . '.create');
     }
 

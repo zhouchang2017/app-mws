@@ -8,10 +8,13 @@
 
 namespace App\Models\DP;
 
+use App\Traits\Authorizable;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
 abstract class Model extends BaseModel
 {
+    use Authorizable;
+
     protected $connection = 'dealpaw';
 
     public $translationForeignKey = 'translatable_id';

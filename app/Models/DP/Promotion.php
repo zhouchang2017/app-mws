@@ -80,7 +80,7 @@ class Promotion extends Model
 
     public function getChannelIdAttribute()
     {
-        return $this->channels()->first()->id;
+        return optional($this->channels()->first())->id;
     }
 
     public function channels()

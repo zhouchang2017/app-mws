@@ -11,8 +11,6 @@ class PreInventoryActionController extends Controller
 
     public static $resource = \App\Resources\PreInventoryAction::class;
 
-    public static $indexViewName = 'admin.pages.pre-inventory-actions.index';
-
 
     /**
      * Show the form for creating a new resource.
@@ -48,7 +46,7 @@ class PreInventoryActionController extends Controller
             return response()->json($resource);
         }
         $this->viewShare();
-        return view('admin.pages.pre-inventory-actions.detail', compact('resource'));
+        return view(static::$resource::uriKey() . '.pre-inventory-actions.detail', compact('resource'));
     }
 
     /**
@@ -106,7 +104,7 @@ class PreInventoryActionController extends Controller
     {
         $resource = $preInventoryAction->loadOrders()->loadStatuses()->loadOriginItems();
         $this->viewShare();
-        return view('admin.pages.pre-inventory-actions.assign', compact('resource'));
+        return view(static::$resource::uriKey() . '.assign', compact('resource'));
     }
 
     public function assigned(PreInventoryAction $preInventoryAction, Request $request)

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Traits\HttpResource;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -51,6 +53,7 @@ class Controller extends BaseController
     {
         if (request()->ajax()) {
             $build = $this->indexQuery();
+
             return response()->json(
                 $this->withoutPage() ? $build->get() : $build->paginate()
             );

@@ -14,9 +14,7 @@
 Route::view('/', 'welcome');
 
 Route::get('/test',function (){
-    $province =  \App\Models\Divisions\Province::find(43);
-    $province->loadMissing('cities.areas');
-    return $province;
+    dd(\App\Models\DP\Product::find(1)->forceDelete(request()));
 });
 //Route::get('/home', 'HomeController@index')->name('home');
 

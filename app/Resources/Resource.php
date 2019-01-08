@@ -214,4 +214,17 @@ abstract class Resource
             'canSearch' => false,
         ];
     }
+
+    public function serializeForIndex($request)
+    {
+        return [
+            'authorizedToView' => $this->authorizedToView($request),
+            'authorizedToUpdate' => $this->authorizedToUpdateForSerialization($request),
+            'authorizedToDelete' => $this->authorizedToDeleteForSerialization($request),
+            'authorizedToRestore' => static::softDeletes() && $this->authorizedToRestore($request),
+            'authorizedToForceDelete' => static::softDeletes() && $this->authorizedToForceDelete($request),
+            'softDeletes' => static::softDeletes(),
+            'softDeleted' => $this->isSoftDeleted(),
+        ];
+    }
 }

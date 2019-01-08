@@ -21,7 +21,7 @@ class SupplyController extends Controller
      */
     public function create()
     {
-        return view('supplier.pages.supplies.create');
+        return view(static::$resource::uriKey() . '.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class SupplyController extends Controller
         if ($request->ajax()) {
             return $this->created($supply);
         } else {
-            return redirect()->route($request->getSubDomain() . '.supplies.show', [ 'supply' => $supply->id ]);
+            return redirect()->route(static::$resource::uriKey() . '.show', [ 'supply' => $supply->id ]);
         }
     }
 
@@ -53,7 +53,7 @@ class SupplyController extends Controller
             return response()->json($resource);
         } else {
             $this->viewShare([ 'resourceId' => $supply->id ]);
-            return view('supplies.detail', compact('resource'));
+            return view(static::$resource::uriKey() . '.detail', compact('resource'));
         }
     }
 
@@ -70,7 +70,7 @@ class SupplyController extends Controller
         if (request()->ajax()) {
             return response()->json($resource);
         } else {
-            return view('supplies.update', compact('resource'));
+            return view(static::$resource::uriKey() . '.update', compact('resource'));
         }
     }
 
@@ -124,7 +124,7 @@ class SupplyController extends Controller
         $order->loadDetailAttribute();
         $order->warehouse->append('simple_address');
         $logistic = Logistic::all();
-        return view('supplies.shipment', [ 'resource' => $supply, 'order' => $order, 'logistic' => $logistic ]);
+        return view(static::$resource::uriKey() . '.shipment', [ 'resource' => $supply, 'order' => $order, 'logistic' => $logistic ]);
     }
 
     public function shipped(Supply $supply, PreInventoryActionOrder $order, Request $request)

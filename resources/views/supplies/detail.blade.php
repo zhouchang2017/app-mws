@@ -23,11 +23,11 @@
         <form-item title="更新时间" value="{{$resource->updated_at }}"></form-item>
     </div>
 
-    @if(auth()->user() instanceof \App\Models\User)
+    @admin
         <card-title label="状态记录"></card-title>
         @component('components.statuses',['statuses'=>$resource->statuses])
         @endcomponent
-    @endif
+    @endadmin
 
     <card-title label="入库商品列表"></card-title>
 
