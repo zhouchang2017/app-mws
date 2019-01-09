@@ -11,11 +11,13 @@
             :can-update="@json($canUpdate)"
             :can-destroy="@json($canDestroy)"
     >
+        @admin
         <el-table-column
                 prop="id"
                 label="ID"
         >
         </el-table-column>
+        @endadmin
         @includeIf($uriKey.'.index')
         {{--<el-table-column--}}
                 {{--prop="updated_at"--}}

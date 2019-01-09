@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\DP\Product;
 use App\Models\DP\ProductVariant;
 use App\Traits\TrackableTrait;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed preOrder

@@ -10,6 +10,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // 供货计划
 Route::resource('/supplies', 'SupplyController');
+
+// 供货计划操作单发货页面
+Route::get('/supplies/{supply}/shipment/{order}', 'SupplyController@shipment')->name('supplies.order.shipment.create');
+
 // 供货计划审核
 Route::patch('/supplies/{supply}/approved', 'SupplyController@approved')
     ->name('supplies.approved');
@@ -114,6 +118,7 @@ Route::get('/addresses/create', 'AddressController@create')->name('addresses.cre
 
 
 // 渠道
+Route::get('/markets/marketables','MarketController@getMarketables');
 Route::resource('/markets', 'MarketController');
 // 订单
 Route::get('/orders', 'OrderController@index');
@@ -121,6 +126,7 @@ Route::get('/orders', 'OrderController@index');
 // 促销活动
 Route::get('/promotions', 'PromotionController@index')->name('promotions.index');
 Route::get('/promotions/{promotion}', 'PromotionController@show')->name('promotions.show');
+
 // 促销计划
 Route::resource('/promotion-plans', 'PromotionPlanController');
 

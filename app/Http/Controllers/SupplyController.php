@@ -119,6 +119,12 @@ class SupplyController extends Controller
         }
     }
 
+    /**
+     * 发货页面
+     * @param Supply $supply
+     * @param PreInventoryActionOrder $order
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shipment(Supply $supply, PreInventoryActionOrder $order)
     {
         $order->loadDetailAttribute();
@@ -127,6 +133,13 @@ class SupplyController extends Controller
         return view(static::$resource::uriKey() . '.shipment', [ 'resource' => $supply, 'order' => $order, 'logistic' => $logistic ]);
     }
 
+    /**
+     * 发货请求
+     * @param Supply $supply
+     * @param PreInventoryActionOrder $order
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function shipped(Supply $supply, PreInventoryActionOrder $order, Request $request)
     {
         (new SupplyService($supply))->shipment($order, $request);

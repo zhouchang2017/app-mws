@@ -55,9 +55,7 @@ class PromotionService
         if ($type === Promotion::KOL_PROMOTE) {
             info('resolve: KOL_PROMOTE ' . $surrenderRate);
             return ['discount_rate' => $surrenderRate * 0.5];
-        } elseif ($type === Promotion::UNIT_DISCOUNT) {
-            info('resolve: UNIT_DISCOUNT ' . $surrenderRate);
-            return ['discount_rate' => $surrenderRate];
         }
+        return ['discount_rate' => $surrenderRate];
     }
 }

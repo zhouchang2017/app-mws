@@ -29,5 +29,16 @@ class Order extends Resource
         return '订单';
     }
 
+    public function authorizedToIndex($request)
+    {
+        return [
+            'canView' => true,
+            'canUpdate' => true,
+            'canCreate' => false,
+            'canDestroy' => true,
+            'canSearch' => false,
+        ];
+    }
+
 
 }

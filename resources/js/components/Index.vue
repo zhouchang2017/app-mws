@@ -9,9 +9,6 @@
         >
         </resource-index-header>
         <resources-table
-                :can-view="canView"
-                :can-update="canUpdate"
-                :can-destroy="canDestroy"
                 :uri-key="uriKey"
                 :label="label"
                 :singular-label="singularLabel"

@@ -19,6 +19,7 @@
                    resource-id="{{$resource->supplier->id}}" @endadmin></form-item>
         <form-item title="累计销量" value="{{$resource->sold}}"></form-item>
         <form-item title="累计金额" value="{{$resource->total_amount}}"></form-item>
+        @admin
         <form-item title="供应商确认时间" value="{{$resource->confirm_at}}" left-center>
             <div slot="value">
                 @if($resource->confirm_at)
@@ -40,8 +41,9 @@
                             </div>
                         </div>
                     </el-alert>
+                @endif
                     <el-table
-                        :data='@json($resource->inviteLogs)'>
+                            :data='@json($resource->inviteLogs)'>
                         <el-table-column
                                 prop="properties.title"
                                 label="标题"
@@ -63,9 +65,9 @@
                         >
                         </el-table-column>
                     </el-table>
-                @endif
             </div>
         </form-item>
+        @endadmin
     </div>
 
     <card-title label="计划商品明细"></card-title>
@@ -79,8 +81,8 @@
             >
             </el-table-column>
             <el-table-column
-                    prop="product_id"
-                    label="产品ID"
+                    prop="variant.code"
+                    label="商品编码"
             >
 
             </el-table-column>

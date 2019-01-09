@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\DP\ProductVariant;
 use App\Observers\PreInventoryActionOrderItemStateObserver;
 use App\Traits\AttachmentableTrait;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class PreInventoryActionOrderItemState

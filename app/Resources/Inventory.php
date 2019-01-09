@@ -19,12 +19,15 @@ class Inventory extends Resource
     ];
 
     public static $with = [
-        'variant', 'warehouse',
+        'variant',
+        'warehouse',
     ];
 
     public static $count = [];
 
-    public static $filter = [];
+    public static $filter = [
+        'warehouse_id',
+    ];
 
     public static function label()
     {
@@ -36,7 +39,7 @@ class Inventory extends Resource
         $query->latest('quantity');
     }
 
-    public function authorizedToIndex()
+    public function authorizedToIndex($request)
     {
         return [
             'canView' => true,

@@ -20,7 +20,7 @@ class SupplierInventoryScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
         if (auth()->user() instanceof SupplierUser) {
-            $builder->whereIn('product_variant_id', auth()->user()->supplier->variantIds);
+            $builder->whereIn('inventories.variant_id', auth()->user()->supplier->variantIds);
         }
     }
 }

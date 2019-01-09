@@ -14,7 +14,7 @@
 Route::view('/', 'welcome');
 
 Route::get('/test',function (){
-    dd(\App\Models\DP\Product::find(1)->forceDelete(request()));
+    return \App\Models\Inventory::where('warehouse_id',10)->get();
 });
 //Route::get('/home', 'HomeController@index')->name('home');
 

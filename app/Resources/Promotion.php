@@ -29,7 +29,7 @@ class Promotion extends Resource
         return '促销活动';
     }
 
-    public function authorizedToIndex()
+    public function authorizedToIndex($request)
     {
         return [
             'canView' => true,

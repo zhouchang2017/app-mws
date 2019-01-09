@@ -72,17 +72,17 @@
                         </el-table-column>
                         <el-table-column
                                 label="操作">
-                            <template slot-scope="{row}">
+                            <template slot-scope="{row,$index}">
                                 <el-popover
                                         placement="top"
                                         width="160"
-                                        v-model="visible">
+                                        v-model="row.visible">
                                     <p>确定删除吗？</p>
                                     <div style="text-align: right; margin: 0">
-                                        <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-                                        <el-button type="primary" size="mini" @click="removeSelection(row)">确定</el-button>
+                                        <el-button size="mini" type="text" @click="row.visible = false">取消</el-button>
+                                        <el-button type="primary" size="mini" @click="removeSelection(row,$index)">确定</el-button>
                                     </div>
-                                    <el-button size="small" slot="reference" type="danger">移 除</el-button>
+                                    <el-button size="small" slot="reference" type="danger">移除</el-button>
                                 </el-popover>
                             </template>
                         </el-table-column>
@@ -113,8 +113,8 @@
                 title="填写供货数量"
                 :visible.sync="centerDialogVisible"
                 width="50%"
-                center>
-            <div class="card p-6 w-full">
+                >
+            <div class="card-no-shadow p-6 w-full">
                 <div class="flex border-b border-40 text-80 items-center">
                     <div class="w-1/5 py-6 px-8">
                         商品名称
@@ -247,10 +247,9 @@
         this.notify({title: '已加入到下方表格', message: `${name}以加入${quantity}件`, type: 'success'})
         this.centerDialogVisible = false
       },
-      removeSelection (row) {
-        const index = this.form.items.findIndex(item => item === row)
+      removeSelection (row,index) {
         this.form.items.splice(index, 1)
-        this.visible = false
+        row.visible = false
       }
     },
 

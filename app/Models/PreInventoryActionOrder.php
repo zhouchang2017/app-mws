@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\TrackableTrait;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStatus\HasStatuses;
 
 // 操作单(拣货单\入仓单)
@@ -74,6 +73,8 @@ class PreInventoryActionOrder extends Model
         $this->loadMissing(['items.state.type','items.state.attachments']);
         return $this;
     }
+
+
 
     public function appendWarehouseSimpleAddress()
     {

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Observers\InventoryActionObserver;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed type

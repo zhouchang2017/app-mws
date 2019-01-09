@@ -6,7 +6,6 @@ use App\Observers\PreInventoryActionObserver;
 use App\Scopes\WithStateScope;
 use App\Traits\HasStatuses;
 use App\Traits\PreInventoryActionStatusTrait;
-use Illuminate\Database\Eloquent\Model;
 
 // 预出\入库(入库单\出货单)
 
@@ -17,9 +16,9 @@ class PreInventoryAction extends Model
 {
     use HasStatuses, PreInventoryActionStatusTrait;
 
-    protected $fillable = [ 'description', 'type_id' ];
+    protected $fillable = ['description', 'type_id'];
 
-    protected $appends = [ 'current_state' ];
+    protected $appends = ['current_state'];
 
     /*
      * 审核通过后，等待管理员填写操作单
@@ -39,7 +38,7 @@ class PreInventoryAction extends Model
     public function getCurrentStateAttribute()
     {
         $status = [
-            self::PENDING  => '等待审核',
+            self::PENDING => '等待审核',
             self::APPROVED => '审核通过,等待分配仓库',
             self::REJECTED => '拒绝',
             self::ASSIGNED => '以分配库存',
@@ -81,35 +80,47 @@ class PreInventoryAction extends Model
     // 详情
     public function scopeWithOrders($query)
     {
-        return $this->with([ 'orders.warehouse', 'orders.items.variant', 'orders.tracks.logistic' ]);
+        return $this->with(['orders.warehouse', 'orders.items.variant', 'orders.tracks.logistic']);
     }
 
     public function loadOrders()
     {
         return tap($this, function ($model) {
-            $model->loadMissing([ 'orders.warehouse', 'orders.items.variant', 'orders.tracks.logistic' ]);
+            $model->loadMissing(['orders.warehouse', 'orders.items.variant', 'orders.tracks.logistic']);
         });
     }
 
     public function loadStatuses()
     {
         return tap($this, function ($model) {
-            $model->loadMissing([ 'statuses.user' ]);
+            $model->loadMissing(['statuses.user']);
         });
     }
 
     public function loadOriginItems()
     {
         return tap($this, function ($model) {
-            $model->loadMissing([ 'origin.items.variant' ]);
+            $model->loadMissing(['origin.items.variant']);
         });
     }
 
     public function loadType()
     {
         return tap($this, function ($model) {
-            $model->loadMissing([ 'type' ]);
+            $model->loadMissing(['type']);
         });
     }
+
+    public function getAuthorizeAttribute()
+    {
+        return array_merge(
+            parent::getAuthorizeAttribute(),
+            [
+                'canApprove' => $this->authorizedTo(request(), 'approve'),
+                'canAssign' => $this->authorizedTo(request(), 'assign'),
+            ]
+        );
+    }
+
 
 }

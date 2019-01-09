@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Divisions\Area;
 use App\Models\Divisions\City;
 use App\Models\Divisions\Province;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed country

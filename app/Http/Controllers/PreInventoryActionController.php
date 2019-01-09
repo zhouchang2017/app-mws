@@ -46,7 +46,7 @@ class PreInventoryActionController extends Controller
             return response()->json($resource);
         }
         $this->viewShare();
-        return view(static::$resource::uriKey() . '.pre-inventory-actions.detail', compact('resource'));
+        return view(static::$resource::uriKey() . '.detail', compact('resource'));
     }
 
     /**

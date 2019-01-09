@@ -45,3 +45,18 @@ Route::get('/product-options', 'ProductOptionController@index')->name('product-o
 Route::get('/notifications', 'HomeController@notifications')->name('notifications.index');
 // 标记已读
 Route::patch('/notifications/{id}', 'HomeController@notificationMakeAsRead')->name('notifications.read');
+
+// 促销计划
+Route::get('/promotion-plans', 'PromotionPlanController@index')->name('promotion-plans.index');
+Route::get('/promotion-plans/{promotionPlan}', 'PromotionPlanController@show')->name('promotion-plans.show');
+// 供应商同意促销计划邀请
+Route::patch('/promotion-plans/{promotionPlan}/confirm',
+    'PromotionPlanController@confirm')->name('promotion-plans.confirm');
+
+// 供应商退仓
+Route::resource('/withdraws', 'WithdrawController');
+
+// 仓库api
+Route::get('/warehouses', 'WarehouseController@index')->name('warehouses.index');
+// 库存api
+Route::get('/inventories', 'InventoryController@index')->name('inventories.index');

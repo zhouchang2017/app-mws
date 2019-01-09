@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\DP\Product;
 use App\Models\DP\ProductVariant;
 use App\Traits\AddressableTrait;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Supplier extends Model

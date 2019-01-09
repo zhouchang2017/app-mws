@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Contracts\Addressable;
 use App\Traits\AddressableTrait;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Warehouse

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\DP\Product;
 use App\Models\DP\ProductVariant;
-use Illuminate\Database\Eloquent\Model;
 
 class SupplyItem extends Model
 {

@@ -13,7 +13,6 @@ use App\Scopes\WithStateScope;
 use App\Traits\HasStatuses;
 use App\Traits\TrackableTrait;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notification;
 
 /**
@@ -36,29 +35,30 @@ class Supply extends Model
     const COMPLETED = 'COMPLETED'; // 已完成
     const CANCEL = 'CANCEL'; // 取消
 
-    protected $fillable = [ 'description', 'total', 'has_ship' ]; // has_ship 是否需要物流
+    protected $fillable = ['description', 'total', 'has_ship']; // has_ship 是否需要物流
 
-    protected $appends = [ 'current_state' ];
+    protected $appends = ['current_state'];
 
-    protected $touches = [ 'statuses' ];
+    protected $touches = ['statuses'];
 
     protected $casts = [
         'has_ship' => 'bool',
     ];
 
+    protected $with = ['state'];
+
     protected static function boot()
     {
         parent::boot();
         static::observe(SupplyObserver::class);
-        static::addGlobalScope(new WithStateScope());
 
         // 如果供应商登录到系统，仅能看到自己发布的供货计划
         static::addGlobalScope('filterBySupplier', function (Builder $builder) {
             if (auth()->user() instanceof SupplierUser) {
                 $supplier = auth()->user()->supplier;
                 $builder->where([
-                    [ 'origin_type', get_class($supplier) ],
-                    [ 'origin_id', $supplier->id ],
+                    ['origin_type', get_class($supplier)],
+                    ['origin_id', $supplier->id],
                 ]);
             }
         });
@@ -68,14 +68,14 @@ class Supply extends Model
     public function getCurrentStateAttribute()
     {
         $status = [
-            self::UN_COMMIT    => '未提交',
-            self::PENDING      => '已提交(审核中)',
-            self::APPROVED     => '审核通过,等待分配接收仓库',
-            self::UN_SHIP      => '待发货',
+            self::UN_COMMIT => '未提交',
+            self::PENDING => '已提交(审核中)',
+            self::APPROVED => '审核通过,等待分配接收仓库',
+            self::UN_SHIP => '待发货',
             self::PART_SHIPPED => '部分发货',
-            self::SHIPPED      => '已发货',
-            self::COMPLETED    => '已完成',
-            self::CANCEL       => '已取消',
+            self::SHIPPED => '已发货',
+            self::COMPLETED => '已完成',
+            self::CANCEL => '已取消',
         ];
         return array_get($status, $this->state->name, 'N/A');
     }
@@ -112,7 +112,7 @@ class Supply extends Model
 
     public function loadOrders()
     {
-        $this->loadMissing([ 'preInventoryAction.orders' ]);
+        $this->loadMissing(['preInventoryAction.orders']);
         $this->preInventoryAction->orders->each->loadDetailAttribute();
     }
 
@@ -174,4 +174,14 @@ class Supply extends Model
     {
         $this->origin->users->each->notify(new SupplyCompletedNotification($this));
     }
+
+    public function getAuthorizeAttribute()
+    {
+        return array_merge(parent::getAuthorizeAttribute(), [
+            'canShipment' => $this->authorizedTo(request(), 'shipment'),
+            'canUpdateShipment' => $this->authorizedTo(request(), 'updateShipment'),
+        ]);
+    }
+
+
 }

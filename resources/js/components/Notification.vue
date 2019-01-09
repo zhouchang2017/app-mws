@@ -48,27 +48,16 @@
                          class="px-3 flex items-center cursor-pointer"
                          @click="read(item)"
                     >
-                        <div v-if="item.hasOwnProperty('notifiable')">
-                            <el-badge v-if="!item.read_at" is-dot>
-                                <img class="h-12 w-12 rounded-full"
-                                     src="https://www.famousbirthdays.com/headshots/russell-crowe-6.jpg"/>
-                            </el-badge>
-                            <img v-else class="h-12 w-12 rounded-full"
-                                 src="https://www.famousbirthdays.com/headshots/russell-crowe-6.jpg"/>
 
-                        </div>
                         <div class="ml-4 flex-1 py-4 overflow-hidden">
                             <div class="flex items-bottom justify-between">
-                                <p class="text-grey-darkest">
-                                    {{ item.notifiable.name }}
+                                <p class="text-grey-dark mt-1 text-sm">
+                                    {{ getTypeName(item.type) }}
                                 </p>
                                 <p class="text-xs text-grey-darkest">
                                     {{ item.created_at | ago }}
                                 </p>
                             </div>
-                            <p class="text-grey-dark mt-1 text-sm">
-                                {{ getTypeName(item.type) }}
-                            </p>
                         </div>
                     </div>
                     <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler">

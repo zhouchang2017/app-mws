@@ -204,7 +204,7 @@ abstract class Resource
         return Str::plural(Str::snake(class_basename(get_called_class()), '-'));
     }
 
-    public function authorizedToIndex()
+    public function authorizedToIndex($request)
     {
         return [
             'canView' => true,

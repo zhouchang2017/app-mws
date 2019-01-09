@@ -18,4 +18,22 @@ abstract class Model extends BaseModel
     protected $connection = 'dealpaw';
 
     public $translationForeignKey = 'translatable_id';
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::retrieved(function($model){
+            $model->append('authorize');
+        });
+    }
+
+
+    public function getAuthorizeAttribute()
+    {
+        return [
+            'canUpdate' => $this->authorizedToUpdate(request()),
+            'canView' => $this->authorizedToView(request()),
+            'canDestroy' => $this->authorizedToDelete(request()),
+        ];
+    }
 }

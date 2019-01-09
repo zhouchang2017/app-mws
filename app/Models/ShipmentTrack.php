@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\MoneyFormatableTrait;
-use Illuminate\Database\Eloquent\Model;
 
 class ShipmentTrack extends Model
 {

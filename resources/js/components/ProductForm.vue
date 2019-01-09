@@ -22,6 +22,9 @@
                             clearable
                     ></el-cascader>
                 </el-form-item>
+                <!--<el-form-item label="产品图集" prop="images">-->
+
+                <!--</el-form-item>-->
                 <p class="text-xs font-semibold text-50">产品属性</p>
                 <div class="border-30 border-b mb-3"></div>
                 <div class="mb-3" v-if="attributes.length === 0">

@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $this->authorize('create',Product::class);
+        $this->authorize('create', Product::class);
         return view(static::$resource::uriKey() . '.create');
     }
 
@@ -44,7 +44,13 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $resource = $product->loadMissing(['attributeValues.attribute', 'options', 'taxon', 'variants.price']);
+        $resource = $product->loadMissing([
+            'attributeValues.attribute',
+            'images',
+            'options',
+            'taxon',
+            'variants.price',
+        ]);
         if (request()->ajax()) {
             return response()->json($resource);
         }
@@ -60,7 +66,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $resource = $product->loadMissing(['taxon', 'attributeValues', 'options:option_id']);
+        $resource = $product->loadMissing(['taxon', 'images', 'attributeValues', 'options:option_id']);
         $product->taxon->append('ancestors');
         $this->viewShare();
         return view(static::$resource::uriKey() . '.update', compact('resource'));

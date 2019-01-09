@@ -99,6 +99,13 @@ a{
     @apply w-full
 }
 
+.image-list li{
+    @apply mr-3
+}
+.image-list li:last-child{
+    @apply mr-0
+}
+
 /**
  * Here you would add any custom utilities you need that don't come out of the
  * box with Tailwind.
@@ -394,7 +401,7 @@ a{
 }
 
 .form-list {
-    @apply card p-6 w-full
+    @apply card-no-shadow p-6 w-full
 }
 .form-list .form-list__item{
     @apply border-b border-40 flex text-80

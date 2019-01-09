@@ -646,6 +646,14 @@ a {
   width: 100%;
 }
 
+.image-list li {
+  margin-right: .75rem;
+}
+
+.image-list li:last-child {
+  margin-right: 0;
+}
+
 /**
  * Here you would add any custom utilities you need that don't come out of the
  * box with Tailwind.
@@ -1029,8 +1037,6 @@ a {
 
 .form-list {
   background-color: #fff;
-  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
-          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
   overflow: hidden;
   border-radius: .5rem;
   padding: 1.5rem;

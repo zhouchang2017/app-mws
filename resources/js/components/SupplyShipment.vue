@@ -1,7 +1,7 @@
 <template>
     <div>
-        <card-title label-name="入库单发货">
-            <div v-if="routeName==='detail'" class="ml-3 w-full flex items-center">
+        <card-title label="入库单发货">
+            <div v-if="routeName==='detail' && canUpdateShipment" class="ml-3 w-full flex items-center">
                 <div class="flex w-full justify-end items-center"></div>
                 <div class="ml-3"><!----> <!----></div>
                 <button slot="reference" title="Update" type="button"
@@ -30,7 +30,7 @@
                 </form-item>
                 <template v-if="routeName === 'detail'">
                     <template v-for="track in staticOrder.tracks">
-                        <form-item title="物流公司" :value="getLogistic(track.id).name"></form-item>
+                        <form-item title="物流公司" :value="track.logistic.name"></form-item>
                         <form-item title="物流单号" :value="track.tracking_number"></form-item>
 
                     </template>
@@ -138,6 +138,9 @@
       },
       shipped () {
         return (_.get(this, 'staticOrder.tracks', [])).length > 0
+      },
+      canUpdateShipment () {
+        return _.get(this, 'resource.authorize.canUpdateShipment', true)
       }
     },
     created () {

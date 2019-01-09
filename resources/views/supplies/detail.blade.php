@@ -7,6 +7,8 @@
             label="{{$label}}"
             singular-label="{{$singularLabel}}"
             resource-id="{{$resource->id}}"
+            :can-update='@json($resource->authorize['canUpdate'])'
+            :can-destroy='@json($resource->authorize['canDestroy'])'
     ></resource-detail-header>
     <div class="form-list mb-6">
         <form-item title="计划说明" value="{{$resource->description}}"></form-item>
@@ -106,7 +108,7 @@
                 </div>
                 {{-- 待发货，显示发货操作按钮--}}
                 <div class="bg-30 flex px-8 py-4 ">
-                    <a href="{{route('supplier.supplies.order.shipment.create',['supply'=>$resource->id,'order'=>$order->id])}}"
+                    <a href="{{route($domain.'.supplies.order.shipment.create',['supply'=>$resource->id,'order'=>$order->id])}}"
                        class="btn btn-a btn-default ml-auto cursor-pointer text-white bg-primary"
                        title="Ship">
                         {{$order->hasTracks() ? '物流详情' : '发货'}}

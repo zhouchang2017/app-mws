@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Models\DP\Product;
 use App\Models\DP\ProductVariant;
+use App\Scopes\SupplierInventoryScope;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 class Inventory extends Model
 {
@@ -18,6 +18,13 @@ class Inventory extends Model
         'warehouse_area',
         'quantity',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new SupplierInventoryScope());
+    }
+
 
     public function warehouse()
     {
@@ -42,8 +49,8 @@ class Inventory extends Model
     public function scopeFindWarehouseVariants($query, $warehouseId, $variantId, $productId = null)
     {
         return $query->where([
-            [ 'warehouse_id', $warehouseId ],
-            [ 'variant_id', $variantId ],
+            ['warehouse_id', $warehouseId],
+            ['variant_id', $variantId],
         ])->when($productId, function ($query, $productId) {
             return $query->where('product_id', $productId);
         });
@@ -58,13 +65,14 @@ class Inventory extends Model
         });
     }
 
+
     public static function updateByAction(InventoryAction $action)
     {
         $inventory = Inventory::where(
             [
-                [ 'variant_id', $action->variant_id ],
-                [ 'warehouse_id', $action->warehouse_id ],
-                [ 'warehouse_area', $action->warehouse_area ],
+                ['variant_id', $action->variant_id],
+                ['warehouse_id', $action->warehouse_id],
+                ['warehouse_area', $action->warehouse_area],
             ]
         )->first();
 
@@ -76,9 +84,9 @@ class Inventory extends Model
             Inventory::create([
                 config('inventory.product_key') => $action->product_id ?? null,
                 config('inventory.variant_key') => $action->variant_id,
-                'warehouse_id'                  => $action->warehouse_id,
-                'quantity'                      => $action->quantity,
-                'warehouse_area'                => $action->warehouse_area,
+                'warehouse_id' => $action->warehouse_id,
+                'quantity' => $action->quantity,
+                'warehouse_area' => $action->warehouse_area,
             ]);
         }
     }

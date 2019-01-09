@@ -10,7 +10,7 @@ class Promotion extends Model
 {
     use SoftDeletes, Translatable;
 
-    public $translatedAttributes = ['name', 'description', 'rest', 'asset_url', 'asset_image'];
+    public $translatedAttributes = ['name', 'description', 'rest', 'asset_url', 'asset_image','image'];
 
     protected $casts = [
         'configuration' => 'array',

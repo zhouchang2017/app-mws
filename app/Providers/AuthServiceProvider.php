@@ -3,9 +3,16 @@
 namespace App\Providers;
 
 use App\Models\DP\Product;
+use App\Models\PreInventoryAction;
+use App\Models\PreInventoryActionOrder;
+use App\Models\Supply;
+use App\Policies\PreInventoryActionOrderPolicy;
+use App\Policies\PreInventoryActionPolicy;
 use App\Policies\ProductPolicy;
+use App\Policies\SupplyPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -15,6 +22,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Product::class => ProductPolicy::class,
+        Supply::class => SupplyPolicy::class,
+        PreInventoryAction::class => PreInventoryActionPolicy::class,
+        PreInventoryActionOrder::class => PreInventoryActionOrderPolicy::class
     ];
 
     /**

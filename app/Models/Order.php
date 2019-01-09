@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Services\OrderService;
 use App\Traits\HasStatuses;
 use App\Traits\MoneyFormatableTrait;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStatus\Exceptions\InvalidStatus;
 
 /**

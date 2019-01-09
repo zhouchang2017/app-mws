@@ -1,0 +1,37 @@
+@extends('layouts.app')
+
+@section('content')
+    <index
+            uri-key="{{$uriKey}}"
+            label="{{$label}}"
+            singular-label="{{$singularLabel}}"
+            can-view
+            can-update
+            can-destroy
+    >
+        <el-table-column
+                prop="description"
+                label="计划描述"
+        >
+        </el-table-column>
+        <el-table-column
+                prop="warehouse.name"
+                label="仓库"
+        >
+        </el-table-column>
+        <el-table-column
+                prop="type.name"
+                label="类型"
+        >
+        </el-table-column>
+        <el-table-column
+            prop="is_shipped"
+            label="物流状态">
+        </el-table-column>
+        <el-table-column
+                prop="updated_at"
+                label="更新时间"
+        >
+        </el-table-column>
+    </index>
+@endsection

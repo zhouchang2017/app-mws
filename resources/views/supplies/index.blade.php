@@ -1,4 +1,3 @@
-
 <el-table-column
         prop="description"
         label="计划描述"
@@ -11,6 +10,7 @@
 >
 </el-table-column>
 @endadmin
+
 <el-table-column
         prop="current_state"
         label="当前状态"

@@ -14,7 +14,7 @@
 
 
     <div class="form-list mb-6">
-        <form-item title="产品名称" value="{{$resource->name}}"></form-item>
+        <translation-detail-item title="产品名称" attribute="name" :translations='@json($resource->translations)'></translation-detail-item>
         <form-item title="产品编码" value="{{$resource->code}}"></form-item>
         <form-item title="产品分类" value="{{$resource->taxon->name}}" @admin uri-key="taxons" resource-id="{{$resource->taxon->id}}" @endadmin></form-item>
         <form-item title="状态" left-center>
@@ -98,6 +98,11 @@
                             show-icon>
                     </el-alert>
                 @endif
+            </div>
+        </form-item>
+        <form-item title="图集" left-center>
+            <div slot="value">
+                <thumb-image-list :images='@json($resource->images)' ></thumb-image-list>
             </div>
         </form-item>
         <form-item title="最后更新时间" value="{{$resource->updated_at}}"></form-item>

@@ -42,6 +42,7 @@ class AdminAuthGrandMiddleware
             $menu->add('价格调整类型', 'attachment-types');
             $menu->add('渠道', 'markets');
             $menu->add('促销活动', 'promotions');
+            $menu->add('促销计划', 'promotion-plans');
             $menu->add('站内消息', 'notifications');
         });
     }

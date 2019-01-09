@@ -20,7 +20,13 @@ class PromotionPlanController extends Controller
         if (request()->ajax()) {
             return response()->json($resource);
         }
-        $this->viewShare((new static::$resource(static::$resource::newModel()))->authorizedToIndex());
+        $this->viewShare((new static::$resource(static::$resource::newModel()))->authorizedToIndex(app(ErpRequest::class)));
+
+        // 供应商没有确认 活动计划之前 看不到详情页，看的是签署同意计划的页面
+        if(isSupplier() && is_null($promotionPlan->confirm_at)){
+            return view(static::$resource::uriKey() . '.un_confirm', compact('resource'));
+        }
+
         return view(static::$resource::uriKey() . '.detail', compact('resource'));
     }
 
@@ -55,5 +61,11 @@ class PromotionPlanController extends Controller
             ->withProperties(['title' => $request->get('title'),'body'=>$request->get('body')])
             ->log('推送促销计划邀请');
         return response()->noContent();
+    }
+
+    public function confirm(PromotionPlan $promotionPlan,ErpRequest $request)
+    {
+        $promotionPlan->markAsConfirm();
+        return redirect()->route($request->getSubDomain() . '.'.static::$resource::uriKey().'.show', [$promotionPlan]);
     }
 }

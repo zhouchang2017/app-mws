@@ -13,6 +13,16 @@ class Channel extends Model
 
     public static $marketName = 'DP商店';
 
+    public function getMarketableTypeAttribute()
+    {
+        return get_class($this);
+    }
+
+    public function getMarketableIdAttribute()
+    {
+        return $this->id;
+    }
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'channel_product');

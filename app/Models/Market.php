@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\DP\Channel;
-use Illuminate\Database\Eloquent\Model;
 
 class Market extends Model
 {
@@ -17,9 +16,26 @@ class Market extends Model
 
     protected $appends = ['type_name'];
 
+    protected $casts = [
+        'enabled' => 'boolean'
+    ];
+
     public static $marketables = [
         Channel::class,
     ];
+
+    public static function marketableMaps()
+    {
+        return collect(static::$marketables)->map(function ($marketable) {
+            return [
+                'type' => $marketable::$marketName,
+                'values' => $marketable::all()->each(function ($item){
+                    $item->marketable_type = get_class($item);
+                    $item->marketable_id = $item->id;
+                }),
+            ];
+        });
+    }
 
     public function marketable()
     {

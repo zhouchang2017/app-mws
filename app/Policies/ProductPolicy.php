@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable as User;
 use App\Models\DP\Product;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

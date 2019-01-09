@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ErpRequest;
 use App\Traits\HttpResource;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -58,7 +59,8 @@ class Controller extends BaseController
                 $this->withoutPage() ? $build->get() : $build->paginate()
             );
         }
-        $this->viewShare((new static::$resource(static::$resource::newModel()))->authorizedToIndex());
+
+        $this->viewShare((new static::$resource(static::$resource::newModel()))->authorizedToIndex(app(ErpRequest::class)));
         return view(static::$indexViewName);
     }
 

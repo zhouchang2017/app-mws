@@ -105,4 +105,14 @@ class Product extends Model
     {
         return $this->belongsToMany(Channel::class, 'channel_product');
     }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function image()
+    {
+        return $this->hasOne(ProductImage::class);
+    }
 }

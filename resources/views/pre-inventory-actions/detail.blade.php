@@ -7,6 +7,8 @@
             uri-key="{{$uriKey}}"
             singular-label="{{$singularLabel}}"
             resource-id="{{$resource->id}}"
+            :can-update='@json($resource->authorize['canUpdate'])'
+            :can-destroy='@json($resource->authorize['canDestroy'])'
     ></resource-detail-header>
 
     <div class="form-list mb-6">
@@ -27,7 +29,7 @@
             <product-variant-list :items='@json($resource->origin->items)'></product-variant-list>
         </div>
         {{--已提交，显示审核按钮--}}
-        @if ($resource->state->name === \App\Models\PreInventoryAction::PENDING)
+        @if ($resource->authorize['canApprove'])
             <div class="bg-30 flex px-8 py-4">
                 <form class="ml-auto"
                       action="{{ route($domain.'.pre-inventory-actions.approved',['pre-inventory-action'=>$resource->id]) }}"
@@ -44,7 +46,7 @@
             </div>
         @endif
         {{-- 以审核，显示分配仓库操作按钮--}}
-        @if ($resource->state->name === \App\Models\PreInventoryAction::APPROVED)
+        @if ($resource->authorize['canAssign'])
             <div class="bg-30 flex px-8 py-4 ">
                 <a  href="{{ route($domain.'.pre-inventory-actions.assign.create',['pre-inventory-action'=>$resource->id]) }}"
                     class="btn btn-a btn-default ml-auto cursor-pointer text-white bg-primary"

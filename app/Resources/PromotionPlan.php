@@ -17,7 +17,7 @@ class PromotionPlan extends Resource
     ];
 
     public static $with = [
-        'supplier'
+        'supplier','promotion'
     ];
 
     public static $count = [];
@@ -29,12 +29,12 @@ class PromotionPlan extends Resource
         return '促销计划';
     }
 
-    public function authorizedToIndex()
+    public function authorizedToIndex($request)
     {
         return [
             'canView' => true,
             'canUpdate' => true,
-            'canCreate' => true,
+            'canCreate' => $request->isAdmin(),
             'canDestroy' => true,
             'canSearch' => true,
         ];

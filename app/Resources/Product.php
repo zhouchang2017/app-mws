@@ -16,7 +16,9 @@ class Product extends Resource
         'id', 'code',
     ];
 
-    public static $with = [];
+    public static $with = [
+        'image'
+    ];
 
     public static $count = [];
 

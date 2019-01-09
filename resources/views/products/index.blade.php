@@ -1,4 +1,11 @@
 <el-table-column
+        label="缩略图"
+>
+    <template slot-scope="{row}">
+        <avatar :image="row.image" path="image"/>
+    </template>
+</el-table-column>
+<el-table-column
         prop="code"
         label="产品编码"
 >
