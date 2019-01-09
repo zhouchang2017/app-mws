@@ -118,7 +118,7 @@ Route::get('/addresses/create', 'AddressController@create')->name('addresses.cre
 
 
 // 渠道
-Route::get('/markets/marketables','MarketController@getMarketables');
+Route::get('/markets/marketables', 'MarketController@getMarketables');
 Route::resource('/markets', 'MarketController');
 // 订单
 Route::get('/orders', 'OrderController@index');
@@ -135,6 +135,10 @@ Route::post('/promotion-plans/{promotionPlan}/notify', 'PromotionPlanController@
     ->name('promotion-plans.notify.store');
 // 供应商
 Route::resource('/suppliers', 'SupplierController');
+// 供应商保存地址
+Route::post('/suppliers/{supplier}/address', 'SupplierController@address')->name('suppliers.address.store');
+// 供应商用户
+Route::resource('/supplier-users', 'SupplierUserController');
 
 // DP渠道
 Route::get('/channels', 'ChannelController@index')->name('channels.index');

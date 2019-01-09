@@ -56,6 +56,10 @@
   export default {
     name: 'address-form',
     props: {
+      collectName: {
+        type: String,
+        default: null
+      },
       address: {
         type: Object,
         default: () => {
@@ -142,6 +146,9 @@
       const {data} = await this.fetchProvinces()
       this.options = data.map(item => _.tap(item, item => {item.children = []}))
       this.country = '中国'
+      if(this.collectName){
+        this.address.collect_name = this.collectName
+      }
     }
   }
 </script>

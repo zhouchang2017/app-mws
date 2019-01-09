@@ -13,8 +13,8 @@ class ProductPolicy
     /**
      * Determine whether the user can view the product.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\DP\Product  $product
+     * @param User $user
+     * @param  \App\Models\DP\Product $product
      * @return mixed
      */
     public function view(User $user, Product $product)
@@ -22,7 +22,7 @@ class ProductPolicy
         return true;
     }
 
-    public function viewAny(User $user,Product $product){
+    public function viewAny(User $user){
         return true;
     }
 

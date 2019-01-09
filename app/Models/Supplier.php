@@ -19,6 +19,8 @@ class Supplier extends Model
         'code',
         'level',
         'description',
+        'user_id',
+        'supplier_user_id'
     ];
 
     // 供应商管理员

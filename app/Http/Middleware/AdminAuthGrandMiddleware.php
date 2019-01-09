@@ -43,6 +43,7 @@ class AdminAuthGrandMiddleware
             $menu->add('渠道', 'markets');
             $menu->add('促销活动', 'promotions');
             $menu->add('促销计划', 'promotion-plans');
+            $menu->add('供应商', 'suppliers');
             $menu->add('站内消息', 'notifications');
         });
     }
