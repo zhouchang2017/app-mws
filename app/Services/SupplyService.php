@@ -241,6 +241,7 @@ class SupplyService
      * @param PreInventoryActionOrder $order
      * @param Request $request
      * @return \Illuminate\Support\Collection
+     * @throws InvalidStatus
      */
     public function shipment(PreInventoryActionOrder $order, Request $request)
     {

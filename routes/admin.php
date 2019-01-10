@@ -76,6 +76,9 @@ Route::delete('/product-variants/{productVariant}/prices/{ProductVariantPrice}',
 // 仓库
 Route::resource('warehouses', 'WarehouseController');
 
+Route::post('warehouses/{warehouse}/address', 'WarehouseController@address')->name('warehouses.address.store');
+Route::patch('warehouses/{warehouse}/address', 'WarehouseController@address')->name('warehouses.address.store');
+
 // 仓库类型
 Route::resource('warehouse-types', 'WarehouseTypeController');
 
@@ -137,11 +140,22 @@ Route::post('/promotion-plans/{promotionPlan}/notify', 'PromotionPlanController@
 Route::resource('/suppliers', 'SupplierController');
 // 供应商保存地址
 Route::post('/suppliers/{supplier}/address', 'SupplierController@address')->name('suppliers.address.store');
+Route::patch('/suppliers/{supplier}/address', 'SupplierController@address')->name('suppliers.address.store');
 // 供应商用户
 Route::resource('/supplier-users', 'SupplierUserController');
 
 // DP渠道
 Route::get('/channels', 'ChannelController@index')->name('channels.index');
+
+
+// 供应商退仓
+Route::resource('/withdraws', 'WithdrawController');
+// 提交退仓
+Route::patch('/withdraws/{withdraw}/submit', 'WithdrawController@submit')->name('withdraws.submit');
+// 审核退仓
+Route::patch('/withdraws/{withdraw}/approved', 'WithdrawController@approved')->name('withdraws.approved');
+// 退仓完成
+Route::patch('/withdraws/{withdraw}/completed', 'WithdrawController@completed')->name('withdraws.completed');
 
 // 中华人民共和国行政区划（五级）：省级、地级、县级、乡级和村级
 Route::get('/divisions/provinces', 'DivisionController@provinces')->name('divisions.provinces.search');

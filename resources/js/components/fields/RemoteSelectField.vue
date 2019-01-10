@@ -21,7 +21,9 @@
             <!--<div class="text-xs  text-70">{{item.code}}</div>-->
             <!--</div>-->
         </el-option>
-        <infinite-loading @infinite="infiniteHandler">
+        <infinite-loading spinner="waveDots" @infinite="infiniteHandler">
+            <span slot="no-more"></span>
+            <div slot="no-results"></div>
         </infinite-loading>
     </el-select>
 </template>
@@ -73,6 +75,10 @@
       valueField: {
         type: String,
         default: 'id'
+      },
+      init:{
+        type:Boolean,
+        default:false
       }
     },
 
@@ -99,11 +105,11 @@
         if (options.length > 0) {
           this.options = options
         } else {
-          await this.remoteMethod()
+          await this.remoteMethod(this.value)
         }
       },
-      remoteMethod (query) {
-        if (query !== '') {
+      remoteMethod (query = null) {
+        if (query || this.init) {
           this.query = query
           this.currentPage = 1
           this.remoteLoading = true
@@ -148,11 +154,13 @@
       }
     },
 
-    async mounted () {
-      await this.initOptions(this.defaultOptions)
+    created(){
       if (this.defaultValue) {
         this.initValue(this.defaultValue)
       }
+    },
+    async mounted () {
+      await this.initOptions(this.defaultOptions)
     }
   }
 </script>

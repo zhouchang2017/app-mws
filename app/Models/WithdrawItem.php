@@ -10,6 +10,8 @@ class WithdrawItem extends Model
 {
     protected $fillable = ['warehouse_id', 'warehouse_area', 'product_id', 'variant_id', 'quantity'];
 
+    protected $with = ['warehouse'];
+
     public function withdraw()
     {
         return $this->belongsTo(Withdraw::class);

@@ -27,6 +27,8 @@ class PreInventoryActionOrder extends Model
 
     protected $appends = ['is_shipped'];
 
+    protected $appendAuthorizes = ['shipment', 'viewShipment'];
+
     // 入库仓库
     public function warehouse()
     {
@@ -70,10 +72,9 @@ class PreInventoryActionOrder extends Model
 
     public function loadItemState()
     {
-        $this->loadMissing(['items.state.type','items.state.attachments']);
+        $this->loadMissing(['items.state.type', 'items.state.attachments']);
         return $this;
     }
-
 
 
     public function appendWarehouseSimpleAddress()

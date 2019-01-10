@@ -35,6 +35,13 @@ trait AddressableTrait
             ->where('collection_name', $collectionName);
     }
 
+    public function scopeAddressWhereCollection($query, $collectionName)
+    {
+        $query->with(['address'=>function($query)use($collectionName){
+            $query->where('collection_name', $collectionName);
+        }]);
+    }
+
     public function addressByCollections($collectionName)
     {
         return $this->morphMany(Address::class, 'addressable')

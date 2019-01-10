@@ -21,14 +21,6 @@
         <form-item title="最后更新时间" value="{{$resource->updated_at}}"></form-item>
     </div>
 
-    <resource-index-header
-            via-relation-name="addressable"
-            morph-type="warehouse"
-            uri-key="addresses"
-            via-relation-id="{{$resource->id}}"
-            singular-label="地址"
-            label="地址"
-    ></resource-index-header>
-    @component('components.address-panel',['address'=>$resource->address])
-    @endcomponent
+    <detail-address :address='@json($resource->address)' api="{{route($domain.'.warehouses.address.store',['supplier'=>$resource])}}" label="地址"
+                    ></detail-address>
 @endsection

@@ -10,10 +10,15 @@ namespace App\Models;
 
 use App\Traits\Authorizable;
 use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Support\Str;
 
 abstract class Model extends BaseModel
 {
     use Authorizable;
+
+    protected $allowAuthorizes = ['update','view','destroy'];
+
+    protected $appendAuthorizes = [];
 
     protected static function boot()
     {
@@ -21,15 +26,5 @@ abstract class Model extends BaseModel
         static::retrieved(function($model){
             $model->append('authorize');
         });
-    }
-
-
-    public function getAuthorizeAttribute()
-    {
-        return [
-            'canUpdate' => $this->authorizedToUpdate(request()),
-            'canView' => $this->authorizedToView(request()),
-            'canDestroy' => $this->authorizedToDelete(request()),
-        ];
     }
 }

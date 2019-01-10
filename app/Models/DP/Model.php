@@ -19,6 +19,10 @@ abstract class Model extends BaseModel
 
     public $translationForeignKey = 'translatable_id';
 
+    protected $allowAuthorizes = ['update','view','destroy'];
+
+    protected $appendAuthorizes = [];
+
     protected static function boot()
     {
         parent::boot();
@@ -27,13 +31,4 @@ abstract class Model extends BaseModel
         });
     }
 
-
-    public function getAuthorizeAttribute()
-    {
-        return [
-            'canUpdate' => $this->authorizedToUpdate(request()),
-            'canView' => $this->authorizedToView(request()),
-            'canDestroy' => $this->authorizedToDelete(request()),
-        ];
-    }
 }

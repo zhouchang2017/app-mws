@@ -46,6 +46,7 @@ trait PerformsQueries
         return array_merge(static::$with, $with);
     }
 
+
     /**
      * Initialize the given index query.
      *

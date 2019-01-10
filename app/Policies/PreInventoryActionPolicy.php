@@ -20,7 +20,7 @@ class PreInventoryActionPolicy
      */
     public function view(Authorizable $user, PreInventoryAction $preInventoryAction)
     {
-        //
+        return true;
     }
 
     /**

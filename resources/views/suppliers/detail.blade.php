@@ -88,10 +88,10 @@
         @endif
     </div>
 
-    <detail-address api="{{route($domain.'.suppliers.address.store',['supplier'=>$resource])}}" label="办公地址"
-                    collect-name="office"></detail-address>
+    <detail-address :address='@json($resource->officeAddress)' api="{{route($domain.'.suppliers.address.store',['supplier'=>$resource])}}" label="办公地址"
+                    collection-name="office"></detail-address>
 
-    <detail-address api="{{route($domain.'.suppliers.address.store',['supplier'=>$resource])}}" label="仓库地址"
-                    collect-name="warehouse"></detail-address>
+    <detail-address :address='@json($resource->warehouseAddress)' api="{{route($domain.'.suppliers.address.store',['supplier'=>$resource])}}" label="仓库地址"
+                    collection-name="warehouse"></detail-address>
 
 @endsection

@@ -47,6 +47,8 @@ class Supply extends Model
 
     protected $with = ['state'];
 
+    protected $appendAuthorizes = ['shipment','updateShipment'];
+
     protected static function boot()
     {
         parent::boot();
@@ -173,14 +175,6 @@ class Supply extends Model
     public function completedNotify()
     {
         $this->origin->users->each->notify(new SupplyCompletedNotification($this));
-    }
-
-    public function getAuthorizeAttribute()
-    {
-        return array_merge(parent::getAuthorizeAttribute(), [
-            'canShipment' => $this->authorizedTo(request(), 'shipment'),
-            'canUpdateShipment' => $this->authorizedTo(request(), 'updateShipment'),
-        ]);
     }
 
 

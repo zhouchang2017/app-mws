@@ -28,10 +28,20 @@ export default {
     }
   },
   methods: {
+    startLoading(){
+      this.loading = true
+    },
+    endLoading(){
+      this.loading = false
+    },
+    validateForm(){
+      return this.$refs[this.formName].validate()
+    },
     async submit () {
       this.$refs[this.formName].validate(async (valid) => {
+
         if (valid) {
-          this.loading = true
+          this.startLoading()
           try {
             if (this.createPage) {
               const {data} = await this.createRequest()
@@ -42,11 +52,10 @@ export default {
               this.notify(data)
               this.go(`/${this.uriKey}/${this.resourceId}`)
             }
-
           } catch (e) {
             this.notify({type: 'error', title: 'ERROR', message: e.response})
           }
-          this.loading = false
+          this.endLoading()
         } else {
           this.notify({type: 'error', title: '表单数据不合法'})
           return false
@@ -99,6 +108,10 @@ export default {
 
     submitText () {
       return this.createPage ? `创建${this.singularLabel}` : `更新${this.singularLabel}`
+    },
+
+    refForm () {
+      return this.$refs[this.formName]
     }
   }
 }

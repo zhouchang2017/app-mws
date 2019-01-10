@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ErpRequest;
+use App\Models\Address;
 use App\Models\Supplier;
+use App\Services\AddressService;
 use Illuminate\Http\Request;
 use App\Resources\Supplier as SupplierResource;
 
@@ -28,7 +30,7 @@ class SupplierController extends Controller
 
     public function show(Supplier $supplier)
     {
-        $resource = $supplier->loadMissing([ 'manager', 'admin', 'users' ]);
+        $resource = $supplier->loadMissing(['manager', 'admin', 'users']);
         if (request()->ajax()) {
             return response()->json($resource);
         } else {
@@ -37,8 +39,21 @@ class SupplierController extends Controller
         }
     }
 
-    public function storeAddress(Supplier $supplier, ErpRequest $request)
+    public function address(Supplier $supplier, ErpRequest $request)
     {
+        if ($request->method() === 'POST') {
+            return $this->created(
+                AddressService::updateOrCreateAddress($supplier, $request->all())
+            );
+        }
+        if ($request->method() === 'PATCH') {
+            $id = $request->get('id');
+            $address = Address::find($id);
+            return $this->updated(
+
+                AddressService::updateOrCreateAddress($supplier, $request->all(), $address)
+            );
+        }
 
     }
 }

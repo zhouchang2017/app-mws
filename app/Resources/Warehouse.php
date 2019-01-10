@@ -22,7 +22,7 @@ class Warehouse extends Resource
     public static $with = ['type'];
 
 
-    public static $count = ['inventories:quantity'];
+    public static $count = [];
 
 
     public static function label()

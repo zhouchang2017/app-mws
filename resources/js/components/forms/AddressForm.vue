@@ -1,154 +1,126 @@
 <template>
     <div>
-        <el-form-item label="联系人" prop="address.name">
-            <el-input placeholder="请输入联系人"
-                      v-model="address.name"></el-input>
-        </el-form-item>
-        <el-form-item label="座机" prop="address.tel">
-            <el-input placeholder="请输入座机"
-                      v-model="address.tel"></el-input>
-        </el-form-item>
-        <el-form-item label="手机" prop="address.phone">
-            <el-input placeholder="请输入手机"
-                      v-model="address.phone"></el-input>
-        </el-form-item>
-        <el-form-item label="传真" prop="address.fax">
-            <el-input placeholder="请输入传真"
-                      v-model="address.fax"></el-input>
-        </el-form-item>
-        <el-form-item label="邮编" prop="address.zip">
-            <el-input placeholder="请输入邮编"
-                      v-model="address.zip"></el-input>
-        </el-form-item>
-        <!--<el-form-item label="国家" prop="address.country">-->
-        <!--<el-input disabled placeholder="请输入国家"-->
-        <!--v-model="address.country"></el-input>-->
-        <!--</el-form-item>-->
+        <div class="p-6">
+            <el-form v-loading="loading" ref="form" :rules="rules" :model="form" label-position="left"
+                     :label-width="width">
+                <el-form-item label="联系人" prop="name">
+                    <el-input placeholder="请输入联系人"
+                              v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="座机" prop="tel">
+                    <el-input placeholder="请输入座机"
+                              v-model="form.tel"></el-input>
+                </el-form-item>
+                <el-form-item label="手机" prop="phone">
+                    <el-input placeholder="请输入手机"
+                              v-model="form.phone"></el-input>
+                </el-form-item>
+                <el-form-item label="传真" prop="fax">
+                    <el-input placeholder="请输入传真"
+                              v-model="form.fax"></el-input>
+                </el-form-item>
+                <el-form-item label="邮编" prop="zip">
+                    <el-input placeholder="请输入邮编"
+                              v-model="form.zip"></el-input>
+                </el-form-item>
 
-        <el-form-item label="省市区" prop="address.province">
-            <el-cascader
-                    class="w-full"
-                    v-model="local"
-                    :options="options"
-                    @active-item-change="handleItemChange"
-                    :props="props"
-            ></el-cascader>
+                <el-form-item label="省市区" prop="district">
+                    <area-select-field :default-value="defaultArea" @change="areaChange"></area-select-field>
+                </el-form-item>
 
-            <!--<el-input placeholder="请输入省份"-->
-            <!--v-model="address.province"></el-input>-->
-        </el-form-item>
-        <!--<el-form-item label="城市" prop="address.city">-->
-        <!--<el-input placeholder="请输入城市"-->
-        <!--v-model="address.city"></el-input>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item label="行政区" prop="address.district">-->
-        <!--<el-input placeholder="请输入行政区"-->
-        <!--v-model="address.district"></el-input>-->
-        <!--</el-form-item>-->
-        <el-form-item label="详细地址" prop="address.address">
-            <el-input placeholder="请输入详细地址"
-                      v-model="address.address"></el-input>
-        </el-form-item>
+                <el-form-item label="详细地址" prop="address">
+                    <el-input placeholder="请输入详细地址"
+                              v-model="form.address"></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <slot :form="form">
+            <div class="bg-30 flex px-8 py-4">
+                <div class="ml-auto"
+                >
+                    <button @click="submit" type="button"
+                            class="btn btn-default btn-primary inline-flex items-center relative">
+                    <span class="">
+                        {{submitText}}
+                    </span>
+                    </button>
+                </div>
+            </div>
+        </slot>
     </div>
+
 </template>
 
 <script>
+  import BaseForm from '../../baseForm'
+
   export default {
     name: 'address-form',
+
+    mixins: [BaseForm],
+
     props: {
-      collectName: {
+      collectionName: {
         type: String,
         default: null
       },
-      address: {
-        type: Object,
-        default: () => {
-          return {
-            name: null,
-            tel: null,
-            phone: null,
-            fax: null,
-            zip: null,
-            country: '中国',
-            province: null,
-            city: null,
-            district: null,
-            address: null
-          }
-        }
+      width: {
+        type: String,
+        default: '180px'
       }
     },
-    // model: {
-    //   prop: 'address',
-    //   event: 'input'
-    // }
     data () {
       return {
-        options: [],
-        local: [],
-        props: {
-          label: 'name',
-          value: 'id',
-          children: 'children'
-        }
-      }
-    },
-
-    watch: {
-      local: function (value) {
-        if (value.length === 3) {
-          this.address.district = (this.getArea(value)).name
-        }
+        form: {
+          collection_name: null,
+          name: null,
+          tel: null,
+          phone: null,
+          fax: null,
+          zip: null,
+          country: '中国',
+          province: null,
+          city: null,
+          district: null,
+          address: null
+        },
+        rules: {
+          name: [
+            {required: true, message: `请输${this.singularLabel}联系人`, trigger: 'blur'},
+          ],
+          phone: [
+            {required: true, message: `请输${this.singularLabel}手机`, trigger: 'blur'},
+            {validator: this.checkPhone, trigger: 'blur'},
+          ],
+          district: [
+            {required: true, message: `请输选择地区`, trigger: 'change'},
+          ]
+        },
+        defaultArea: []
       }
     },
 
     methods: {
-      fetchProvinces (params = null) {
-        return axios.get('/divisions/provinces?orderBy=id', {params})
+      areaChange ({province, city, district}) {
+        this.form = {...this.form, province, city, district}
       },
-      fetchCities (params = null) {
-        return axios.get('/divisions/cities?orderBy=id', {params})
-      },
-      fetchAreas (params = null) {
-        return axios.get('/divisions/areas?orderBy=id', {params})
-      },
-      getArea (local) {
-        if (local.length === 3) {
-          const province = _.find(this.options, ['id', _.head(local)])
-          const city = _.find(province.children, ['id', local[1]])
-          return _.find(city.children, ['id', _.last(local)])
-        }
-      },
-      handleItemChange (value) {
-        if (value.length === 1) {
-          this.fetchCities({province_id: _.last(value)}).then(({data}) => {
-            const province = _.find(this.options, ['id', _.last(value)])
-            if (province) {
-              this.address.province = province.name
-              province.children = data.map(item => _.tap(item, item => {item.children = []}))
-            }
-          })
-        }
-        if (value.length === 2) {
-          this.fetchAreas({city_id: _.last(value)}).then(({data}) => {
-            const province = _.find(this.options, ['id', _.head(value)])
-            const city = _.find(province.children, ['id', _.last(value)])
-            this.address.city = city.name
-            if (city) {
-              city.children = data
-            }
-          })
+      fillForm () {
+        if (this.updatePage) {
+          this.form = this.resource
+          this.defaultArea.push(...[
+            _.get(this.resource,'province'),
+            _.get(this.resource,'city'),
+            _.get(this.resource,'district'),
+          ])
         }
       }
     },
 
     async mounted () {
-      const {data} = await this.fetchProvinces()
-      this.options = data.map(item => _.tap(item, item => {item.children = []}))
-      this.country = '中国'
-      if(this.collectName){
-        this.address.collect_name = this.collectName
+      if (this.collectionName) {
+        this.form.collection_name = this.collectionName
       }
+      this.fillForm()
     }
   }
 </script>

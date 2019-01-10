@@ -55,6 +55,8 @@ Route::patch('/promotion-plans/{promotionPlan}/confirm',
 
 // 供应商退仓
 Route::resource('/withdraws', 'WithdrawController');
+// 提交退仓
+Route::patch('/withdraws/{withdraw}/submit', 'WithdrawController@submit')->name('withdraws.submit');
 
 // 仓库api
 Route::get('/warehouses', 'WarehouseController@index')->name('warehouses.index');

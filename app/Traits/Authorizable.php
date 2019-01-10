@@ -14,6 +14,15 @@ use Illuminate\Auth\Access\AuthorizationException;
  */
 trait Authorizable
 {
+    public function getAuthorizeAttribute()
+    {
+        return collect($this->allowAuthorizes)->concat($this->appendAuthorizes)->mapWithKeys(function($item){
+            return [
+                Str::camel('can_'.$item) => $this->authorizedTo(request(),$item)
+            ];
+        });
+    }
+
     /**
      * Determine if the given resource is authorizable.
      *

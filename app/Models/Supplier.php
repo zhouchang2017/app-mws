@@ -20,8 +20,18 @@ class Supplier extends Model
         'level',
         'description',
         'user_id',
-        'supplier_user_id'
+        'supplier_user_id',
     ];
+
+    public function officeAddress()
+    {
+        return $this->address()->where('collection_name', 'office');
+    }
+
+    public function warehouseAddress()
+    {
+        return $this->address()->where('collection_name', 'warehouse');
+    }
 
     // 供应商管理员
     public function manager()

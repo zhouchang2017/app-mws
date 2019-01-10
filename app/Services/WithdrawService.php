@@ -9,13 +9,26 @@
 namespace App\Services;
 
 
+use App\Events\WithdrawApprovedEvent;
+use App\Events\WithdrawCompletedEvent;
+use App\Events\WithdrawPendingEvent;
+use App\Events\WithdrawShippedEvent;
+use App\Events\WithdrawUnShipEvent;
+use App\Models\InventoryActionType;
 use App\Models\Withdraw;
 use App\Models\WithdrawItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class WithdrawService
+ * @package App\Services
+ */
 class WithdrawService
 {
+    /**
+     * @var Withdraw
+     */
     protected $withdraw;
 
     /**
@@ -45,7 +58,7 @@ class WithdrawService
     {
         $this->withdraw->setStatus($this->withdraw::APPROVED, $reason);
         $this->withdraw->freshNow();
-        // event(new SupplyApprovedEvent($this->supply));
+         event(new WithdrawApprovedEvent($this->withdraw));
     }
 
     /**
@@ -56,7 +69,7 @@ class WithdrawService
     {
         $this->withdraw->setStatus($this->withdraw::UN_SHIP, $reason);
         $this->withdraw->freshNow();
-        //event(new SupplyUnShipEvent($this->withdraw));
+        event(new WithdrawUnShipEvent($this->withdraw));
     }
 
 
@@ -81,7 +94,7 @@ class WithdrawService
     {
         $this->withdraw->setStatus($this->withdraw::PENDING, $reason);
         $this->withdraw->freshNow();
-//        event(new SupplyPendingEvent($this->withdraw));
+        event(new WithdrawPendingEvent($this->withdraw));
     }
 
 
@@ -119,7 +132,7 @@ class WithdrawService
     {
         $this->withdraw->setStatus($this->withdraw::SHIPPED, $reason);
         $this->withdraw->freshNow();
-        // event(new SupplyShippedEvent($this->withdraw));
+         event(new WithdrawShippedEvent($this->withdraw));
     }
 
 
@@ -132,10 +145,16 @@ class WithdrawService
     {
         $this->withdraw->setStatus($this->withdraw::COMPLETED, $reason);
         $this->withdraw->freshNow();
-//        event(new SupplyCompletedEvent($this->withdraw));
+        event(new WithdrawCompletedEvent($this->withdraw));
     }
 
 
+    /**
+     * 更新/创建 退仓计划
+     * @param Request $request
+     * @param Withdraw|null $withdraw
+     * @return mixed
+     */
     public static function updateOrCreateWithdraw(Request $request, Withdraw $withdraw = null)
     {
         return DB::transaction(function () use ($withdraw, $request) {
@@ -162,6 +181,11 @@ class WithdrawService
         });
     }
 
+    /**
+     * 解析 退仓明细
+     * @param $data
+     * @return null
+     */
     public static function resolveWithdrawItem($data)
     {
         if ($id = array_get($data, 'id')) {
@@ -171,6 +195,12 @@ class WithdrawService
     }
 
 
+    /**
+     * 更新/创建 退仓明细
+     * @param array $data
+     * @param WithdrawItem|null $withdrawItem
+     * @return mixed
+     */
     public function updateOrCreateWithdrawItem(array $data, WithdrawItem $withdrawItem = null)
     {
         return DB::transaction(function () use ($data, $withdrawItem) {
@@ -182,6 +212,41 @@ class WithdrawService
                 $instance->save();
             });
         });
+    }
+
+
+    /**
+     * 创建 预入库单数据
+     * @param null $reason
+     * @return array
+     */
+    protected function formatCreatePreActionParams($reason = null)
+    {
+        /** @var Carbon $createAt */
+        $createAt = $this->withdraw->latestStatus($this->withdraw::PENDING)->created_at;
+        $user = $this->withdraw->latestStatus($this->withdraw::APPROVED)->user;
+        $updateAt = $this->withdraw->latestStatus($this->withdraw::APPROVED)->created_at;
+        return [
+            'description' => $reason ?? '供应商' . $this->withdraw->origin->name . '于' . $createAt->toDateTimeString() . '提交的退仓申请, 由' . $user->name . '在' . $updateAt->toDateTimeString() . '审核通过，系统推入库存调度中心',
+        ];
+    }
+
+    /*
+     * 创建 预出\入库(入库单\出货单)
+     * */
+    public function createPreAction(InventoryActionType $type = null, $data = [])
+    {
+        if (is_null($type)) {
+            $type = InventoryActionType::firstOrCreate([
+                'name' => '供应商供货退仓',
+                'action' => 'take',
+                'is_accounting' => true,
+            ]);
+        }
+
+        return InventoryService::createPreAction(array_merge($this->formatCreatePreActionParams(), $data, [
+            'type_id' => $type->id,
+        ]), $this->withdraw);
     }
 
 }

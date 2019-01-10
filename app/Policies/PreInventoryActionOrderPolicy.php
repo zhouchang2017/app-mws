@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\User;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use App\Models\PreInventoryActionOrder;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -79,5 +80,24 @@ class PreInventoryActionOrderPolicy
     public function forceDelete(Authorizable $user, PreInventoryActionOrder $preInventoryActionOrder)
     {
         //
+    }
+
+    public function shipment(Authorizable $user, PreInventoryActionOrder $preInventoryActionOrder)
+    {
+        if ( !$preInventoryActionOrder->hasTracks() && $user instanceof User) {
+            return true;
+        }
+        return false;
+    }
+
+    public function viewShipment(Authorizable $user, PreInventoryActionOrder $preInventoryActionOrder)
+    {
+        if ($preInventoryActionOrder->hasTracks()) {
+            return true;
+        }
+        if ($user instanceof User) {
+            return true;
+        }
+        return false;
     }
 }

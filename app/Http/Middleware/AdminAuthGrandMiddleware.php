@@ -29,6 +29,7 @@ class AdminAuthGrandMiddleware
             $menu->add('Home', ['route' => 'admin.home']);
             $menu->add('订单', 'orders');
             $menu->add('供货计划', 'supplies');
+            $menu->add('退仓服务', 'withdraws');
             $menu->add('入库单\出货单', 'pre-inventory-actions');
             $menu->add('操作单', 'pre-inventory-action-orders');
             $menu->add('仓库', 'warehouses');

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\Addressable;
 use App\Traits\AddressableTrait;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class Warehouse
@@ -16,7 +17,7 @@ class Warehouse extends Model implements Addressable
     /**
      * @var array
      */
-    protected $fillable = [ 'name', 'type_id', 'user_id' ];
+    protected $fillable = ['name', 'type_id', 'user_id'];
 
     /**
      * @var array
@@ -24,6 +25,24 @@ class Warehouse extends Model implements Addressable
     protected $casts = [
         'options' => 'array',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::addGlobalScope('countInventories', function (Builder $builder) {
+            $builder->withCount([
+                'inventories' => function ($query) {
+                    /** @var Builder $query */
+                    if (isSupplier()) {
+                        $query->whereIn('variant_id', auth()->user()->supplier->variantIds);
+                    }
+                        $query->select('quantity');
+
+                },
+            ]);
+        });
+    }
+
 
     /**
      * 仓库类型
@@ -47,4 +66,6 @@ class Warehouse extends Model implements Addressable
     {
         return $this->hasMany(Inventory::class);
     }
+
+
 }

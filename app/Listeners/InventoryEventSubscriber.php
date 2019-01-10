@@ -3,7 +3,9 @@
 namespace App\Listeners;
 
 use App\Models\Supply;
+use App\Models\Withdraw;
 use App\Services\SupplyService;
+use App\Services\WithdrawService;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -49,6 +51,9 @@ class InventoryEventSubscriber
         if ($origin instanceof Supply) {
             // 供货计划，标记为等待发货
             (new SupplyService($origin))->statusToUnShip();
+        }
+        if ($origin instanceof Withdraw) {
+            (new WithdrawService($origin))->statusToUnShip();
         }
     }
 

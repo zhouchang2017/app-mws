@@ -20,6 +20,8 @@ class PreInventoryAction extends Model
 
     protected $appends = ['current_state'];
 
+    protected $appendAuthorizes = ['approve','assign'];
+
     /*
      * 审核通过后，等待管理员填写操作单
      * */
@@ -109,17 +111,6 @@ class PreInventoryAction extends Model
         return tap($this, function ($model) {
             $model->loadMissing(['type']);
         });
-    }
-
-    public function getAuthorizeAttribute()
-    {
-        return array_merge(
-            parent::getAuthorizeAttribute(),
-            [
-                'canApprove' => $this->authorizedTo(request(), 'approve'),
-                'canAssign' => $this->authorizedTo(request(), 'assign'),
-            ]
-        );
     }
 
 

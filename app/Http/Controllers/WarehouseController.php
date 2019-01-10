@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ErpRequest;
+use App\Models\Address;
 use App\Models\Warehouse;
 use App\Resources\Warehouse as WarehouseResource;
 use App\Services\AddressService;
@@ -34,9 +36,6 @@ class WarehouseController extends Controller
     public function store(Request $request)
     {
         $warehouse = Warehouse::create($request->all());
-        if ($request->has('address')) {
-            AddressService::updateOrCreateAddress($warehouse, $request->get('address'));
-        }
 
         return $this->created(
             $warehouse
@@ -89,7 +88,7 @@ class WarehouseController extends Controller
 
         $warehouse->save();
         if ($request->has('address')) {
-             AddressService::updateOrCreateAddress($warehouse, $request->get('address'), $warehouse->address);
+            AddressService::updateOrCreateAddress($warehouse, $request->get('address'), $warehouse->address);
         }
 
         return $this->updated(
@@ -106,5 +105,21 @@ class WarehouseController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function address(Warehouse $warehouse, ErpRequest $request)
+    {
+        if ($request->method() === 'POST') {
+            return $this->created(
+                AddressService::updateOrCreateAddress($warehouse, $request->all())
+            );
+        }
+        if ($request->method() === 'PATCH') {
+            $id = $request->get('id');
+            $address = Address::find($id);
+            return $this->updated(
+                AddressService::updateOrCreateAddress($warehouse, $request->all(), $address)
+            );
+        }
     }
 }

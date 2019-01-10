@@ -14,8 +14,11 @@
 Route::view('/', 'welcome');
 
 Route::get('/test',function (){
-
-    return \App\Models\Inventory::where('warehouse_id',10)->get();
+    return \App\Models\DP\PromotionVariant::all()->map(function($item){
+       $item->ended_at = now()->addDay(7);
+       $item->save();
+    });
+//    return \App\Models\Inventory::where('warehouse_id',10)->get();
 });
 //Route::get('/home', 'HomeController@index')->name('home');
 
