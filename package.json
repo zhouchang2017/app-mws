@@ -29,6 +29,8 @@
     "dependencies": {
         "dayjs": "^1.7.8",
         "element-ui": "^2.4.11",
+        "inflector-js": "^1.0.1",
+        "numeral": "^2.0.6",
         "vue-infinite-loading": "^2.4.3",
         "vue-lazyload": "^1.2.6"
     }

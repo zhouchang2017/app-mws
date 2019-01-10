@@ -1,3 +1,5 @@
+import Inflector from 'inflector-js'
+
 export default {
   methods: {
     go (link) {
@@ -14,6 +16,18 @@ export default {
         return callback(new Error('手机号码有误，请重填'))
       }
       callback()
+    },
+    singularOrPlural(value,suffix){
+      if (value > 1 || value == 0) return Inflector.pluralize(suffix)
+      return Inflector.singularize(suffix)
+    },
+    minimum(originalPromise, delay = 100){
+      return Promise.all([
+        originalPromise,
+        new Promise(resolve => {
+          setTimeout(() => resolve(), delay)
+        }),
+      ]).then(result => result[0])
     }
   },
   computed: {

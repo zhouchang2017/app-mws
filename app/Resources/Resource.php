@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 
 abstract class Resource
 {
-    use Authorizable, PerformsQueries;
+    use \App\Erp\Authorizable, PerformsQueries;
     /**
      * The underlying model resource instance.
      *
@@ -31,6 +31,8 @@ abstract class Resource
      * @var string
      */
     public static $title = 'id';
+
+    const DEFAULT_PIVOT_NAME = 'Pivot';
 
     /**
      * The relationships that should be eager loaded when performing an index query.
@@ -59,6 +61,11 @@ abstract class Resource
     public function __construct($resource)
     {
         $this->resource = $resource;
+    }
+
+    public function metrics($request)
+    {
+        return [];
     }
 
     public static function addFilters(Request $request)

@@ -3,6 +3,9 @@
 namespace App\Resources;
 
 
+use App\Erp\Charts\Metrics\NewProducts;
+use App\Erp\Charts\Metrics\ProductsGroupBySupplier;
+
 class Product extends Resource
 {
     public static $model = \App\Models\DP\Product::class;
@@ -27,6 +30,14 @@ class Product extends Resource
     public static function label()
     {
         return '产品';
+    }
+
+    public function metrics($request)
+    {
+        return [
+            new ProductsGroupBySupplier(),
+            new NewProducts()
+        ];
     }
 
 
