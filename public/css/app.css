@@ -590,9 +590,12 @@ table {
 }
 
 html {
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   font-family: Nunito, system-ui, BlinkMacSystemFont, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: #3d4852;
 }
 
 a {
@@ -4162,12 +4165,64 @@ a {
   font-weight: 800;
 }
 
+.h-1 {
+  height: .25rem;
+}
+
+.h-2 {
+  height: .5rem;
+}
+
+.h-3 {
+  height: .75rem;
+}
+
+.h-4 {
+  height: 1rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+.h-8 {
+  height: 2rem;
+}
+
 .h-9 {
   height: 2.25rem;
 }
 
 .h-12 {
   height: 3rem;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.h-24 {
+  height: 6rem;
+}
+
+.h-32 {
+  height: 8rem;
+}
+
+.h-48 {
+  height: 12rem;
+}
+
+.h-64 {
+  height: 16rem;
+}
+
+.h-auto {
+  height: auto;
+}
+
+.h-px {
+  height: 1px;
 }
 
 .h-full {
@@ -4180,6 +4235,10 @@ a {
 
 .h-screen {
   height: 100vw;
+}
+
+.h-fill {
+  height: 100vh;
 }
 
 .leading-9 {
@@ -10963,12 +11022,64 @@ a {
     font-weight: 800;
   }
 
+  .sm\:h-1 {
+    height: .25rem;
+  }
+
+  .sm\:h-2 {
+    height: .5rem;
+  }
+
+  .sm\:h-3 {
+    height: .75rem;
+  }
+
+  .sm\:h-4 {
+    height: 1rem;
+  }
+
+  .sm\:h-6 {
+    height: 1.5rem;
+  }
+
+  .sm\:h-8 {
+    height: 2rem;
+  }
+
   .sm\:h-9 {
     height: 2.25rem;
   }
 
   .sm\:h-12 {
     height: 3rem;
+  }
+
+  .sm\:h-16 {
+    height: 4rem;
+  }
+
+  .sm\:h-24 {
+    height: 6rem;
+  }
+
+  .sm\:h-32 {
+    height: 8rem;
+  }
+
+  .sm\:h-48 {
+    height: 12rem;
+  }
+
+  .sm\:h-64 {
+    height: 16rem;
+  }
+
+  .sm\:h-auto {
+    height: auto;
+  }
+
+  .sm\:h-px {
+    height: 1px;
   }
 
   .sm\:h-full {
@@ -10981,6 +11092,10 @@ a {
 
   .sm\:h-screen {
     height: 100vw;
+  }
+
+  .sm\:h-fill {
+    height: 100vh;
   }
 
   .sm\:leading-9 {
@@ -17369,12 +17484,64 @@ a {
     font-weight: 800;
   }
 
+  .md\:h-1 {
+    height: .25rem;
+  }
+
+  .md\:h-2 {
+    height: .5rem;
+  }
+
+  .md\:h-3 {
+    height: .75rem;
+  }
+
+  .md\:h-4 {
+    height: 1rem;
+  }
+
+  .md\:h-6 {
+    height: 1.5rem;
+  }
+
+  .md\:h-8 {
+    height: 2rem;
+  }
+
   .md\:h-9 {
     height: 2.25rem;
   }
 
   .md\:h-12 {
     height: 3rem;
+  }
+
+  .md\:h-16 {
+    height: 4rem;
+  }
+
+  .md\:h-24 {
+    height: 6rem;
+  }
+
+  .md\:h-32 {
+    height: 8rem;
+  }
+
+  .md\:h-48 {
+    height: 12rem;
+  }
+
+  .md\:h-64 {
+    height: 16rem;
+  }
+
+  .md\:h-auto {
+    height: auto;
+  }
+
+  .md\:h-px {
+    height: 1px;
   }
 
   .md\:h-full {
@@ -17387,6 +17554,10 @@ a {
 
   .md\:h-screen {
     height: 100vw;
+  }
+
+  .md\:h-fill {
+    height: 100vh;
   }
 
   .md\:leading-9 {
@@ -23775,12 +23946,64 @@ a {
     font-weight: 800;
   }
 
+  .lg\:h-1 {
+    height: .25rem;
+  }
+
+  .lg\:h-2 {
+    height: .5rem;
+  }
+
+  .lg\:h-3 {
+    height: .75rem;
+  }
+
+  .lg\:h-4 {
+    height: 1rem;
+  }
+
+  .lg\:h-6 {
+    height: 1.5rem;
+  }
+
+  .lg\:h-8 {
+    height: 2rem;
+  }
+
   .lg\:h-9 {
     height: 2.25rem;
   }
 
   .lg\:h-12 {
     height: 3rem;
+  }
+
+  .lg\:h-16 {
+    height: 4rem;
+  }
+
+  .lg\:h-24 {
+    height: 6rem;
+  }
+
+  .lg\:h-32 {
+    height: 8rem;
+  }
+
+  .lg\:h-48 {
+    height: 12rem;
+  }
+
+  .lg\:h-64 {
+    height: 16rem;
+  }
+
+  .lg\:h-auto {
+    height: auto;
+  }
+
+  .lg\:h-px {
+    height: 1px;
   }
 
   .lg\:h-full {
@@ -23793,6 +24016,10 @@ a {
 
   .lg\:h-screen {
     height: 100vw;
+  }
+
+  .lg\:h-fill {
+    height: 100vh;
   }
 
   .lg\:leading-9 {
@@ -30181,12 +30408,64 @@ a {
     font-weight: 800;
   }
 
+  .xl\:h-1 {
+    height: .25rem;
+  }
+
+  .xl\:h-2 {
+    height: .5rem;
+  }
+
+  .xl\:h-3 {
+    height: .75rem;
+  }
+
+  .xl\:h-4 {
+    height: 1rem;
+  }
+
+  .xl\:h-6 {
+    height: 1.5rem;
+  }
+
+  .xl\:h-8 {
+    height: 2rem;
+  }
+
   .xl\:h-9 {
     height: 2.25rem;
   }
 
   .xl\:h-12 {
     height: 3rem;
+  }
+
+  .xl\:h-16 {
+    height: 4rem;
+  }
+
+  .xl\:h-24 {
+    height: 6rem;
+  }
+
+  .xl\:h-32 {
+    height: 8rem;
+  }
+
+  .xl\:h-48 {
+    height: 12rem;
+  }
+
+  .xl\:h-64 {
+    height: 16rem;
+  }
+
+  .xl\:h-auto {
+    height: auto;
+  }
+
+  .xl\:h-px {
+    height: 1px;
   }
 
   .xl\:h-full {
@@ -30199,6 +30478,10 @@ a {
 
   .xl\:h-screen {
     height: 100vw;
+  }
+
+  .xl\:h-fill {
+    height: 100vh;
   }
 
   .xl\:leading-9 {

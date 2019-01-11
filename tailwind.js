@@ -212,10 +212,24 @@ module.exports = Object.assign({},require('tailwindcss/defaultConfig')(),{
     wide: '0.05em',
   },
   height:{
+    'auto': 'auto',
+    'px': '1px',
+    '1': '0.25rem',
+    '2': '0.5rem',
+    '3': '0.75rem',
+    '4': '1rem',
+    '6': '1.5rem',
+    '8': '2rem',
     '9': '2.25rem',
     '12': '3rem',
+    '16': '4rem',
+    '24': '6rem',
+    '32': '8rem',
+    '48': '12rem',
+    '64': '16rem',
     full: '100%',
     'btn-sm': '1.875rem',
     screen: '100vw',
+    fill:'100vh'
   }
 })

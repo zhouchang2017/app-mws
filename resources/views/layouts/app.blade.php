@@ -14,63 +14,79 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/vendor.css') }}" rel="stylesheet">
 </head>
 <body>
-<div id="app" class="w-full absolute bg-40">
-    <el-container>
-        <el-header class="bg-indigo-darker text-center p-4 px-6 flex items-center text-white flex">
-            <div>
-                <a class="h-2 font-bold text-white" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+<div id="app" class="text-base text-grey-darkest font-normal relative bg-40 min-h-fill">
+    <div class="bg-primary">
+        <div class="container mx-auto px-2 lg:px-4 ">
+        <div class="flex items-center md:justify-between  py-4">
+            <div class="w-1/4 flex items-center md:hidden" @click="showNav">
+                <svg class="fill-current text-white h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z"/></svg>
             </div>
-            <el-dropdown class="ml-auto">
-                <i class="el-icon-setting text-white mr-3"></i>
-                <el-dropdown-menu slot="dropdown">
-                    @guest
-                        @if (Route::has($domain.'.register'))
+            <div class="w-1/2 md:w-auto text-center text-white text-2xl font-medium">
+                <a class="text-white dim no-underline" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
+            </div>
+            <div class="w-1/4   flex items-center text-right">
+                <el-dropdown class="ml-auto">
+                    <div class="flex items-center">
+                        <div class="flex items-center">
+                            <img class="inline-block h-8 w-8 rounded-full" src="https://avatars0.githubusercontent.com/u/4323180?s=460&v=4" alt="">
+                        </div>
+                        <div class="hidden md:block md:flex md:items-center ml-2">
+                        <span class="text-white text-sm mr-1">
+                            @auth
+                                {{auth()->user()->name}}
+                            @endauth
+                        </span>
+                        </div>
+                    </div>
+
+                    <el-dropdown-menu slot="dropdown">
+                        @guest
+                            @if (Route::has($domain.'.register'))
+                                <el-dropdown-item>
+                                    <a class="nav-link" href="{{ route($domain.'.register') }}">{{ __('Register') }}</a>
+                                </el-dropdown-item>
+                            @endif
+
+                        @else
                             <el-dropdown-item>
-                                <a class="nav-link" href="{{ route($domain.'.register') }}">{{ __('Register') }}</a>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
                             </el-dropdown-item>
-                        @endif
-
-                    @else
-                        <el-dropdown-item>
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-                        </el-dropdown-item>
-                        <el-dropdown-item>
-                            <a class="nav-link" href="{{ route($domain.'.logout') }}"
-                               onclick="event.preventDefault();
+                            <el-dropdown-item>
+                                <a class="nav-link" href="{{ route($domain.'.logout') }}"
+                                   onclick="event.preventDefault();
     document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
+                                    {{ __('Logout') }}
+                                </a>
 
-                            <form id="logout-form" action="{{ route($domain.'.logout') }}" method="POST"
-                                  style="display: none;">
-                                @csrf
-                            </form>
-                        </el-dropdown-item>
-                    @endguest
-                </el-dropdown-menu>
-            </el-dropdown>
-            @auth
-                <div><span>{{auth()->user()->name}}</span></div>
-            @endauth
-        </el-header>
+                                <form id="logout-form" action="{{ route($domain.'.logout') }}" method="POST"
+                                      style="display: none;">
+                                    @csrf
+                                </form>
+                            </el-dropdown-item>
+                        @endguest
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="flex h-auto">
+        @component('components.nav-menu')
+        @endcomponent
+        {{--<div class="container mx-auto lg:p-8 p-4 sm:p-2">--}}
+        <div class="flex flex-1 flex-col mx-auto md:p-8 p-4 sm:p-2">
+            @yield('content')
+        </div>
+    </div>
 
-        <el-container>
-            @component('components.nav-menu')
-            @endcomponent
-            <el-main>
-                @yield('content')
-            </el-main>
-        </el-container>
-    </el-container>
 
 </div>
 <script> window.config = @json(\App\Supports\ERP::jsonVariables(request())) </script>

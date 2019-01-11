@@ -5,13 +5,11 @@
  */
 
 require('./bootstrap')
-
 window.Vue = require('vue')
 
 import ElementUI from 'element-ui'
 
 Vue.use(ElementUI)
-
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,6 +29,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  */
 import notifyable from './notifyable'
 import helper from './helper'
+
 require('./filters')
 Vue.mixin(notifyable)
 Vue.mixin(helper)
@@ -39,10 +38,20 @@ const app = new Vue({
   el: '#app',
   data () {
     return {
-      erpConfig: {}
+      erpConfig: {},
     }
   },
+  
   methods: {
+    showNav () {
+      if (document.getElementById('side-nav').classList.contains('hidden')) {
+        document.getElementById('nav-side-list').classList.add('animated', 'bounceInDown')
+        document.getElementById('side-nav').classList.remove('hidden')
+      } else {
+        document.getElementById('side-nav').classList.add('hidden')
+        document.getElementById('nav-side-list').classList.remove('animated', 'bounceInDown')
+      }
+    },
     setConfig (config) {
       // _.each(config, (value, key) => {
       //   this.$set(this.erpConfig, key, value)
@@ -50,6 +59,7 @@ const app = new Vue({
       this.erpConfig = config
     }
   },
+
   mounted () {
     this.setConfig(erpConfig)
   }

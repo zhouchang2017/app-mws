@@ -20,13 +20,12 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/vendor.css') }}" rel="stylesheet">
 </head>
-<body>
-<div id="app" class="h-screen bg-grey-lightest">
-    <el-container class="h-full w-full">
-        <main class="flex py-4 w-full">
-            @yield('content')
-        </main>
-    </el-container>
+<body class="bg-40 text-base text-grey-darkest font-normal relative">
+<div id="app">
+    <div class="h-2 bg-primary"></div>
+    <div class="container mx-auto p-8">
+        @yield('content')
+    </div>
 </div>
 </body>
 </html>

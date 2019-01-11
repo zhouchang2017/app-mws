@@ -61,11 +61,18 @@
 }
 
 html {
-    @apply antialiased font-sans
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+
+    @apply .font-sans;
+    @apply .leading-normal;
+    @apply .text-grey-darkest;
 }
 a{
     text-decoration: none;
 }
+
 
 .nav-link {
     @apply text-80

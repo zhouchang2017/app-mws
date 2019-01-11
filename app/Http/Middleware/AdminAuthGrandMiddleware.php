@@ -35,11 +35,11 @@ class AdminAuthGrandMiddleware
             $menu->add('仓库', 'warehouses');
             $menu->add('仓库类型', 'warehouse-types');
             $menu->add('库存', 'inventories');
-            $product = $menu->add('产品', 'products');
-            $product->add('产品属性', 'product-attributes');
+            $menu->add('产品', 'products');
+            $menu->add('产品属性', 'product-attributes');
 //            $menu->add('产品属性','product-attributes');
-            $product->add('产品销售属性', 'product-options');
-            $product->add('变体', 'product-variants');
+            $menu->add('产品销售属性', 'product-options');
+            $menu->add('变体', 'product-variants');
             $menu->add('价格调整类型', 'attachment-types');
             $menu->add('渠道', 'markets');
             $menu->add('促销活动', 'promotions');

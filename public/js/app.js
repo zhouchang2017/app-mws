@@ -11789,7 +11789,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21), __webpack_require__(112).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(112).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -12771,6 +12771,33 @@ module.exports = function (it, key) {
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12812,12 +12839,12 @@ exports.default = {
 };
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(17);
+var dP = __webpack_require__(18);
 var createDesc = __webpack_require__(26);
-module.exports = __webpack_require__(18) ? function (object, key, value) {
+module.exports = __webpack_require__(19) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -12826,7 +12853,7 @@ module.exports = __webpack_require__(18) ? function (object, key, value) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(25);
@@ -12834,7 +12861,7 @@ var IE8_DOM_DEFINE = __webpack_require__(74);
 var toPrimitive = __webpack_require__(45);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(18) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(19) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -12848,7 +12875,7 @@ exports.f = __webpack_require__(18) ? Object.defineProperty : function definePro
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
@@ -12858,7 +12885,7 @@ module.exports = !__webpack_require__(24)(function () {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
@@ -12870,7 +12897,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(49)('wks');
@@ -12884,33 +12911,6 @@ var $exports = module.exports = function (name) {
 };
 
 $exports.store = store;
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
 
 
 /***/ }),
@@ -13434,7 +13434,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -14407,7 +14407,7 @@ exports.default = function (ref) {
 var global = __webpack_require__(11);
 var core = __webpack_require__(22);
 var ctx = __webpack_require__(143);
-var hide = __webpack_require__(16);
+var hide = __webpack_require__(17);
 var has = __webpack_require__(14);
 var PROTOTYPE = 'prototype';
 
@@ -14566,9 +14566,9 @@ module.exports = {};
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(17).f;
+var def = __webpack_require__(18).f;
 var has = __webpack_require__(14);
-var TAG = __webpack_require__(20)('toStringTag');
+var TAG = __webpack_require__(21)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -14579,7 +14579,7 @@ module.exports = function (it, tag, stat) {
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(20);
+exports.f = __webpack_require__(21);
 
 
 /***/ }),
@@ -14590,7 +14590,7 @@ var global = __webpack_require__(11);
 var core = __webpack_require__(22);
 var LIBRARY = __webpack_require__(28);
 var wksExt = __webpack_require__(54);
-var defineProperty = __webpack_require__(17).f;
+var defineProperty = __webpack_require__(18).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -15261,7 +15261,7 @@ module.exports = function normalizeComponent (
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 /* 2 */
@@ -48843,7 +48843,7 @@ exports.default = _assign2.default || function (target) {
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(18) && !__webpack_require__(24)(function () {
+module.exports = !__webpack_require__(19) && !__webpack_require__(24)(function () {
   return Object.defineProperty(__webpack_require__(75)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -48866,7 +48866,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(14);
-var toIObject = __webpack_require__(19);
+var toIObject = __webpack_require__(20);
 var arrayIndexOf = __webpack_require__(146)(false);
 var IE_PROTO = __webpack_require__(48)('IE_PROTO');
 
@@ -48927,12 +48927,12 @@ module.exports = function (it) {
 var LIBRARY = __webpack_require__(28);
 var $export = __webpack_require__(44);
 var redefine = __webpack_require__(81);
-var hide = __webpack_require__(16);
+var hide = __webpack_require__(17);
 var Iterators = __webpack_require__(52);
 var $iterCreate = __webpack_require__(153);
 var setToStringTag = __webpack_require__(53);
 var getPrototypeOf = __webpack_require__(156);
-var ITERATOR = __webpack_require__(20)('iterator');
+var ITERATOR = __webpack_require__(21)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -48998,7 +48998,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(16);
+module.exports = __webpack_require__(17);
 
 
 /***/ }),
@@ -49136,8 +49136,8 @@ function required(rule, value, source, errors, options, type) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(88);
-__webpack_require__(516);
-module.exports = __webpack_require__(517);
+__webpack_require__(522);
+module.exports = __webpack_require__(523);
 
 
 /***/ }),
@@ -49148,8 +49148,8 @@ module.exports = __webpack_require__(517);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_ui__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_ui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_ui__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__notifyable__ = __webpack_require__(512);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helper__ = __webpack_require__(513);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__notifyable__ = __webpack_require__(518);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helper__ = __webpack_require__(519);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -49157,7 +49157,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  */
 
 __webpack_require__(89);
-
 window.Vue = __webpack_require__(5);
 
 
@@ -49184,7 +49183,8 @@ files.keys().map(function (key) {
  */
 
 
-__webpack_require__(515);
+
+__webpack_require__(521);
 Vue.mixin(__WEBPACK_IMPORTED_MODULE_1__notifyable__["a" /* default */]);
 Vue.mixin(__WEBPACK_IMPORTED_MODULE_2__helper__["a" /* default */]);
 var erpConfig = _.cloneDeep(config);
@@ -49196,7 +49196,17 @@ var app = new Vue({
     };
   },
 
+
   methods: {
+    showNav: function showNav() {
+      if (document.getElementById('side-nav').classList.contains('hidden')) {
+        document.getElementById('nav-side-list').classList.add('animated', 'bounceInDown');
+        document.getElementById('side-nav').classList.remove('hidden');
+      } else {
+        document.getElementById('side-nav').classList.add('hidden');
+        document.getElementById('nav-side-list').classList.remove('animated', 'bounceInDown');
+      }
+    },
     setConfig: function setConfig(config) {
       // _.each(config, (value, key) => {
       //   this.$set(this.erpConfig, key, value)
@@ -49204,6 +49214,7 @@ var app = new Vue({
       this.erpConfig = config;
     }
   },
+
   mounted: function mounted() {
     this.setConfig(erpConfig);
   }
@@ -66377,7 +66388,7 @@ __webpack_require__(197);
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21), __webpack_require__(91)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(91)(module)))
 
 /***/ }),
 /* 91 */
@@ -67419,7 +67430,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
 /* 113 */
@@ -67612,7 +67623,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21), __webpack_require__(58)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(58)))
 
 /***/ }),
 /* 114 */
@@ -69565,7 +69576,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -71147,7 +71158,7 @@ var index = (function () {
 
 /* harmony default export */ __webpack_exports__["default"] = (index);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(21)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(15)))
 
 /***/ }),
 /* 122 */
@@ -71833,7 +71844,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -72656,7 +72667,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -74352,7 +74363,7 @@ module.exports = function normalizeComponent (
 /***/ 1:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(16);
 
 /***/ }),
 
@@ -76466,7 +76477,7 @@ module.exports = !$assign || __webpack_require__(24)(function () {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(19);
+var toIObject = __webpack_require__(20);
 var toLength = __webpack_require__(147);
 var toAbsoluteIndex = __webpack_require__(148);
 module.exports = function (IS_INCLUDES) {
@@ -76588,7 +76599,7 @@ var setToStringTag = __webpack_require__(53);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(16)(IteratorPrototype, __webpack_require__(20)('iterator'), function () { return this; });
+__webpack_require__(17)(IteratorPrototype, __webpack_require__(21)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -76600,11 +76611,11 @@ module.exports = function (Constructor, NAME, next) {
 /* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(17);
+var dP = __webpack_require__(18);
 var anObject = __webpack_require__(25);
 var getKeys = __webpack_require__(27);
 
-module.exports = __webpack_require__(18) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(19) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -76648,9 +76659,9 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 __webpack_require__(158);
 var global = __webpack_require__(11);
-var hide = __webpack_require__(16);
+var hide = __webpack_require__(17);
 var Iterators = __webpack_require__(52);
-var TO_STRING_TAG = __webpack_require__(20)('toStringTag');
+var TO_STRING_TAG = __webpack_require__(21)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
   'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -76676,7 +76687,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 var addToUnscopables = __webpack_require__(159);
 var step = __webpack_require__(160);
 var Iterators = __webpack_require__(52);
-var toIObject = __webpack_require__(19);
+var toIObject = __webpack_require__(20);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
@@ -76750,7 +76761,7 @@ module.exports = __webpack_require__(22).Symbol;
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(11);
 var has = __webpack_require__(14);
-var DESCRIPTORS = __webpack_require__(18);
+var DESCRIPTORS = __webpack_require__(19);
 var $export = __webpack_require__(44);
 var redefine = __webpack_require__(81);
 var META = __webpack_require__(164).KEY;
@@ -76758,20 +76769,20 @@ var $fails = __webpack_require__(24);
 var shared = __webpack_require__(49);
 var setToStringTag = __webpack_require__(53);
 var uid = __webpack_require__(29);
-var wks = __webpack_require__(20);
+var wks = __webpack_require__(21);
 var wksExt = __webpack_require__(54);
 var wksDefine = __webpack_require__(55);
 var enumKeys = __webpack_require__(165);
 var isArray = __webpack_require__(166);
 var anObject = __webpack_require__(25);
 var isObject = __webpack_require__(23);
-var toIObject = __webpack_require__(19);
+var toIObject = __webpack_require__(20);
 var toPrimitive = __webpack_require__(45);
 var createDesc = __webpack_require__(26);
 var _create = __webpack_require__(82);
 var gOPNExt = __webpack_require__(167);
 var $GOPD = __webpack_require__(168);
-var $DP = __webpack_require__(17);
+var $DP = __webpack_require__(18);
 var $keys = __webpack_require__(27);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -76973,7 +76984,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(16)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(17)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -76989,7 +77000,7 @@ setToStringTag(global.JSON, 'JSON', true);
 var META = __webpack_require__(29)('meta');
 var isObject = __webpack_require__(23);
 var has = __webpack_require__(14);
-var setDesc = __webpack_require__(17).f;
+var setDesc = __webpack_require__(18).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -77078,7 +77089,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(19);
+var toIObject = __webpack_require__(20);
 var gOPN = __webpack_require__(83).f;
 var toString = {}.toString;
 
@@ -77104,13 +77115,13 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 var pIE = __webpack_require__(30);
 var createDesc = __webpack_require__(26);
-var toIObject = __webpack_require__(19);
+var toIObject = __webpack_require__(20);
 var toPrimitive = __webpack_require__(45);
 var has = __webpack_require__(14);
 var IE8_DOM_DEFINE = __webpack_require__(74);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(18) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(19) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -78760,7 +78771,7 @@ var map = {
 	"./product-variants/SelectedProductVariantList.vue": 497,
 	"./product-variants/SelectedProductVariantListItem.vue": 502,
 	"./promotion/InviteSupplierJoinPromotionPlan.vue": 507,
-	"./wechat/BindWechat.vue": 525
+	"./wechat/BindWechat.vue": 512
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -102332,447 +102343,18 @@ if (false) {
 
 /***/ }),
 /* 512 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  methods: {
-    notify: function notify(data) {
-      var title = data.title,
-          message = data.message,
-          type = data.type;
-
-      this.$notify({ title: title, message: message, type: type });
-    }
-  }
-});
-
-/***/ }),
-/* 513 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflector_js__ = __webpack_require__(514);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflector_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_inflector_js__);
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  methods: {
-    go: function go(link) {
-      window.location.href = link;
-    },
-    resolveUserType: function resolveUserType(type) {
-      return type === 'App\\Models\\SupplierUser' ? '供应商' : '官方';
-    },
-    checkPhone: function checkPhone(rule, value, callback) {
-      if (!value) {
-        return callback(new Error('手机号码不能为空'));
-      }
-      if (!/^1[34578]\d{9}$/.test(value)) {
-        return callback(new Error('手机号码有误，请重填'));
-      }
-      callback();
-    },
-    singularOrPlural: function singularOrPlural(value, suffix) {
-      if (value > 1 || value == 0) return __WEBPACK_IMPORTED_MODULE_0_inflector_js___default.a.pluralize(suffix);
-      return __WEBPACK_IMPORTED_MODULE_0_inflector_js___default.a.singularize(suffix);
-    },
-    minimum: function minimum(originalPromise) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
-
-      return Promise.all([originalPromise, new Promise(function (resolve) {
-        setTimeout(function () {
-          return resolve();
-        }, delay);
-      })]).then(function (result) {
-        return result[0];
-      });
-    }
-  },
-  computed: {
-    appConfig: function appConfig() {
-      return this.$root.erpConfig;
-    },
-    isAdmin: function isAdmin() {
-      return this.appConfig.userType === 'App\\Models\\User';
-    }
-  }
-});
-
-/***/ }),
-/* 514 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Javascript inflector
- * 
- * @author Dida Nurwanda <didanurwanda@gmail.com>
- * @since 1.0
- */
-
-
-var _Inflector = {
-
-    uncountableWords : [
-        'equipment', 'information', 'rice', 'money', 'species', 'series',
-        'fish', 'sheep', 'moose', 'deer', 'news'
-    ],
-
-    pluralRules: [
-        [new RegExp('(m)an$', 'gi'),                 '$1en'],
-        [new RegExp('(pe)rson$', 'gi'),              '$1ople'],
-        [new RegExp('(child)$', 'gi'),               '$1ren'],
-        [new RegExp('^(ox)$', 'gi'),                 '$1en'],
-        [new RegExp('(ax|test)is$', 'gi'),           '$1es'],
-        [new RegExp('(octop|vir)us$', 'gi'),         '$1i'],
-        [new RegExp('(alias|status)$', 'gi'),        '$1es'],
-        [new RegExp('(bu)s$', 'gi'),                 '$1ses'],
-        [new RegExp('(buffal|tomat|potat)o$', 'gi'), '$1oes'],
-        [new RegExp('([ti])um$', 'gi'),              '$1a'],
-        [new RegExp('sis$', 'gi'),                   'ses'],
-        [new RegExp('(?:([^f])fe|([lr])f)$', 'gi'),  '$1$2ves'],
-        [new RegExp('(hive)$', 'gi'),                '$1s'],
-        [new RegExp('([^aeiouy]|qu)y$', 'gi'),       '$1ies'],
-        [new RegExp('(x|ch|ss|sh)$', 'gi'),          '$1es'],
-        [new RegExp('(matr|vert|ind)ix|ex$', 'gi'),  '$1ices'],
-        [new RegExp('([m|l])ouse$', 'gi'),           '$1ice'],
-        [new RegExp('(quiz)$', 'gi'),                '$1zes'],
-        [new RegExp('s$', 'gi'),                     's'],
-        [new RegExp('$', 'gi'),                      's']
-    ],
-
-    singularRules: [
-        [new RegExp('(m)en$', 'gi'),                                                       '$1an'],
-        [new RegExp('(pe)ople$', 'gi'),                                                    '$1rson'],
-        [new RegExp('(child)ren$', 'gi'),                                                  '$1'],
-        [new RegExp('([ti])a$', 'gi'),                                                     '$1um'],
-        [new RegExp('((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$','gi'), '$1$2sis'],
-        [new RegExp('(hive)s$', 'gi'),                                                     '$1'],
-        [new RegExp('(tive)s$', 'gi'),                                                     '$1'],
-        [new RegExp('(curve)s$', 'gi'),                                                    '$1'],
-        [new RegExp('([lr])ves$', 'gi'),                                                   '$1f'],
-        [new RegExp('([^fo])ves$', 'gi'),                                                  '$1fe'],
-        [new RegExp('([^aeiouy]|qu)ies$', 'gi'),                                           '$1y'],
-        [new RegExp('(s)eries$', 'gi'),                                                    '$1eries'],
-        [new RegExp('(m)ovies$', 'gi'),                                                    '$1ovie'],
-        [new RegExp('(x|ch|ss|sh)es$', 'gi'),                                              '$1'],
-        [new RegExp('([m|l])ice$', 'gi'),                                                  '$1ouse'],
-        [new RegExp('(bus)es$', 'gi'),                                                     '$1'],
-        [new RegExp('(o)es$', 'gi'),                                                       '$1'],
-        [new RegExp('(shoe)s$', 'gi'),                                                     '$1'],
-        [new RegExp('(cris|ax|test)es$', 'gi'),                                            '$1is'],
-        [new RegExp('(octop|vir)i$', 'gi'),                                                '$1us'],
-        [new RegExp('(alias|status)es$', 'gi'),                                            '$1'],
-        [new RegExp('^(ox)en', 'gi'),                                                      '$1'],
-        [new RegExp('(vert|ind)ices$', 'gi'),                                              '$1ex'],
-        [new RegExp('(matr)ices$', 'gi'),                                                  '$1ix'],
-        [new RegExp('(quiz)zes$', 'gi'),                                                   '$1'],
-        [new RegExp('s$', 'gi'),                                                           '']
-    ],
-
-    nonTitlecasedWords: [
-        'and', 'or', 'nor', 'a', 'an', 'the', 'so', 'but', 'to', 'of', 'at',
-        'by', 'from', 'into', 'on', 'onto', 'off', 'out', 'in', 'over',
-        'with', 'for'
-    ],
-
-    idSuffix: new RegExp('(_ids|_id)$', 'g'),
-    underbar: new RegExp('_', 'g'),
-    spaceOrUnderbar: new RegExp('[\ _]', 'g'),
-    uppercase: new RegExp('([A-Z])', 'g'),
-    underbarPrefix: new RegExp('^_'),
-
-    applyRules: function(str, rules, skip, override) {
-        if (override) {
-            str = override;
-        } else {
-            var ignore = (skip.indexOf(str.toLowerCase()) > -1);
-            if (!ignore) {
-                for (var x = 0; x < rules.length; x++) {
-                    if (str.match(rules[x][0])) {
-                        str = str.replace(rules[x][0], rules[x][1]);
-                        break;
-                    }
-                }
-            }
-        }
-        return str;
-    },
-
-
-    /*
-    Inflector.pluralize('person')           -> 'people'
-    Inflector.pluralize('octopus')          -> 'octopi'
-    Inflector.pluralize('Hat')              -> 'Hats'
-    Inflector.pluralize('person', 'guys')   -> 'guys'    
-    */
-    pluralize: function(str, plural) {
-        return this.applyRules(
-            str,
-            this.pluralRules,
-            this.uncountableWords,
-            plural
-        );
-    },
-
-    /*
-    Inflector.singularize('person')         -> 'person'
-    Inflector.singularize('octopi')         -> 'octopus'
-    Inflector.singularize('hats')           -> 'hat'
-    Inflector.singularize('guys', 'person') -> 'person'
-    */
-    singularize: function(str, singular) {
-        return this.applyRules(
-            str,
-            this.singularRules,
-            this.uncountableWords, 
-            singular
-        );
-    },
-
-    /*
-    Inflector.camelize('message_properties')        -> 'MessageProperties'
-    Inflector.camelize('message_properties', true)  -> 'messageProperties'
-    */
-    camelize: function(str, lowFirstLetter) {
-       // var str = str.toLowerCase();
-        var str_path = str.split('/');
-        for (var i = 0; i < str_path.length; i++)
-        {
-            var str_arr = str_path[i].split('_');
-            var initX = ((lowFirstLetter && i + 1 === str_path.length) ? (1) : (0));
-            for (var x = initX; x < str_arr.length; x++)
-            {
-                str_arr[x] = str_arr[x].charAt(0).toUpperCase() + str_arr[x].substring(1);
-            }
-            str_path[i] = str_arr.join('');
-        }
-        str = str_path.join('::');
-
-        // fix 
-        if (lowFirstLetter === true) {
-          var first = str.charAt(0).toLowerCase();
-          var last = str.slice(1);
-          str = first + last;
-        }
-
-        return str;
-    },
-
-    /*
-    Inflector.underscore('MessageProperties')       -> 'message_properties'
-    Inflector.underscore('messageProperties')       -> 'message_properties'
-    */
-    underscore: function(str) { 
-        var str_path = str.split('::');
-        for (var i = 0; i < str_path.length; i++)
-        {
-            str_path[i] = str_path[i].replace(this.uppercase, '_$1');
-            str_path[i] = str_path[i].replace(this.underbarPrefix, '');
-        }
-        str = str_path.join('/').toLowerCase();
-        return str;
-    },
-
-    /*
-    Inflector.humanize('message_properties')        -> 'Message properties'
-    Inflector.humanize('message_properties')        -> 'message properties'
-    */
-    humanize: function(str, lowFirstLetter) {
-        var str = str.toLowerCase();
-        str = str.replace(this.idSuffix, '');
-        str = str.replace(this.underbar, ' ');
-        if (!lowFirstLetter)
-        {
-            str = this.capitalize(str);
-        }
-        return str;
-    },
-
-    /*
-    Inflector.capitalize('message_properties')      -> 'Message_properties'
-    Inflector.capitalize('message properties')      -> 'Message properties'
-    */
-    capitalize: function(str) {
-        var str = str.toLowerCase();
-        str = str.substring(0, 1).toUpperCase() + str.substring(1);
-        return str;
-    },
-
-    /*
-    Inflector.dasherize('message_properties')       -> 'message-properties'
-    Inflector.dasherize('message properties')       -> 'message-properties'
-    */
-    dasherize: function(str) {
-        str = str.replace(this.spaceOrUnderbar, '-');
-        return str;
-    },
-
-    /*
-    Inflector.camel2words('message_properties')         -> 'Message Properties'
-    Inflector.camel2words('message properties')         -> 'Message Properties'
-    Inflactor.camel2words('Message_propertyId', true)   -> 'Message Properties Id'
-    */
-    camel2words: function(str, allFirstUpper) {
-        //var str = str.toLowerCase();
-        if (allFirstUpper === true) {
-            str = this.camelize(str);
-            str = this.underscore(str);
-        } else {
-            str = str.toLowerCase();
-        }
-
-        str = str.replace(this.underbar, ' ');
-        var str_arr = str.split(' ');
-        for (var x = 0; x < str_arr.length; x++)
-        {
-            var d = str_arr[x].split('-');
-            for (var i = 0; i < d.length; i++)
-            {
-                if (this.nonTitlecasedWords.indexOf(d[i].toLowerCase()) < 0)
-                {
-                    d[i] = this.capitalize(d[i]);
-                }
-            }
-            str_arr[x] = d.join('-');
-        }
-        str = str_arr.join(' ');
-        str = str.substring(0, 1).toUpperCase() + str.substring(1);
-        return str;
-    },
-
-    /*
-    Inflector.demodulize('Message::Bus::Properties')    -> 'Properties'
-    */
-    demodulize: function(str) {
-        var str_arr = str.split('::');
-        str = str_arr[str_arr.length - 1];
-        return str;
-    },
-
-    /*
-    Inflector.tableize('MessageBusProperty')    -> 'message_bus_properties'
-    */
-    tableize: function(str) {
-        str = this.pluralize(this.underscore(str));
-        return str;
-    },
-
-    /*
-    Inflector.classify('message_bus_properties')    -> 'MessageBusProperty'
-    */
-    classify: function(str) {
-        str = this.singularize(this.camelize(str));
-        return str;
-    },
-
-    /*
-    Inflector.foreignKey('MessageBusProperty')       -> 'message_bus_property_id'
-    Inflector.foreignKey('MessageBusProperty', true) -> 'message_bus_propertyid'
-    */   
-    foreignKey: function(str, dropIdUbar) {
-        str = this.underscore(this.demodulize(str)) + ((dropIdUbar) ? ('') : ('_')) + 'id';
-        return str;
-    },
-
-    /*
-    Inflector.ordinalize('the 1 pitch')     -> 'the 1st pitch'
-    */
-    ordinalize: function(str) {
-        var str_arr = str.split(' ');
-        for (var x = 0; x < str_arr.length; x++)
-        {
-            var i = parseInt(str_arr[x]);
-            if (i === NaN)
-            {
-                var ltd = str_arr[x].substring(str_arr[x].length - 2);
-                var ld = str_arr[x].substring(str_arr[x].length - 1);
-                var suf = "th";
-                if (ltd != "11" && ltd != "12" && ltd != "13")
-                {
-                    if (ld === "1")
-                    {
-                        suf = "st";
-                    }
-                    else if (ld === "2")
-                    {
-                        suf = "nd";
-                    }
-                    else if (ld === "3")
-                    {
-                        suf = "rd";
-                    }
-                }
-                str_arr[x] += suf;
-            }
-        }
-        str = str_arr.join(' ');
-        return str;
-    }
-}
-
-if (true) {
-    module.exports = _Inflector;
-} else if (typeof define === "function" && define.amd) {
-    define([], function(){
-        return _Inflector;
-    });
-} else {
-    window.Inflector = _Inflector;
-}
-
-
-/***/ }),
-/* 515 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.filter('ago', function (value) {
-  if (!value) return '-';
-  return dayjs(value).fromNow();
-});
-
-/***/ }),
-/* 516 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 517 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 518 */,
-/* 519 */,
-/* 520 */,
-/* 521 */,
-/* 522 */,
-/* 523 */,
-/* 524 */,
-/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(526)
+  __webpack_require__(513)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(528)
+var __vue_script__ = __webpack_require__(515)
 /* template */
-var __vue_template__ = __webpack_require__(529)
+var __vue_template__ = __webpack_require__(517)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -102811,13 +102393,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 526 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(527);
+var content = __webpack_require__(514);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -102837,7 +102419,7 @@ if(false) {
 }
 
 /***/ }),
-/* 527 */
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -102851,14 +102433,14 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 528 */
+/* 515 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_qriously__ = __webpack_require__(530);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_qriously__ = __webpack_require__(516);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_qriously___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_qriously__);
 
 
@@ -103082,93 +102664,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 });
 
 /***/ }),
-/* 529 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("el-button", { attrs: { type: "text" }, on: { click: _vm.open } }, [
-        _vm._v("绑定微信")
-      ]),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          directives: [
-            {
-              name: "loading",
-              rawName: "v-loading",
-              value: _vm.loading,
-              expression: "loading"
-            }
-          ],
-          attrs: {
-            title: "扫码绑定微信",
-            visible: _vm.centerDialogVisible,
-            width: "30%"
-          },
-          on: {
-            "update:visible": function($event) {
-              _vm.centerDialogVisible = $event
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "flex items-center justify-center" },
-            [_c("qriously", { attrs: { value: _vm.url, size: 200 } })],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "flex", attrs: { slot: "footer" }, slot: "footer" },
-            [
-              _c(
-                "div",
-                { staticClass: "ml-auto" },
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.centerDialogVisible = false
-                        }
-                      }
-                    },
-                    [_vm._v("关闭")]
-                  )
-                ],
-                1
-              )
-            ]
-          )
-        ]
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-8294209e", module.exports)
-  }
-}
-
-/***/ }),
-/* 530 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {(function (global, factory) {
@@ -105673,7 +105169,515 @@ return VueQriously;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 517 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("el-button", { attrs: { type: "text" }, on: { click: _vm.open } }, [
+        _vm._v("绑定微信")
+      ]),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
+          attrs: {
+            title: "扫码绑定微信",
+            visible: _vm.centerDialogVisible,
+            width: "30%"
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.centerDialogVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "flex items-center justify-center" },
+            [_c("qriously", { attrs: { value: _vm.url, size: 200 } })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "flex", attrs: { slot: "footer" }, slot: "footer" },
+            [
+              _c(
+                "div",
+                { staticClass: "ml-auto" },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.centerDialogVisible = false
+                        }
+                      }
+                    },
+                    [_vm._v("关闭")]
+                  )
+                ],
+                1
+              )
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-8294209e", module.exports)
+  }
+}
+
+/***/ }),
+/* 518 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  methods: {
+    notify: function notify(data) {
+      var title = data.title,
+          message = data.message,
+          type = data.type;
+
+      this.$notify({ title: title, message: message, type: type });
+    }
+  }
+});
+
+/***/ }),
+/* 519 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflector_js__ = __webpack_require__(520);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflector_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_inflector_js__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  methods: {
+    go: function go(link) {
+      window.location.href = link;
+    },
+    resolveUserType: function resolveUserType(type) {
+      return type === 'App\\Models\\SupplierUser' ? '供应商' : '官方';
+    },
+    checkPhone: function checkPhone(rule, value, callback) {
+      if (!value) {
+        return callback(new Error('手机号码不能为空'));
+      }
+      if (!/^1[34578]\d{9}$/.test(value)) {
+        return callback(new Error('手机号码有误，请重填'));
+      }
+      callback();
+    },
+    singularOrPlural: function singularOrPlural(value, suffix) {
+      if (value > 1 || value == 0) return __WEBPACK_IMPORTED_MODULE_0_inflector_js___default.a.pluralize(suffix);
+      return __WEBPACK_IMPORTED_MODULE_0_inflector_js___default.a.singularize(suffix);
+    },
+    minimum: function minimum(originalPromise) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+
+      return Promise.all([originalPromise, new Promise(function (resolve) {
+        setTimeout(function () {
+          return resolve();
+        }, delay);
+      })]).then(function (result) {
+        return result[0];
+      });
+    }
+  },
+  computed: {
+    appConfig: function appConfig() {
+      return this.$root.erpConfig;
+    },
+    isAdmin: function isAdmin() {
+      return this.appConfig.userType === 'App\\Models\\User';
+    }
+  }
+});
+
+/***/ }),
+/* 520 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Javascript inflector
+ * 
+ * @author Dida Nurwanda <didanurwanda@gmail.com>
+ * @since 1.0
+ */
+
+
+var _Inflector = {
+
+    uncountableWords : [
+        'equipment', 'information', 'rice', 'money', 'species', 'series',
+        'fish', 'sheep', 'moose', 'deer', 'news'
+    ],
+
+    pluralRules: [
+        [new RegExp('(m)an$', 'gi'),                 '$1en'],
+        [new RegExp('(pe)rson$', 'gi'),              '$1ople'],
+        [new RegExp('(child)$', 'gi'),               '$1ren'],
+        [new RegExp('^(ox)$', 'gi'),                 '$1en'],
+        [new RegExp('(ax|test)is$', 'gi'),           '$1es'],
+        [new RegExp('(octop|vir)us$', 'gi'),         '$1i'],
+        [new RegExp('(alias|status)$', 'gi'),        '$1es'],
+        [new RegExp('(bu)s$', 'gi'),                 '$1ses'],
+        [new RegExp('(buffal|tomat|potat)o$', 'gi'), '$1oes'],
+        [new RegExp('([ti])um$', 'gi'),              '$1a'],
+        [new RegExp('sis$', 'gi'),                   'ses'],
+        [new RegExp('(?:([^f])fe|([lr])f)$', 'gi'),  '$1$2ves'],
+        [new RegExp('(hive)$', 'gi'),                '$1s'],
+        [new RegExp('([^aeiouy]|qu)y$', 'gi'),       '$1ies'],
+        [new RegExp('(x|ch|ss|sh)$', 'gi'),          '$1es'],
+        [new RegExp('(matr|vert|ind)ix|ex$', 'gi'),  '$1ices'],
+        [new RegExp('([m|l])ouse$', 'gi'),           '$1ice'],
+        [new RegExp('(quiz)$', 'gi'),                '$1zes'],
+        [new RegExp('s$', 'gi'),                     's'],
+        [new RegExp('$', 'gi'),                      's']
+    ],
+
+    singularRules: [
+        [new RegExp('(m)en$', 'gi'),                                                       '$1an'],
+        [new RegExp('(pe)ople$', 'gi'),                                                    '$1rson'],
+        [new RegExp('(child)ren$', 'gi'),                                                  '$1'],
+        [new RegExp('([ti])a$', 'gi'),                                                     '$1um'],
+        [new RegExp('((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$','gi'), '$1$2sis'],
+        [new RegExp('(hive)s$', 'gi'),                                                     '$1'],
+        [new RegExp('(tive)s$', 'gi'),                                                     '$1'],
+        [new RegExp('(curve)s$', 'gi'),                                                    '$1'],
+        [new RegExp('([lr])ves$', 'gi'),                                                   '$1f'],
+        [new RegExp('([^fo])ves$', 'gi'),                                                  '$1fe'],
+        [new RegExp('([^aeiouy]|qu)ies$', 'gi'),                                           '$1y'],
+        [new RegExp('(s)eries$', 'gi'),                                                    '$1eries'],
+        [new RegExp('(m)ovies$', 'gi'),                                                    '$1ovie'],
+        [new RegExp('(x|ch|ss|sh)es$', 'gi'),                                              '$1'],
+        [new RegExp('([m|l])ice$', 'gi'),                                                  '$1ouse'],
+        [new RegExp('(bus)es$', 'gi'),                                                     '$1'],
+        [new RegExp('(o)es$', 'gi'),                                                       '$1'],
+        [new RegExp('(shoe)s$', 'gi'),                                                     '$1'],
+        [new RegExp('(cris|ax|test)es$', 'gi'),                                            '$1is'],
+        [new RegExp('(octop|vir)i$', 'gi'),                                                '$1us'],
+        [new RegExp('(alias|status)es$', 'gi'),                                            '$1'],
+        [new RegExp('^(ox)en', 'gi'),                                                      '$1'],
+        [new RegExp('(vert|ind)ices$', 'gi'),                                              '$1ex'],
+        [new RegExp('(matr)ices$', 'gi'),                                                  '$1ix'],
+        [new RegExp('(quiz)zes$', 'gi'),                                                   '$1'],
+        [new RegExp('s$', 'gi'),                                                           '']
+    ],
+
+    nonTitlecasedWords: [
+        'and', 'or', 'nor', 'a', 'an', 'the', 'so', 'but', 'to', 'of', 'at',
+        'by', 'from', 'into', 'on', 'onto', 'off', 'out', 'in', 'over',
+        'with', 'for'
+    ],
+
+    idSuffix: new RegExp('(_ids|_id)$', 'g'),
+    underbar: new RegExp('_', 'g'),
+    spaceOrUnderbar: new RegExp('[\ _]', 'g'),
+    uppercase: new RegExp('([A-Z])', 'g'),
+    underbarPrefix: new RegExp('^_'),
+
+    applyRules: function(str, rules, skip, override) {
+        if (override) {
+            str = override;
+        } else {
+            var ignore = (skip.indexOf(str.toLowerCase()) > -1);
+            if (!ignore) {
+                for (var x = 0; x < rules.length; x++) {
+                    if (str.match(rules[x][0])) {
+                        str = str.replace(rules[x][0], rules[x][1]);
+                        break;
+                    }
+                }
+            }
+        }
+        return str;
+    },
+
+
+    /*
+    Inflector.pluralize('person')           -> 'people'
+    Inflector.pluralize('octopus')          -> 'octopi'
+    Inflector.pluralize('Hat')              -> 'Hats'
+    Inflector.pluralize('person', 'guys')   -> 'guys'    
+    */
+    pluralize: function(str, plural) {
+        return this.applyRules(
+            str,
+            this.pluralRules,
+            this.uncountableWords,
+            plural
+        );
+    },
+
+    /*
+    Inflector.singularize('person')         -> 'person'
+    Inflector.singularize('octopi')         -> 'octopus'
+    Inflector.singularize('hats')           -> 'hat'
+    Inflector.singularize('guys', 'person') -> 'person'
+    */
+    singularize: function(str, singular) {
+        return this.applyRules(
+            str,
+            this.singularRules,
+            this.uncountableWords, 
+            singular
+        );
+    },
+
+    /*
+    Inflector.camelize('message_properties')        -> 'MessageProperties'
+    Inflector.camelize('message_properties', true)  -> 'messageProperties'
+    */
+    camelize: function(str, lowFirstLetter) {
+       // var str = str.toLowerCase();
+        var str_path = str.split('/');
+        for (var i = 0; i < str_path.length; i++)
+        {
+            var str_arr = str_path[i].split('_');
+            var initX = ((lowFirstLetter && i + 1 === str_path.length) ? (1) : (0));
+            for (var x = initX; x < str_arr.length; x++)
+            {
+                str_arr[x] = str_arr[x].charAt(0).toUpperCase() + str_arr[x].substring(1);
+            }
+            str_path[i] = str_arr.join('');
+        }
+        str = str_path.join('::');
+
+        // fix 
+        if (lowFirstLetter === true) {
+          var first = str.charAt(0).toLowerCase();
+          var last = str.slice(1);
+          str = first + last;
+        }
+
+        return str;
+    },
+
+    /*
+    Inflector.underscore('MessageProperties')       -> 'message_properties'
+    Inflector.underscore('messageProperties')       -> 'message_properties'
+    */
+    underscore: function(str) { 
+        var str_path = str.split('::');
+        for (var i = 0; i < str_path.length; i++)
+        {
+            str_path[i] = str_path[i].replace(this.uppercase, '_$1');
+            str_path[i] = str_path[i].replace(this.underbarPrefix, '');
+        }
+        str = str_path.join('/').toLowerCase();
+        return str;
+    },
+
+    /*
+    Inflector.humanize('message_properties')        -> 'Message properties'
+    Inflector.humanize('message_properties')        -> 'message properties'
+    */
+    humanize: function(str, lowFirstLetter) {
+        var str = str.toLowerCase();
+        str = str.replace(this.idSuffix, '');
+        str = str.replace(this.underbar, ' ');
+        if (!lowFirstLetter)
+        {
+            str = this.capitalize(str);
+        }
+        return str;
+    },
+
+    /*
+    Inflector.capitalize('message_properties')      -> 'Message_properties'
+    Inflector.capitalize('message properties')      -> 'Message properties'
+    */
+    capitalize: function(str) {
+        var str = str.toLowerCase();
+        str = str.substring(0, 1).toUpperCase() + str.substring(1);
+        return str;
+    },
+
+    /*
+    Inflector.dasherize('message_properties')       -> 'message-properties'
+    Inflector.dasherize('message properties')       -> 'message-properties'
+    */
+    dasherize: function(str) {
+        str = str.replace(this.spaceOrUnderbar, '-');
+        return str;
+    },
+
+    /*
+    Inflector.camel2words('message_properties')         -> 'Message Properties'
+    Inflector.camel2words('message properties')         -> 'Message Properties'
+    Inflactor.camel2words('Message_propertyId', true)   -> 'Message Properties Id'
+    */
+    camel2words: function(str, allFirstUpper) {
+        //var str = str.toLowerCase();
+        if (allFirstUpper === true) {
+            str = this.camelize(str);
+            str = this.underscore(str);
+        } else {
+            str = str.toLowerCase();
+        }
+
+        str = str.replace(this.underbar, ' ');
+        var str_arr = str.split(' ');
+        for (var x = 0; x < str_arr.length; x++)
+        {
+            var d = str_arr[x].split('-');
+            for (var i = 0; i < d.length; i++)
+            {
+                if (this.nonTitlecasedWords.indexOf(d[i].toLowerCase()) < 0)
+                {
+                    d[i] = this.capitalize(d[i]);
+                }
+            }
+            str_arr[x] = d.join('-');
+        }
+        str = str_arr.join(' ');
+        str = str.substring(0, 1).toUpperCase() + str.substring(1);
+        return str;
+    },
+
+    /*
+    Inflector.demodulize('Message::Bus::Properties')    -> 'Properties'
+    */
+    demodulize: function(str) {
+        var str_arr = str.split('::');
+        str = str_arr[str_arr.length - 1];
+        return str;
+    },
+
+    /*
+    Inflector.tableize('MessageBusProperty')    -> 'message_bus_properties'
+    */
+    tableize: function(str) {
+        str = this.pluralize(this.underscore(str));
+        return str;
+    },
+
+    /*
+    Inflector.classify('message_bus_properties')    -> 'MessageBusProperty'
+    */
+    classify: function(str) {
+        str = this.singularize(this.camelize(str));
+        return str;
+    },
+
+    /*
+    Inflector.foreignKey('MessageBusProperty')       -> 'message_bus_property_id'
+    Inflector.foreignKey('MessageBusProperty', true) -> 'message_bus_propertyid'
+    */   
+    foreignKey: function(str, dropIdUbar) {
+        str = this.underscore(this.demodulize(str)) + ((dropIdUbar) ? ('') : ('_')) + 'id';
+        return str;
+    },
+
+    /*
+    Inflector.ordinalize('the 1 pitch')     -> 'the 1st pitch'
+    */
+    ordinalize: function(str) {
+        var str_arr = str.split(' ');
+        for (var x = 0; x < str_arr.length; x++)
+        {
+            var i = parseInt(str_arr[x]);
+            if (i === NaN)
+            {
+                var ltd = str_arr[x].substring(str_arr[x].length - 2);
+                var ld = str_arr[x].substring(str_arr[x].length - 1);
+                var suf = "th";
+                if (ltd != "11" && ltd != "12" && ltd != "13")
+                {
+                    if (ld === "1")
+                    {
+                        suf = "st";
+                    }
+                    else if (ld === "2")
+                    {
+                        suf = "nd";
+                    }
+                    else if (ld === "3")
+                    {
+                        suf = "rd";
+                    }
+                }
+                str_arr[x] += suf;
+            }
+        }
+        str = str_arr.join(' ');
+        return str;
+    }
+}
+
+if (true) {
+    module.exports = _Inflector;
+} else if (typeof define === "function" && define.amd) {
+    define([], function(){
+        return _Inflector;
+    });
+} else {
+    window.Inflector = _Inflector;
+}
+
+
+/***/ }),
+/* 521 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.filter('ago', function (value) {
+  if (!value) return '-';
+  return dayjs(value).fromNow();
+});
+
+/***/ }),
+/* 522 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 523 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
