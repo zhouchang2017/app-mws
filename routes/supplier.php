@@ -62,3 +62,8 @@ Route::patch('/withdraws/{withdraw}/submit', 'WithdrawController@submit')->name(
 Route::get('/warehouses', 'WarehouseController@index')->name('warehouses.index');
 // 库存api
 Route::get('/inventories', 'InventoryController@index')->name('inventories.index');
+
+// 微信二维码url
+Route::get('/wechat/bind/create', 'Supplier\Auth\WechatController@getBindUrl')->name('wechat.bind.create');
+// 轮询是否绑定成功
+Route::get('/wechat/bind','Supplier\Auth\WechatController@checkIsBind');

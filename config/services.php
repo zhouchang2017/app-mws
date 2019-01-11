@@ -39,5 +39,9 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
+    'youdao' => [
+        'appKey' => env('YOUDAO_APP_KEY'),
+        'appSecret' => env('YOUDAO_APP_SECRET'),
+    ],
 
 ];

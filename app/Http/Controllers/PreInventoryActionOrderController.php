@@ -6,8 +6,10 @@ use App\Models\Logistic;
 use App\Models\Order;
 use App\Models\PreInventoryActionOrder;
 use App\Models\Supply;
+use App\Models\Withdraw;
 use App\Services\OrderService;
 use App\Services\SupplyService;
+use App\Services\WithdrawService;
 use Illuminate\Http\Request;
 
 class PreInventoryActionOrderController extends Controller
@@ -39,7 +41,7 @@ class PreInventoryActionOrderController extends Controller
             return response()->json($resource);
         }
         $this->viewShare();
-        return view(static::$resource::uriKey() .'.check', compact('resource'));
+        return view(static::$resource::uriKey() . '.check', compact('resource'));
     }
 
     public function shipment(PreInventoryActionOrder $preInventoryActionOrder)
@@ -47,7 +49,7 @@ class PreInventoryActionOrderController extends Controller
         $preInventoryActionOrder->loadDetailAttribute()->loadType()->append('simple_address');
         $logistic = Logistic::all();
         $this->viewShare();
-        return view(static::$resource::uriKey() .'.shipment',
+        return view(static::$resource::uriKey() . '.shipment',
             ['resource' => $preInventoryActionOrder, 'logistic' => $logistic]
         );
     }
@@ -63,6 +65,11 @@ class PreInventoryActionOrderController extends Controller
         if ($origin instanceof Supply) {
             // 供应商入库
             (new SupplyService($origin))->shipment($preInventoryActionOrder, $request);
+        }
+
+        if ($origin instanceof Withdraw) {
+            // 供应商退仓
+            (new WithdrawService($origin))->shipment($preInventoryActionOrder, $request);
         }
 
         $preInventoryActionOrder->loadDetailAttribute()->loadType()->append('simple_address');

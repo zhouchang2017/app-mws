@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Notifications\SupplyPendingNotification;
 use App\Traits\Notifiable;
+use App\Traits\WechatableTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,WechatableTrait;
 
     /**
      * The attributes that are mass assignable.

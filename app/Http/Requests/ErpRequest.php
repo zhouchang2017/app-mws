@@ -8,6 +8,10 @@ use App\Models\User;
 use App\Resources\Resource;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class ErpRequest
+ * @package App\Http\Requests
+ */
 class ErpRequest extends FormRequest
 {
     /**
@@ -20,26 +24,41 @@ class ErpRequest extends FormRequest
         return true;
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [];
     }
 
+    /**
+     * @return string
+     */
     public function getSubDomain()
     {
         return array_first(explode('.', $this->getHost()));
     }
 
+    /**
+     * @return string
+     */
     public function userType()
     {
         return get_class($this->user());
     }
 
+    /**
+     * @return bool
+     */
     public function isAdmin()
     {
         return $this->user() instanceof User;
     }
 
+    /**
+     * @return bool
+     */
     public function isSupplier()
     {
         return $this->user() instanceof SupplierUser;

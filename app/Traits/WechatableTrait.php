@@ -6,15 +6,20 @@
  * Time: 上午10:55
  */
 
-namespace Chang\Erp\Traits;
+namespace App\Traits;
 
 
-use Chang\Erp\Models\Wechat;
+use App\Models\Wechat;
 
 trait WechatableTrait
 {
     public function wechat()
     {
         return $this->morphOne(Wechat::class, 'wechatable');
+    }
+
+    public function hasBind()
+    {
+        return $this->wechat()->count() > 0;
     }
 }

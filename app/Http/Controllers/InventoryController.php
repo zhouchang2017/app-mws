@@ -34,12 +34,24 @@ class InventoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param Inventory $inventory
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Inventory $inventory)
     {
-        //
+        $resource = $inventory->loadMissing(['warehouse', 'variant']);
+        if (request()->ajax()) {
+            return response()->json($resource);
+        }
+        $this->viewShare();
+        return view(static::$resource::uriKey() . '.detail', compact('resource'));
+    }
+
+    public function histories(Inventory $inventory)
+    {
+        return response()->json(
+            $inventory->histories()->with(['type', 'origin'])
+        );
     }
 
     /**

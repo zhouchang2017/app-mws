@@ -2,13 +2,10 @@
 
 @section('content')
     <div>
-        <h2 class="text-80 pb-3">用户中心</h2>
-        <div class="card p-6 w-full">
-            <div class="card-header">Dashboard</div>
+        <card-title label="用户中心"></card-title>
 
-            <div class="card-body">
-                You are logged in!
-            </div>
+        <div class="form-list mb-6">
+            <bind-wechat></bind-wechat>
         </div>
     </div>
 @endsection

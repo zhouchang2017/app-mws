@@ -15,6 +15,7 @@ use App\Events\WithdrawPendingEvent;
 use App\Events\WithdrawShippedEvent;
 use App\Events\WithdrawUnShipEvent;
 use App\Models\InventoryActionType;
+use App\Models\PreInventoryActionOrder;
 use App\Models\Withdraw;
 use App\Models\WithdrawItem;
 use Illuminate\Http\Request;
@@ -58,7 +59,7 @@ class WithdrawService
     {
         $this->withdraw->setStatus($this->withdraw::APPROVED, $reason);
         $this->withdraw->freshNow();
-         event(new WithdrawApprovedEvent($this->withdraw));
+        event(new WithdrawApprovedEvent($this->withdraw));
     }
 
     /**
@@ -132,7 +133,7 @@ class WithdrawService
     {
         $this->withdraw->setStatus($this->withdraw::SHIPPED, $reason);
         $this->withdraw->freshNow();
-         event(new WithdrawShippedEvent($this->withdraw));
+        event(new WithdrawShippedEvent($this->withdraw));
     }
 
 
@@ -247,6 +248,28 @@ class WithdrawService
         return InventoryService::createPreAction(array_merge($this->formatCreatePreActionParams(), $data, [
             'type_id' => $type->id,
         ]), $this->withdraw);
+    }
+
+
+    /**
+     * @param PreInventoryActionOrder $order
+     * @param Request $request
+     * @return mixed
+     */
+    public function shipment(PreInventoryActionOrder $order, Request $request)
+    {
+        return tap(InventoryService::preActionOrderShipment($order, $request, true), function () {
+            if ($this->isShipped()) {
+                $this->statusToShipped();
+            } else {
+                $this->statusToPartShipped();
+            }
+        });
+    }
+
+    private function isShipped()
+    {
+        return $this->withdraw->preInventoryAction->orders->every->hasTracks();
     }
 
 }

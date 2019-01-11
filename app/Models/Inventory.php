@@ -46,6 +46,12 @@ class Inventory extends Model
         return $this->hasOne(SupplierVariant::class, 'variant_id', 'variant_id');
     }
 
+    public function histories()
+    {
+        return $this->hasMany(InventoryAction::class, 'variant_id', 'variant_id')
+            ->where('warehouse_id', $this->warehouse_id);
+    }
+
     public function scopeFindWarehouseVariants($query, $warehouseId, $variantId, $productId = null)
     {
         return $query->where([

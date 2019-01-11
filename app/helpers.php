@@ -20,3 +20,11 @@ if ( !function_exists('isSupplier')) {
     }
 }
 
+if ( !function_exists('erpRequest')) {
+    function erpRequest()
+    {
+        return app(\App\Http\Requests\ErpRequest::class);
+    }
+}
+
+

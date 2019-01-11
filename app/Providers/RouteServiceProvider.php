@@ -68,6 +68,7 @@ class RouteServiceProvider extends ServiceProvider
             ['middleware' => 'web','namespace'=>'App\Http\Controllers\Admin']),
             function () {
                 $this->auth();
+                $this->get('/wechat/bind/{user}', 'Auth\WechatController@bind')->name('wechat.bind');
             });
     }
 
@@ -80,6 +81,7 @@ class RouteServiceProvider extends ServiceProvider
             ['middleware']), ['middleware' => 'web','namespace'=>'App\Http\Controllers\Supplier']),
             function () {
                 $this->auth();
+                $this->get('/wechat/bind/{user}', 'Auth\WechatController@bind')->name('wechat.bind');
             });
     }
 

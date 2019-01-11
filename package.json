@@ -32,6 +32,7 @@
         "inflector-js": "^1.0.1",
         "numeral": "^2.0.6",
         "vue-infinite-loading": "^2.4.3",
-        "vue-lazyload": "^1.2.6"
+        "vue-lazyload": "^1.2.6",
+        "vue-qriously": "^1.1.1"
     }
 }

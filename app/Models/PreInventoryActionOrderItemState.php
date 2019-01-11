@@ -52,6 +52,7 @@ class PreInventoryActionOrderItemState extends Model
         return $this->belongsTo(ProductVariant::class);
     }
 
+
     /**
      * @return Warehouse
      */

@@ -6,11 +6,12 @@ namespace App\Models;
 use App\Models\DP\PromotionPlan;
 use App\Notifications\InvitePromotionPlanNotification;
 use App\Traits\Notifiable;
+use App\Traits\WechatableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class SupplierUser extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, WechatableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -50,8 +51,8 @@ class SupplierUser extends Authenticatable
         return $this->supplier->variants;
     }
 
-    public function invitePromotionPlanNotify(PromotionPlan $promotionPlan,$title,$body)
+    public function invitePromotionPlanNotify(PromotionPlan $promotionPlan, $title, $body)
     {
-        $this->notify(new InvitePromotionPlanNotification($promotionPlan,$title,$body));
+        $this->notify(new InvitePromotionPlanNotification($promotionPlan, $title, $body));
     }
 }

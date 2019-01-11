@@ -105,6 +105,8 @@ Route::resource('/product-options', 'ProductOptionController');
 // 库存
 Route::get('/inventories/search', 'InventoryController@search')->name('inventories.search');
 Route::resource('/inventories', 'InventoryController');
+// 库存变动历史
+Route::get('/inventory-actions', 'InventoryActionController@index')->name('inventory-actions.index');
 
 // 价格调整类型
 Route::resource('/attachment-types', 'AttachmentTypeController');
@@ -124,7 +126,8 @@ Route::get('/addresses/create', 'AddressController@create')->name('addresses.cre
 Route::get('/markets/marketables', 'MarketController@getMarketables');
 Route::resource('/markets', 'MarketController');
 // 订单
-Route::get('/orders', 'OrderController@index');
+Route::get('/orders', 'OrderController@index')->name('orders.index');
+Route::get('/orders/{order}', 'OrderController@show')->name('orders.show');
 
 // 促销活动
 Route::get('/promotions', 'PromotionController@index')->name('promotions.index');
@@ -161,3 +164,8 @@ Route::patch('/withdraws/{withdraw}/completed', 'WithdrawController@completed')-
 Route::get('/divisions/provinces', 'DivisionController@provinces')->name('divisions.provinces.search');
 Route::get('/divisions/cities', 'DivisionController@cities')->name('divisions.cities.search');
 Route::get('/divisions/areas', 'DivisionController@areas')->name('divisions.areas.search');
+
+// 微信二维码url
+Route::get('/wechat/bind/create', 'Admin\Auth\WechatController@getBindUrl')->name('wechat.bind.create');
+// 轮询是否绑定成功
+Route::get('/wechat/bind','Supplier\Auth\WechatController@checkIsBind');

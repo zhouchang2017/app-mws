@@ -14,12 +14,8 @@
 Route::view('/', 'welcome');
 
 Route::get('/test',function (\App\Http\Requests\ErpRequest $request){
-    return $request->findParentModel();
+    return \App\Models\DP\Taxon::all();
 //    return \App\Models\Inventory::where('warehouse_id',10)->get();
 });
-//Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::get('/users/{user}', 'UserController@show')->name('user.show');
-
-//Route::get('/users/profile', 'UserController@profile')->name('user.profile');
-
+Route::get('/excels/import','HelperImportExcelController@import');

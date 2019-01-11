@@ -7130,6 +7130,11 @@ vue-loader@^13.7.1:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
+vue-qriously@^1.1.1:
+  version "1.1.1"
+  resolved "http://registry.npm.taobao.org/vue-qriously/download/vue-qriously-1.1.1.tgz#b3a84b05280cb1edfd153bbc003f031995ea7ce7"
+  integrity sha1-s6hLBSgMse39FTu8AD8DGZXqfOc=
+
 vue-style-loader@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-3.1.2.tgz#6b66ad34998fc9520c2f1e4d5fa4091641c1597a"
