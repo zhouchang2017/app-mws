@@ -128,6 +128,9 @@ Route::resource('/markets', 'MarketController');
 // 订单
 Route::get('/orders', 'OrderController@index')->name('orders.index');
 Route::get('/orders/{order}', 'OrderController@show')->name('orders.show');
+// 为订单创建出库单
+Route::patch('/orders/{order}/createPreInventoryAction', 'OrderController@createPreInventoryAction')
+    ->name('orders.createPreInventoryAction');
 
 // 促销活动
 Route::get('/promotions', 'PromotionController@index')->name('promotions.index');
@@ -141,9 +144,11 @@ Route::post('/promotion-plans/{promotionPlan}/notify', 'PromotionPlanController@
     ->name('promotion-plans.notify.store');
 // 供应商
 Route::resource('/suppliers', 'SupplierController');
+
 // 供应商保存地址
 Route::post('/suppliers/{supplier}/address', 'SupplierController@address')->name('suppliers.address.store');
 Route::patch('/suppliers/{supplier}/address', 'SupplierController@address')->name('suppliers.address.store');
+
 // 供应商用户
 Route::resource('/supplier-users', 'SupplierUserController');
 
@@ -167,5 +172,11 @@ Route::get('/divisions/areas', 'DivisionController@areas')->name('divisions.area
 
 // 微信二维码url
 Route::get('/wechat/bind/create', 'Admin\Auth\WechatController@getBindUrl')->name('wechat.bind.create');
+// 个人中心
+Route::get('/profile', 'UserController@profile')->name('users.profile');
 // 轮询是否绑定成功
-Route::get('/wechat/bind','Supplier\Auth\WechatController@checkIsBind');
+Route::get('/wechat/bind', 'Supplier\Auth\WechatController@checkIsBind');
+
+// 图片上传
+Route::post('/fs/upload/image', 'FileSystemController@image')->name('upload.image.store');
+Route::delete('/fs/upload/image', 'FileSystemController@image')->name('upload.image.destroy');

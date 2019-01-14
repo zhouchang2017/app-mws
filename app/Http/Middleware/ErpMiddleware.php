@@ -25,7 +25,8 @@ class ErpMiddleware
         View::share('notifyTypes',User::getTypes());
         ERP::provideToScript([
             'locales'     => $locales,
-            'indexLocale' => app()->getLocale()
+            'indexLocale' => app()->getLocale(),
+            'assetDomain' => $request->getScheme().'://'.config('filesystems.disks.qiniu.domains.default')
         ]);
         return $next($request);
     }

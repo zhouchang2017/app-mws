@@ -21,7 +21,7 @@
     <link href="{{ asset('css/vendor.css') }}" rel="stylesheet">
 </head>
 <body class="bg-40 text-base text-grey-darkest font-normal relative">
-<div id="app">
+<div id="app" class="min-h-fill">
     <div class="h-2 bg-primary"></div>
     <div class="container mx-auto p-8">
         @yield('content')

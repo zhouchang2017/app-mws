@@ -100,11 +100,7 @@
                 @endif
             </div>
         </form-item>
-        <form-item title="图集" left-center>
-            <div slot="value">
-                <thumb-image-list :images='@json($resource->images)' ></thumb-image-list>
-            </div>
-        </form-item>
+        <translation-images-detail-item title="图集" :images='@json($resource->images)'></translation-images-detail-item>
         <form-item title="最后更新时间" value="{{$resource->updated_at}}"></form-item>
     </div>
 

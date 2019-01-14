@@ -166,6 +166,8 @@ return [
          * Package Service Providers...
          */
 
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

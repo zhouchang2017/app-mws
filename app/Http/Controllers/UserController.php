@@ -17,4 +17,11 @@ class UserController extends Controller
             204
         );
     }
+
+    public function profile()
+    {
+        $resource = auth()->user();
+        $this->viewShare();
+        return view('profile', compact('resource'));
+    }
 }

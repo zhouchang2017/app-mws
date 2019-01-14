@@ -65,5 +65,21 @@ Route::get('/inventories', 'InventoryController@index')->name('inventories.index
 
 // 微信二维码url
 Route::get('/wechat/bind/create', 'Supplier\Auth\WechatController@getBindUrl')->name('wechat.bind.create');
+
+// 个人中心
+Route::get('/profile', 'UserController@profile')->name('users.profile');
+
+// 供应商保存地址
+Route::post('/suppliers/{supplier}/address', 'SupplierController@address')->name('suppliers.address.store');
+Route::patch('/suppliers/{supplier}/address', 'SupplierController@address')->name('suppliers.address.store');
+
+// 供应商详情
+Route::get('/suppliers/profile', 'SupplierController@profile')->name('suppliers.profile');
+
+
 // 轮询是否绑定成功
 Route::get('/wechat/bind','Supplier\Auth\WechatController@checkIsBind');
+
+// 图片上传
+Route::post('/fs/upload/image', 'FileSystemController@image')->name('upload.image.store');
+Route::delete('/fs/upload/image', 'FileSystemController@image')->name('upload.image.destroy');

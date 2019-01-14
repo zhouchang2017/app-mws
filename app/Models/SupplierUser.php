@@ -5,13 +5,26 @@ namespace App\Models;
 
 use App\Models\DP\PromotionPlan;
 use App\Notifications\InvitePromotionPlanNotification;
+use App\Traits\Authorizable;
 use App\Traits\Notifiable;
 use App\Traits\WechatableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class SupplierUser extends Authenticatable
 {
-    use Notifiable, WechatableTrait;
+    use Notifiable, WechatableTrait,Authorizable;
+
+    protected $allowAuthorizes = ['update','view','destroy'];
+
+    protected $appendAuthorizes = [];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::retrieved(function($model){
+            $model->append('authorize');
+        });
+    }
 
     /**
      * The attributes that are mass assignable.

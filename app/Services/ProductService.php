@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Models\DP\Product;
 use App\Models\DP\ProductAttribute;
+use App\Models\DP\ProductImage;
 use App\Models\DP\ProductOption;
 use App\Models\DP\ProductVariant;
 use App\Models\DP\ProductVariantOptionValue;
@@ -50,6 +51,24 @@ class ProductService
             });
 
             $product->save();
+
+            if ($request->has('images')) {
+                collect($request->get('images'))->each(function ($item, $locale) use ($product) {
+                    collect($item)->each(function ($data) use ($locale, $product) {
+                        $data['image'] = $data['url'];
+                        if (isset($data['id'])) {
+                            $image = $product->images()->find($data['id']);
+                        }
+
+
+                        $image = $image ?? new ProductImage();
+
+                        $image->fill(array_merge($data, ['locale_code' => $locale]));
+                        $image->product()->associate($product);
+                        $image->save();
+                    });
+                });
+            }
 
             if ($request->has('attributes')) {
                 static::updateOrCreateProductAttributeValue($product, $request->input('attributes'));

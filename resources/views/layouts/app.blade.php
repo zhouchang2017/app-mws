@@ -21,8 +21,8 @@
 <body>
 <div id="app" class="text-base text-grey-darkest font-normal relative bg-40 min-h-fill">
     <div class="bg-primary">
-        <div class="container mx-auto px-2 lg:px-4 ">
-        <div class="flex items-center md:justify-between  py-4">
+        <div class="mx-auto w-full px-2 lg:px-4 ">
+        <div class="flex sm:items-center justify-between  py-4">
             <div class="w-1/4 flex items-center md:hidden" @click="showNav">
                 <svg class="fill-current text-white h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z"/></svg>
             </div>

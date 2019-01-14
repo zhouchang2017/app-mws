@@ -11,7 +11,8 @@
                             {{value || '-'}}
                         </p>
                         <p class="text-90" v-else>
-                            <a :href="relationLink" class="text-primary no-underline dim text-primary font-bold">{{value || '-'}}</a>
+                            <a :href="relationLink" class="text-primary no-underline dim text-primary font-bold">{{value
+                                || '-'}}</a>
                         </p>
                     </slot>
                 </div>
@@ -39,6 +40,9 @@
       },
       resourceId: {
         type: [Number, String]
+      },
+      url: {
+        type: String
       }
     },
     computed: {
@@ -48,9 +52,15 @@
         }
       },
       isRelation () {
+        if (this.url) {
+          return true
+        }
         return !!(this.uriKey && this.resourceId)
       },
       relationLink () {
+        if (this.url) {
+          return this.url
+        }
         return `/${this.uriKey}/${this.resourceId}`
       }
     }

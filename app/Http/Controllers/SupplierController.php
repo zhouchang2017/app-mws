@@ -39,6 +39,17 @@ class SupplierController extends Controller
         }
     }
 
+    public function profile()
+    {
+        if (erpRequest()->isSupplier()) {
+            $supplier = auth()->user()->supplier;
+            $resource = $supplier->loadMissing(['manager', 'admin', 'users']);
+            $this->viewShare();
+            return view(static::$resource::uriKey() . '.profile', compact('resource'));
+        }
+        abort(404);
+    }
+
     public function address(Supplier $supplier, ErpRequest $request)
     {
         if ($request->method() === 'POST') {

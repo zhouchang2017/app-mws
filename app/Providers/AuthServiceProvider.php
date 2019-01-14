@@ -5,11 +5,15 @@ namespace App\Providers;
 use App\Models\DP\Product;
 use App\Models\PreInventoryAction;
 use App\Models\PreInventoryActionOrder;
+use App\Models\Supplier;
+use App\Models\SupplierUser;
 use App\Models\Supply;
 use App\Models\Withdraw;
 use App\Policies\PreInventoryActionOrderPolicy;
 use App\Policies\PreInventoryActionPolicy;
 use App\Policies\ProductPolicy;
+use App\Policies\SupplierPolicy;
+use App\Policies\SupplierUserPolicy;
 use App\Policies\SupplyPolicy;
 use App\Policies\WithdrawPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -28,6 +32,8 @@ class AuthServiceProvider extends ServiceProvider
         PreInventoryAction::class => PreInventoryActionPolicy::class,
         PreInventoryActionOrder::class => PreInventoryActionOrderPolicy::class,
         Withdraw::class => WithdrawPolicy::class,
+        Supplier::class => SupplierPolicy::class,
+        SupplierUser::class => SupplierUserPolicy::class,
     ];
 
     /**

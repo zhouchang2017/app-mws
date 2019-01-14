@@ -1,15 +1,24 @@
 export default {
   methods: {
-    fillTranslationField (attribute, translations, path) {
+    fillTranslationField (attribute, translations, path, image = false) {
       _.set(this, path,
         translations.reduce((res, cur) => {
           return _.tap(res, res => {
-            _.set(res, cur.locale_code, cur[attribute])
+            if (image) {
+              _.set(res, cur.locale_code, cur)
+            } else {
+              _.set(res, cur.locale_code, cur[attribute])
+            }
           })
         }, {})
       )
     },
-    formatTranslationValue(attribute, translations){
+
+    resolveTranslationImagesField (translations) {
+      return _.groupBy(translations,'locale_code')
+    },
+
+    formatTranslationValue (attribute, translations) {
       return translations.reduce((res, cur) => {
         return _.tap(res, res => {
           _.set(res, cur.locale_code, cur[attribute])

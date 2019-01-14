@@ -20,7 +20,7 @@ class PreInventoryAction extends Model
 
     protected $appends = ['current_state'];
 
-    protected $appendAuthorizes = ['approve','assign'];
+    protected $appendAuthorizes = ['approve', 'assign'];
 
     /*
      * 审核通过后，等待管理员填写操作单
@@ -35,6 +35,17 @@ class PreInventoryAction extends Model
         parent::boot();
         static::observe(PreInventoryActionObserver::class);
         static::addGlobalScope(new WithStateScope());
+    }
+
+    public function getStateAlertAttribute()
+    {
+        $status = [
+            self::PENDING => 'warning',
+            self::APPROVED => 'info',
+            self::REJECTED => 'error',
+            self::ASSIGNED => 'success',
+        ];
+        return array_get($status, $this->state->name, 'info');
     }
 
     public function getCurrentStateAttribute()

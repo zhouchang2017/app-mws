@@ -22,9 +22,12 @@
                             clearable
                     ></el-cascader>
                 </el-form-item>
-                <!--<el-form-item label="产品图集" prop="images">-->
-
-                <!--</el-form-item>-->
+                <el-form-item v-if="init" label="产品图集" prop="images">
+                    <translation-images-upload-field
+                            v-model="form.images"
+                            :images="form.images" multiple
+                    ></translation-images-upload-field>
+                </el-form-item>
                 <p class="text-xs font-semibold text-50">产品属性</p>
                 <div class="border-30 border-b mb-3"></div>
                 <div class="mb-3" v-if="attributes.length === 0">
@@ -111,10 +114,12 @@
           value: 'id',
           label: 'name'
         },
-        loading: false,
+        loading: true,
+        init:false,
         form: {
           name: {},
           code: '',
+          images: {},
           taxon: [],
           attributes: {},
           options: [],
@@ -171,7 +176,7 @@
               }
 
             } catch (e) {
-              this.notify({type: 'error', title: 'ERROR',message:e.response})
+              this.notify({type: 'error', title: 'ERROR', message: e.response})
             }
 
             // this.state.push(data.data)
@@ -218,11 +223,11 @@
       },
       fetchAttributes () {
         this.form.attributes = []
-        return axios.get('/product-attributes?taxon_id=' + this.taxon +'&withoutPage=1').then(({data}) => {
+        return axios.get('/product-attributes?taxon_id=' + this.taxon + '&withoutPage=1').then(({data}) => {
           this.attributes = data
           this.form.attributes = data.map(item => {
             const attribute_id = item.id
-            let value = {value:{},id:null}
+            let value = {value: {}, id: null}
             if (_.get(this, 'resource.taxon_id') === this.taxon && this.updatePage) {
               const attributeValues = this.resource.attribute_values.filter(item => item.attribute_id === attribute_id)
               value = attributeValues.reduce((value, cur) => {
@@ -239,7 +244,7 @@
         })
       },
       fetchOptions () {
-        return axios.get('/product-options?taxon_id=' + this.taxon+'&withoutPage=1').then(({data}) => {
+        return axios.get('/product-options?taxon_id=' + this.taxon + '&withoutPage=1').then(({data}) => {
           this.options = data
         })
       },
@@ -304,14 +309,17 @@
       }
     },
     async created () {
+      this.loading = true
       await this.fetchTaxons()
       if (this.updatePage) {
-
         this.fillTranslationField('name', _.get(this, 'resource.translations'), 'form.name')
         this.form.code = _.get(this, 'resource.code')
+        this.form.images = this.resolveTranslationImagesField(_.get(this, 'resource.images'))
         this.fillTaxon()
         this.fillOptions()
       }
+      this.loading = false
+      this.init = true
     }
   }
 </script>

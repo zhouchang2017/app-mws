@@ -27,6 +27,7 @@ class AdminAuthGrandMiddleware
     {
         \Menu::make('Menu', function ($menu) {
             $menu->add('Home', ['route' => 'admin.home']);
+            $menu->add('个人中心', ['route' => 'admin.users.profile']);
             $menu->add('订单', 'orders');
             $menu->add('供货计划', 'supplies');
             $menu->add('退仓服务', 'withdraws');

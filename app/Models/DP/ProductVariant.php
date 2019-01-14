@@ -4,7 +4,6 @@ namespace App\Models\DP;
 
 
 use App\Models\Inventory;
-use App\Models\ProductPrice;
 use App\Models\Supplier;
 use App\Models\SupplierVariant;
 use App\Observers\ProductVariantObserver;
@@ -67,6 +66,16 @@ class ProductVariant extends Model
                 $query->filterChannel($channel);
             },
         ]);
+    }
+
+    public function appendCurrentPrice($channel)
+    {
+        if ($channel instanceof Channel) {
+            $price = $this->dpPrice()->where('channel_id',$channel->id)->first();
+            $this->current_price = optional($price)->price;
+            return;
+        }
+        $this->current_price = 0;
     }
 
     public function dpPrices()

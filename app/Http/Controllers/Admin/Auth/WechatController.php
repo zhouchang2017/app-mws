@@ -19,13 +19,23 @@ class WechatController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except(['getBindUrl','checkIsBind']);
+        $this->middleware(['guest'])->except(['getBindUrl', 'checkIsBind']);
     }
 
 
     public function bind(User $user, ErpRequest $request)
     {
         $this->authorizeUrl();
-        dd($user);
+
+        if (!$user->hasBind()) {
+            $oauthUser = session('wechat.oauth_user.default');
+            $user->wechat()->create([
+                'openid' => $oauthUser->getId(),
+                'avatar' => $oauthUser->getAvatar(),
+                'nickname' => $oauthUser->getNickname(),
+            ]);
+            return view('wechat.success', ['message' => '绑定成功！']);
+        }
+        return view('wechat.success', ['message' => '您已经绑定，无需再次绑定！']);
     }
 }

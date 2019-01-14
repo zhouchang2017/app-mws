@@ -26,6 +26,8 @@ class SupplierAuthGrandMiddleware
     {
         \Menu::make('Menu', function ($menu) {
             $menu->add('Home',['route'  => 'supplier.home']);
+            $menu->add('个人中心', ['route' => 'supplier.users.profile']);
+            $menu->add('供应商中心', ['route' => 'supplier.suppliers.profile']);
             $menu->add('供货计划','supplies');
             $menu->add('促销活动','promotion-plans');
             $menu->add('产品管理','products');

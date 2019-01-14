@@ -36,6 +36,9 @@ export default {
     },
     isAdmin () {
       return this.appConfig.userType === 'App\\Models\\User'
+    },
+    assetDomain () {
+      return this.appConfig.assetDomain
     }
   }
 }

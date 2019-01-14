@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'supplier' => \App\Http\Middleware\SupplierAuthGrandMiddleware::class,
         'admin' => \App\Http\Middleware\AdminAuthGrandMiddleware::class,
         'erp' => \App\Http\Middleware\ErpMiddleware::class,
+        'wechat.oauth' => \Overtrue\LaravelWeChat\Middleware\OAuthAuthenticate::class,
     ];
 
     /**

@@ -7,6 +7,9 @@ use App\Models\DP\ProductVariant;
 use App\Traits\AddressableTrait;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @property mixed manager
+ */
 class Supplier extends Model
 {
     use AddressableTrait;
@@ -22,6 +25,8 @@ class Supplier extends Model
         'user_id',
         'supplier_user_id',
     ];
+
+    protected $appendAuthorizes = ['addUser'];
 
     public function officeAddress()
     {

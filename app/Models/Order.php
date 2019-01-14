@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\DP\Channel;
 use App\Services\OrderService;
 use App\Traits\HasStatuses;
 use App\Traits\MoneyFormatableTrait;
@@ -12,6 +13,8 @@ use Spatie\ModelStatus\Exceptions\InvalidStatus;
  * @property mixed description
  * @property mixed status
  * @property mixed preInventoryAction
+ * @property mixed market
+ * @property mixed items
  */
 class Order extends Model
 {
@@ -35,13 +38,14 @@ class Order extends Model
         'updated_at',
     ];
 
+
     protected $dates = [
         'created_at',
         'updated_at',
     ];
 
     protected $appends = [
-        'type_name',
+        'type_name','current_state'
     ];
 
     protected static function boot()
@@ -52,6 +56,19 @@ class Order extends Model
             $service->createOrderItems();
             // $service->createPreInventoryAction();
         });
+    }
+
+    public function getCurrentStateAttribute()
+    {
+        $status = [
+            self::PENDING => '等待买家付款',
+            self::UN_SHIP => '待发货',
+            self::PART_SHIPPED => '部分发货',
+            self::SHIPPED => '已发货',
+            self::CANCEL => '已取消',
+            self::UNFULFILLABLE => '订单无法进行配送'
+        ];
+        return array_get($status, $this->state->name, 'N/A');
     }
 
     // 预出\入库(入库单\出货单)
@@ -87,6 +104,18 @@ class Order extends Model
     public function market()
     {
         return $this->belongsTo(Market::class);
+    }
+
+    public function loadItemsWithMarketPrice()
+    {
+        $this->loadMissing(['market', 'items.variant']);
+        if ($this->market->marketable instanceof Channel) {
+
+            $this->items->each(function($item){
+                $item->variant->appendCurrentPrice($this->market->marketable);
+            });
+        }
+        return $this;
     }
 
     public function address()

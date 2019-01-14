@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-
     <resource-detail-header
             label="{{$resource->type->name}}"
             uri-key="{{$uriKey}}"
-            singular-label="{{$singularLabel}}"
+            singular-label="{{$resource->type->name}}"
             resource-id="{{$resource->id}}"
             :can-update='@json($resource->authorize['canUpdate'])'
             :can-destroy='@json($resource->authorize['canDestroy'])'
