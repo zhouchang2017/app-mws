@@ -2,11 +2,12 @@
 
 namespace App\Erp\Metrics;
 
+use App\Erp\Card;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
-abstract class Metric
+abstract class Metric extends Card
 {
     /**
      * The displayable name of the metric.
@@ -92,10 +93,10 @@ abstract class Metric
      */
     public function jsonSerialize()
     {
-        return [
+        return array_merge(parent::jsonSerialize(), [
             'class' => get_class($this),
             'name' => $this->name(),
             'uriKey' => $this->uriKey(),
-        ];
+        ]);
     }
 }

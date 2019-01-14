@@ -41,7 +41,7 @@ const app = new Vue({
       erpConfig: {},
     }
   },
-  
+
   methods: {
     showNav () {
       if (document.getElementById('side-nav').classList.contains('hidden')) {

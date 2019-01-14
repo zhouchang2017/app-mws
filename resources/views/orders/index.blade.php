@@ -14,3 +14,8 @@
         label="渠道"
 >
 </el-table-column>
+<el-table-column
+        prop="current_state"
+        label="状态"
+>
+</el-table-column>

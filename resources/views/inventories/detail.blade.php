@@ -26,6 +26,8 @@
                    uri-key="warehouses"
                    resource-id="{{$resource->warehouse->id}}"
         ></form-item>
+        <form-item title="余量" value="{{$resource->quantity}}"
+        ></form-item>
         <form-item title="良品/不良品">
             <boolean-field slot="value"
                            :value='@json($resource->warehouse_area)'

@@ -2,6 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Erp\Charts\Metrics\OrdersPerDay;
+use App\Erp\Charts\Metrics\ProductVariants;
+use App\Erp\Charts\Metrics\SupplierCount;
+use App\Erp\Erp;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -20,6 +24,7 @@ class AdminAuthGrandMiddleware
     {
         View::share('domain', array_first(explode('.', $request->getHost())));
         $this->generateMenus();
+        $this->cards();
         return $next($request);
     }
 
@@ -48,5 +53,16 @@ class AdminAuthGrandMiddleware
             $menu->add('供应商', 'suppliers');
             $menu->add('站内消息', 'notifications');
         });
+    }
+
+    protected function cards()
+    {
+        Erp::cards(
+            [
+                new ProductVariants(),
+                new SupplierCount(),
+                new OrdersPerDay()
+            ]
+        );
     }
 }

@@ -31,10 +31,6 @@
         type: String,
         required: true,
       },
-      metricCode: {
-        type: [Number, String],
-        required: true,
-      },
     },
 
     data: () => ({
@@ -91,7 +87,7 @@
       },
 
       metricEndpoint () {
-        return `/metrics/${this.uriKey}/${this.metricCode}`
+        return `/metrics/${this.uriKey}`
       },
     },
   }

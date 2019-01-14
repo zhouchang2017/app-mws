@@ -3,6 +3,7 @@
 namespace App\Erp;
 
 
+use App\Http\Requests\ErpRequest;
 use App\Resources\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -13,6 +14,8 @@ class Erp
     public static $resources = [];
 
     public static $resourcesByModel = [];
+
+    public static $cards = [];
 
     /**
      * Get meta data information about all resources for client side consumption.
@@ -31,6 +34,33 @@ class Erp
                 'searchable' => $resource::searchable(),
             ];
         })->values()->all();
+    }
+
+    /**
+     * Get the available dashboard cards for the given request.
+     *
+     * @param  ErpRequest  $request
+     * @return \Illuminate\Support\Collection
+     */
+    public static function availableDashboardCards(ErpRequest $request)
+    {
+        return collect(static::$cards)->filter->authorize($request)->values();
+    }
+
+    /**
+     * Register new dashboard cards with Nova.
+     *
+     * @param  array  $cards
+     * @return static
+     */
+    public static function cards(array $cards)
+    {
+        static::$cards = array_merge(
+            static::$cards,
+            $cards
+        );
+
+        return new static;
     }
 
     /**

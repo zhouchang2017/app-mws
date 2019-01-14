@@ -83,7 +83,7 @@ a{
 }
 
 .card {
-    @apply .bg-white .shadow .overflow-hidden  .rounded-lg;
+    @apply .bg-white  .overflow-hidden  .rounded-lg;
 }
 
 .card-no-shadow {
@@ -127,6 +127,10 @@ a{
  * @import "utilities/background-patterns";
  * @import "utilities/skew-transforms";
  */
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
 
 .navbar-laravel {
     background-color: #fff;

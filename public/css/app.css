@@ -613,8 +613,6 @@ a {
 
 .card {
   background-color: #fff;
-  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
-          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
   overflow: hidden;
   border-radius: .5rem;
 }
@@ -671,6 +669,11 @@ a {
  * @import "utilities/background-patterns";
  * @import "utilities/skew-transforms";
  */
+
+.rotate-180 {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
 
 .navbar-laravel {
   background-color: #fff;

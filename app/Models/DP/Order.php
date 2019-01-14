@@ -22,17 +22,24 @@ class Order extends Model implements Orderable
 {
     use MoneyFormatableTrait;
 
-    protected $priceFields = ['items_total', 'adjustments_total', 'total'];
+    protected $priceFields = [ 'items_total', 'adjustments_total', 'total' ];
 
     public static $orderTypeName = 'DP订单';
 
+    protected $appends = [ 'name' ];
+
     protected $casts = [
-        'rest' => 'array',
-        'paid_at' => 'datetime',
+        'rest'         => 'array',
+        'paid_at'      => 'datetime',
         'confirmed_at' => 'datetime',
-        'reviewed_at' => 'datetime',
+        'reviewed_at'  => 'datetime',
         'fulfilled_at' => 'datetime',
     ];
+
+    public function getNameAttribute()
+    {
+        return static::$orderTypeName . '(' . $this->number . ')';
+    }
 
     // ==============money format====================
     public function getItemsTotalAttribute($value)
@@ -125,15 +132,15 @@ class Order extends Model implements Orderable
     // 订单明细
     public function getExpendItems()
     {
-        $this->loadMissing(['items.units']);
+        $this->loadMissing([ 'items.units' ]);
 
         return $this->items->reduce(function ($list, $item) {
             return $list->concat($item->units->map(function ($unit) use ($item) {
                 return [
                     'product_id' => $item->product_id,
                     'variant_id' => $item->variant_id,
-                    'quantity' => 1,
-                    'price' => $unit->price,
+                    'quantity'   => 1,
+                    'price'      => $unit->price,
                 ];
             }));
         }, collect([]));

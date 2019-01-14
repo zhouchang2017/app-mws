@@ -1,5 +1,5 @@
 <template>
-    <loading-card :loading="loading" class="px-6 py-4">
+    <div v-loading="loading" class="card metric px-6 py-4 relative">
         <div class="flex mb-4">
             <h3 class="mr-3 text-base text-80 font-bold">{{ title }}</h3>
 
@@ -29,7 +29,7 @@
             class="z-40 absolute pin rounded-b-lg ct-chart"
             style="top: 60%"
         />
-    </loading-card>
+    </div>
 </template>
 
 <script>
@@ -38,7 +38,6 @@ import _ from 'lodash'
 import Chartist from 'chartist'
 import 'chartist-plugin-tooltips'
 import 'chartist/dist/chartist.min.css'
-import { SingularOrPlural } from 'laravel-nova'
 import 'chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css'
 
 // const getLabelForValue = (value, vm) => {
@@ -112,7 +111,7 @@ export default {
                         }
 
                         if (this.suffix) {
-                            const suffix = SingularOrPlural(value, this.suffix)
+                            const suffix = this.singularOrPlural(value, this.suffix)
                             return `${value} ${suffix}`
                         }
 
@@ -151,7 +150,7 @@ export default {
         },
 
         formattedSuffix() {
-            return SingularOrPlural(this.value, this.suffix)
+            return this.singularOrPlural(this.value, this.suffix)
         },
     },
 }

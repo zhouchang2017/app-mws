@@ -3,6 +3,7 @@
 namespace App\Resources;
 
 
+use App\Erp\Charts\Metrics\ProductVariants;
 use Illuminate\Http\Request as NovaRequest;
 
 class ProductVariant extends Resource
@@ -41,6 +42,13 @@ class ProductVariant extends Resource
         $query->when(request()->get('channel', false), function ($query, $channel) {
             $query->filterChannel($channel);
         });
+    }
+
+    public function cards($request)
+    {
+        return [
+            new ProductVariants(),
+        ];
     }
 
 

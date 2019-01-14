@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Erp\Charts\Metrics\ProductVariants;
 use App\Erp\Erp;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,6 +28,8 @@ class ErpServiceProvider extends ServiceProvider
     {
         Erp::resourcesIn(app_path('Resources'));
     }
+
+
 
     /**
      * Register services.

@@ -2,23 +2,26 @@
 
 namespace App\Erp\Charts\Metrics;
 
-use App\Erp\Metrics\Trend;
-use App\Models\DP\Order;
+use App\Models\DP\Product;
+use App\Models\DP\ProductVariant;
 use Illuminate\Http\Request;
+use App\Erp\Metrics\Value;
 
-class OrdersPerDay extends Trend
+class ProductVariants extends Value
 {
-    public $name = '订单增量';
 
+    public $name = '变体数量';
+
+    public $width = 'full';
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
     public function calculate(Request $request)
     {
-        return $this->countByDays($request, Order::class);
+        return $this->count($request, ProductVariant::class);
     }
 
     /**
@@ -31,7 +34,10 @@ class OrdersPerDay extends Trend
         return [
             30 => '30 Days',
             60 => '60 Days',
-            90 => '90 Days',
+            365 => '365 Days',
+            'MTD' => 'Month To Date',
+            'QTD' => 'Quarter To Date',
+            'YTD' => 'Year To Date',
         ];
     }
 
@@ -52,6 +58,6 @@ class OrdersPerDay extends Trend
      */
     public function uriKey()
     {
-        return 'order-per-day';
+        return 'product-variants';
     }
 }

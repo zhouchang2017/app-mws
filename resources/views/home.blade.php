@@ -2,10 +2,8 @@
 
 @section('content')
     <div>
-        <card-title label="用户中心"></card-title>
+        <card-title label="Dashboard"></card-title>
 
-        <div class="form-list mb-6">
-            <bind-wechat></bind-wechat>
-        </div>
+        <home-metrics></home-metrics>
     </div>
 @endsection

@@ -8,6 +8,11 @@
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/metrics', 'DashboardMetricController@index');
+Route::get('/metrics/{metric}', 'DashboardMetricController@show');
+
+Route::get('/{resource}/metrics', 'MetricController@index')->name('metrics.index');
+Route::get('/{resource}/metrics/{metric}', 'MetricController@show')->name('metrics.show');
 // 供货计划
 Route::resource('/supplies', 'SupplyController');
 

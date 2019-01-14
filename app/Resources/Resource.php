@@ -9,15 +9,17 @@
 namespace App\Resources;
 
 
+use App\Erp\ResolvesCards;
 use App\Traits\Authorizable;
 use App\Traits\PerformsQueries;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\ConditionallyLoadsAttributes;
 use Illuminate\Support\Str;
 
 abstract class Resource
 {
-    use \App\Erp\Authorizable, PerformsQueries;
+    use \App\Erp\Authorizable, PerformsQueries,ResolvesCards,ConditionallyLoadsAttributes;
     /**
      * The underlying model resource instance.
      *
@@ -63,7 +65,7 @@ abstract class Resource
         $this->resource = $resource;
     }
 
-    public function metrics($request)
+    public function cards(Request $request)
     {
         return [];
     }
