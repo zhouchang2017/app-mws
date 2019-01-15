@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\DP\Product;
 use App\Models\DP\ProductVariant;
 use App\Traits\AddressableTrait;
+use App\Traits\MoneyFormatableTrait;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\DB;
  */
 class Supplier extends Model
 {
-    use AddressableTrait;
+    use AddressableTrait, MoneyFormatableTrait;
 
     protected $connection = 'mysql';
     /**
@@ -76,9 +77,37 @@ class Supplier extends Model
             ->withPivot('name')->wherePivot('hidden', 0);
     }
 
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
+
+    public function casheds()
+    {
+        return $this->hasMany(Cashed::class);
+    }
+
+    /*
+     * 更新余额
+     * */
+    public function changeBalance(Bill $bill)
+    {
+        $this->increment('balance', $bill->price);
+    }
+
     public function getVariantIdsAttribute()
     {
         return DB::table('supplier_variants')->where('supplier_id', $this->id)->pluck('variant_id')->toArray();
+    }
+
+    public function getBalanceAttribute($value)
+    {
+        return $this->displayCurrencyUsing($value);
+    }
+
+    public function setBalanceAttribute($value)
+    {
+        $this->attributes['balance'] = $this->saveCurrencyUsing($value === 0 ? '0.00' : (string)$value);
     }
 
 }

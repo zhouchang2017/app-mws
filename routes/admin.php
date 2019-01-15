@@ -13,6 +13,11 @@ Route::get('/metrics/{metric}', 'DashboardMetricController@show');
 
 Route::get('/{resource}/metrics', 'MetricController@index')->name('metrics.index');
 Route::get('/{resource}/metrics/{metric}', 'MetricController@show')->name('metrics.show');
+
+
+// 账单
+Route::get('/bills', 'BillController@index')->name('bills.index');
+
 // 供货计划
 Route::resource('/supplies', 'SupplyController');
 

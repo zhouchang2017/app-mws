@@ -8,6 +8,9 @@
                 :singular-label="singularLabel"
         >
         </resource-index-header>
+        <slot name="indexHeader" :uri-key="uriKey"
+              :label="label"
+              :singular-label="singularLabel"></slot>
         <resources-table
                 :uri-key="uriKey"
                 :label="label"

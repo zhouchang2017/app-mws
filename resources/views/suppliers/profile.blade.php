@@ -14,6 +14,7 @@
         <form-item title="名称" value="{{$resource->name}}"></form-item>
         <form-item title="编码" value="{{$resource->code}}"></form-item>
         <form-item title="描述" value="{{$resource->description }}"></form-item>
+        <form-item title="余额" value="{{$resource->balance }}"></form-item>
         <form-item title="店长" value="{{$resource->manager->name }}" uri-key="supplier-users"
                    resource-id="{{$resource->manager->id}}"></form-item>
         <form-item title="官方小二" value="{{$resource->admin->name }}" uri-key="users"

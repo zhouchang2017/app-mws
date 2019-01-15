@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="loading" class="card metric px-6 py-4 relative">
+    <div v-loading="loading" class="bg-white rounded-lg metric px-6 py-4 relative">
         <div class="flex mb-4">
             <h3 class="mr-3 text-base text-80 font-bold">{{ title }}</h3>
 

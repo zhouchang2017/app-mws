@@ -19,4 +19,5 @@ interface Orderable
 
     public function getTotalPriceAttribute();
 
+    public function localOrder();
 }

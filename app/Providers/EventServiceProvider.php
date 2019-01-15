@@ -40,6 +40,7 @@ class EventServiceProvider extends ServiceProvider
     protected $subscribe = [
         'App\Listeners\SupplyEventSubscriber',
         'App\Listeners\InventoryEventSubscriber',
-        'App\Listeners\WithdrawEventSubscriber'
+        'App\Listeners\WithdrawEventSubscriber',
+        'App\Listeners\OrderEventSubscriber',
     ];
 }

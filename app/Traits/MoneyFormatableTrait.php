@@ -77,34 +77,6 @@ trait MoneyFormatableTrait
         return $money->getAmount();
     }
 
-    public function hasSetMoneyMutator($key)
-    {
-        return in_array($key, $this->getFormatFields());
-    }
-
-    public function setAttribute($key, $value)
-    {
-        if ($this->hasSetMoneyMutator($key)) {
-            return $this->attributes[$key] = $this->saveCurrencyUsing($value === 0 ? '0.00' : (string)$value);
-        }
-        return parent::setAttribute($key, $value);
-    }
-
-    public function hasGetMutator($key)
-    {
-        if ($this->hasSetMoneyMutator($key)) {
-            return true;
-        }
-        return parent::hasGetMutator($key);
-    }
-
-    protected function mutateAttribute($key, $value)
-    {
-        if ($this->hasSetMoneyMutator($key)) {
-            return $this->displayCurrencyUsing($value);
-        }
-        return parent::mutateAttribute($key, $value);
-    }
 
     public function getPriceAttribute($value)
     {

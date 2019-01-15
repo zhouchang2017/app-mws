@@ -140,10 +140,7 @@ class Withdraw extends Model
         $this->preInventoryAction->orders->each->loadDetailAttribute();
     }
 
-    public function freshNow()
-    {
-        $this->forceFill(['updated_at' => $this->freshTimestamp()])->save();
-    }
+
 
     // 是否全部确认收货
     public function isAllChecked()

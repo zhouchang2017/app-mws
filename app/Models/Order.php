@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use App\Models\DP\Channel;
-use App\Services\OrderService;
+use App\Observers\OrderObserver;
+use App\Traits\HasBills;
 use App\Traits\HasStatuses;
 use App\Traits\MoneyFormatableTrait;
 use Spatie\ModelStatus\Exceptions\InvalidStatus;
@@ -18,16 +19,21 @@ use Spatie\ModelStatus\Exceptions\InvalidStatus;
  */
 class Order extends Model
 {
-    use MoneyFormatableTrait, HasStatuses;
+    use MoneyFormatableTrait, HasStatuses, HasBills;
 
     const PENDING = 'PENDING';              //等待买家付款
-    const UN_SHIP = 'UN_SHIP';            //买家已付款，等待卖家发货
+    const UN_SHIP = 'UN_SHIP';              //买家已付款，等待卖家发货
     const PART_SHIPPED = 'PART_SHIPPED';    //部分发货
     const SHIPPED = 'SHIPPED';              //已发货
-    const CANCEL = 'CANCEL';               //订单已取消
-    const UNFULFILLABLE = 'UNFULFILLABLE';       // 订单无法进行配送
+    const COMPLETED = 'COMPLETED';          // 已完成
+    const CANCEL = 'CANCEL';                //订单已取消
+    const UNFULFILLABLE = 'UNFULFILLABLE';  // 订单无法进行配送
 
     public $timestamps = false;
+
+    protected $connection = 'mysql';
+
+    protected $with = ['state'];
 
     protected $fillable = [
         'origin_id',
@@ -45,17 +51,14 @@ class Order extends Model
     ];
 
     protected $appends = [
-        'type_name','current_state'
+        'type_name',
+        'current_state',
     ];
 
     protected static function boot()
     {
         parent::boot();
-        static::created(function ($model) {
-            $service = new OrderService($model);
-            $service->createOrderItems();
-            // $service->createPreInventoryAction();
-        });
+        static::observe(OrderObserver::class);
     }
 
     public function getCurrentStateAttribute()
@@ -66,9 +69,9 @@ class Order extends Model
             self::PART_SHIPPED => '部分发货',
             self::SHIPPED => '已发货',
             self::CANCEL => '已取消',
-            self::UNFULFILLABLE => '订单无法进行配送'
+            self::UNFULFILLABLE => '订单无法进行配送',
         ];
-        return array_get($status, $this->state->name, 'N/A');
+        return array_get($status, optional($this->state)->name, 'N/A');
     }
 
     // 预出\入库(入库单\出货单)
@@ -111,7 +114,7 @@ class Order extends Model
         $this->loadMissing(['market', 'items.variant']);
         if ($this->market->marketable instanceof Channel) {
 
-            $this->items->each(function($item){
+            $this->items->each(function ($item) {
                 $item->variant->appendCurrentPrice($this->market->marketable);
             });
         }
@@ -148,6 +151,12 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = $value;
     }
 
 }

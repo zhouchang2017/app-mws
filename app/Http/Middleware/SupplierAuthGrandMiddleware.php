@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Erp\Charts\Metrics\ProductVariants;
+use App\Erp\Erp;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -19,6 +21,7 @@ class SupplierAuthGrandMiddleware
     {
         View::share('domain', array_first(explode('.',$request->getHost())));
         $this->generateMenus();
+        $this->cards();
         return $next($request);
     }
 
@@ -34,5 +37,14 @@ class SupplierAuthGrandMiddleware
             $menu->add('退仓申请','withdraws');
             $menu->add('站内消息','notifications');
         });
+    }
+
+    protected function cards()
+    {
+        Erp::cards(
+            [
+                new ProductVariants(),
+            ]
+        );
     }
 }

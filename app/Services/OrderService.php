@@ -10,10 +10,19 @@ namespace App\Services;
 
 
 use App\Contracts\Orderable;
+use App\Events\CancelOrderEvent;
+use App\Events\CompletedOrderEvent;
+use App\Events\NewOrderEvent;
+use App\Events\PaymentOrderEvent;
+use App\Events\ShippedOrderEvent;
+use App\Exceptions\OrderHasAlreadyExistsException;
+use App\Http\Requests\ErpRequest;
 use App\Models\InventoryActionType;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\PreInventoryActionOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
@@ -79,6 +88,8 @@ class OrderService
     public function statusToUnShip($reason = '买家已付款，等待卖家发货')
     {
         $this->order->setStatus($this->order::UN_SHIP, $reason);
+        // 订单付款事件
+        event(new PaymentOrderEvent($this->order));
     }
 
     /**
@@ -97,6 +108,19 @@ class OrderService
     public function statusToShipped($reason = '已发货')
     {
         $this->order->setStatus($this->order::SHIPPED, $reason);
+        // 订单已发货事件
+        event(new ShippedOrderEvent($this->order));
+    }
+
+    /**
+     * @param string $reason
+     * @throws \Spatie\ModelStatus\Exceptions\InvalidStatus
+     */
+    public function statusToCompleted($reason = '交易完成')
+    {
+        $this->order->setStatus($this->order::COMPLETED, $reason);
+        // 订单交易完成事件
+        event(new CompletedOrderEvent($this->order));
     }
 
     /**
@@ -106,6 +130,8 @@ class OrderService
     public function statusToCancel($reason = '订单已取消')
     {
         $this->order->setStatus($this->order::CANCEL, $reason);
+        // 订单取消事件
+        event(new CancelOrderEvent($this->order));
     }
 
     /**
@@ -115,6 +141,65 @@ class OrderService
     public function statusToUnfulfillable($reason = '订单无法进行配送')
     {
         $this->order->setStatus($this->order::UNFULFILLABLE, $reason);
+    }
+
+
+    /**
+     * @param Orderable $orderable
+     * @param ErpRequest $request
+     * @return mixed
+     * @throws \Throwable
+     */
+    public static function createOrder(Orderable $orderable, ErpRequest $request)
+    {
+        throw_unless(!$orderable->localOrder, OrderHasAlreadyExistsException::class);
+        return DB::transaction(function () use ($orderable, $request) {
+            return tap(new Order(), function ($order) use ($orderable, $request) {
+                /** @var Order $order */
+                $order->fill($request->all());
+                $order->origin()->associate($orderable);
+                $order->market()->associate(optional($orderable->channel)->market);
+                $order->save();
+
+                (new OrderService($order))->statusToPending();
+//                $order->se
+                collect($request->get('items'))->map(function ($data) use ($order) {
+                    return tap(new OrderItem())->forceFill($data)->order()->associate($order)->save();
+                });
+                // 新订单事件
+                event(new NewOrderEvent($order));
+            });
+        });
+    }
+
+    public static function changeOrderStatus(Orderable $orderable, ErpRequest $request)
+    {
+        return DB::transaction(function () use ($orderable, $request) {
+            $service = new static($orderable->localOrder);
+            switch ($request->get('status')) {
+                case Order::PENDING:
+                    $service->statusToPending();
+                    break;
+                case Order::UN_SHIP:
+                    $service->statusToUnShip();
+                    break;
+                case Order::PART_SHIPPED:
+                    $service->statusToPartShipped();
+                    break;
+                case Order::SHIPPED:
+                    $service->statusToShipped();
+                    break;
+                case Order::COMPLETED:
+                    $service->statusToCompleted();
+                    break;
+                case Order::CANCEL:
+                    $service->statusToCancel();
+                    break;
+                case Order::UNFULFILLABLE:
+                    $service->statusToUnfulfillable();
+            }
+            return $orderable;
+        });
     }
 
     /**
@@ -142,7 +227,7 @@ class OrderService
 
     public function createOrderItems()
     {
-        return $this->order->getExpendItems()->map(function($item){
+        return $this->order->getExpendItems()->map(function ($item) {
             return $this->order->items()->create($item);
         });
     }
@@ -170,12 +255,12 @@ class OrderService
         }
     }
 
-    public function shipment(PreInventoryActionOrder $preInventoryActionOrder,Request $request)
+    public function shipment(PreInventoryActionOrder $preInventoryActionOrder, Request $request)
     {
-        InventoryService::preActionOrderShipment($preInventoryActionOrder,$request,true);
-        if($this->isShipped()){
+        InventoryService::preActionOrderShipment($preInventoryActionOrder, $request, true);
+        if ($this->isShipped()) {
             $this->statusToShipped();
-        }else{
+        } else {
             $this->statusToPartShipped();
         }
     }

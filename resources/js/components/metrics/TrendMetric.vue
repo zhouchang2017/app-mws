@@ -1,10 +1,10 @@
 <template>
     <BaseTrendMetric
         @selected="handleRangeSelected"
-        :title="card.name"
+        :title="option.name"
         :value="value"
         :chart-data="data"
-        :ranges="card.ranges"
+        :ranges="option.ranges"
         :prefix="prefix"
         :suffix="suffix"
         :selected-range-key="selectedRangeKey"
@@ -14,8 +14,8 @@
 
 <script>
 import _ from 'lodash'
-import { InteractsWithDates, Minimum } from 'laravel-nova'
-import BaseTrendMetric from './Base/TrendMetric'
+import InteractsWithDates from '../../InteractsWithDates'
+import BaseTrendMetric from '../../base-components/metrics/TrendMetric'
 
 export default {
     name: 'trend-metric',
@@ -27,17 +27,13 @@ export default {
     },
 
     props: {
-        card: {
+        option: {
             type: Object,
             required: true,
         },
-        resourceName: {
+        uriKey: {
             type: String,
-            default: '',
-        },
-        resourceId: {
-            type: [Number, String],
-            default: '',
+            required: true,
         },
     },
 
@@ -52,7 +48,7 @@ export default {
 
     created() {
         if (this.hasRanges) {
-            this.selectedRangeKey = this.card.ranges[0].value
+            this.selectedRangeKey = this.option.ranges[0].value
         }
     },
 
@@ -69,7 +65,7 @@ export default {
         fetch() {
             this.loading = true
 
-            Minimum(Nova.request().get(this.metricEndpoint, this.metricPayload)).then(
+            this.minimum(axios.get(this.metricEndpoint, this.metricPayload)).then(
                 ({
                     data: {
                         value: { labels, trend, value, prefix, suffix },
@@ -98,7 +94,7 @@ export default {
 
     computed: {
         hasRanges() {
-            return this.card.ranges.length > 0
+            return this.option.ranges.length > 0
         },
 
         metricPayload() {
@@ -117,15 +113,7 @@ export default {
         },
 
         metricEndpoint() {
-            if (this.resourceName && this.resourceId) {
-                return `/nova-api/${this.resourceName}/${this.resourceId}/metrics/${
-                    this.card.uriKey
-                }`
-            } else if (this.resourceName) {
-                return `/nova-api/${this.resourceName}/metrics/${this.card.uriKey}`
-            } else {
-                return `/nova-api/metrics/${this.card.uriKey}`
-            }
+          return `/metrics/${this.uriKey}`
         },
     },
 }

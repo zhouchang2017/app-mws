@@ -27,4 +27,9 @@ abstract class Model extends BaseModel
             $model->append('authorize');
         });
     }
+
+    public function freshNow()
+    {
+        $this->forceFill(['updated_at' => $this->freshTimestamp()])->save();
+    }
 }

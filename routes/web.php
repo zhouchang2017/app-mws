@@ -13,9 +13,10 @@
 
 Route::view('/', 'welcome');
 
-Route::get('/test',function (\App\Http\Requests\ErpRequest $request){
+Route::get('/test', function (\App\Http\Requests\ErpRequest $request) {
     return \App\Models\DP\Taxon::all();
 //    return \App\Models\Inventory::where('warehouse_id',10)->get();
 });
 
-Route::get('/excels/import','HelperImportExcelController@import');
+Route::get('/excels/import', 'HelperImportExcelController@import');
+

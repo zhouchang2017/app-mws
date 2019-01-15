@@ -22,6 +22,7 @@ class CreateSuppliersTable extends Migration
             $table->text('description')->nullable()->comment('供应商描述说明');
             $table->unsignedInteger('supplier_user_id')->nullable()->comment('供应商管理员');
             $table->unsignedInteger('user_id')->nullable()->comment('跟进人');
+            $table->bigInteger('balance')->default(0)->comment('供应商余额');
             $table->timestamps();
             $table->softDeletes();
         });

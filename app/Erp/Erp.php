@@ -17,6 +17,21 @@ class Erp
 
     public static $cards = [];
 
+    public static $userTimezoneCallback;
+
+    /**
+     * Resolve the user's preferred timezone.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string|null
+     */
+    public static function resolveUserTimezone(Request $request)
+    {
+        if (static::$userTimezoneCallback) {
+            return call_user_func(static::$userTimezoneCallback, $request);
+        }
+    }
+
     /**
      * Get meta data information about all resources for client side consumption.
      *

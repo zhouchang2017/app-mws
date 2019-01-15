@@ -68,14 +68,23 @@ class ProductVariant extends Model
         ]);
     }
 
+    public function resolveCurrentPrice($channel)
+    {
+        if ($channel instanceof Channel) {
+            $price = $this->dpPrice()->where('channel_id', $channel->id)->first();
+            return optional($price)->price ?? $this->price->price;
+        }
+        return $this->price->price;
+    }
+
     public function appendCurrentPrice($channel)
     {
         if ($channel instanceof Channel) {
-            $price = $this->dpPrice()->where('channel_id',$channel->id)->first();
+            $price = $this->dpPrice()->where('channel_id', $channel->id)->first();
             $this->current_price = optional($price)->price;
             return;
         }
-        $this->current_price = 0;
+        $this->current_price = $this->price->price;
     }
 
     public function dpPrices()

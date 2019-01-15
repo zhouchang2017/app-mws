@@ -5,10 +5,10 @@ export default {
      */
     toAppTimezone(value) {
       return value
-        ? moment
+        ? dayjs
             .tz(value, this.userTimezone)
             .clone()
-            .tz(Nova.config.timezone)
+            .tz(this.appConfig.timezone)
             .format('YYYY-MM-DD HH:mm:ss')
         : value
     },
@@ -21,8 +21,8 @@ export default {
         return value
       }
 
-      return moment
-        .tz(value, Nova.config.timezone)
+      return dayjs
+        .tz(value, this.appConfig.timezone)
         .clone()
         .tz(this.userTimezone)
         .format('YYYY-MM-DD HH:mm:ss')
@@ -36,8 +36,8 @@ export default {
         return field.value
       }
 
-      const localized = moment
-        .tz(field.value, Nova.config.timezone)
+      const localized = dayjs
+        .tz(field.value, this.appConfig.timezone)
         .clone()
         .tz(this.userTimezone)
 
@@ -58,8 +58,8 @@ export default {
         return field.value
       }
 
-      const localized = moment
-        .tz(field.value, Nova.config.timezone)
+      const localized = dayjs
+        .tz(field.value, this.appConfig.timezone)
         .clone()
         .tz(this.userTimezone)
 
@@ -76,7 +76,7 @@ export default {
      * Get the user's local timezone.
      */
     userTimezone() {
-      return Nova.config.userTimezone ? Nova.config.userTimezone : moment.tz.guess()
+      return this.appConfig.timezone
     },
 
     /**

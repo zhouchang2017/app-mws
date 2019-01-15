@@ -7,6 +7,16 @@
  */
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+Route::get('/metrics', 'DashboardMetricController@index');
+Route::get('/metrics/{metric}', 'DashboardMetricController@show');
+
+// 账单
+Route::get('/bills', 'BillController@index')->name('bills.index');
+
+// 获取余额
+Route::get('/bills/balance','BillController@getBalance');
+
 // 供货计划
 Route::resource('/supplies', 'SupplyController');
 // 供货计划提交审核
@@ -78,7 +88,7 @@ Route::get('/suppliers/profile', 'SupplierController@profile')->name('suppliers.
 
 
 // 轮询是否绑定成功
-Route::get('/wechat/bind','Supplier\Auth\WechatController@checkIsBind');
+Route::get('/wechat/bind', 'Supplier\Auth\WechatController@checkIsBind');
 
 // 图片上传
 Route::post('/fs/upload/image', 'FileSystemController@image')->name('upload.image.store');

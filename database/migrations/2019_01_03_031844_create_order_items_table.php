@@ -19,7 +19,9 @@ class CreateOrderItemsTable extends Migration
             $table->unsignedInteger(config('inventory.product_key'))->nullable();
             $table->unsignedInteger(config('inventory.variant_key'));
             $table->integer('quantity')->comment('数量');
+            $table->integer('origin_price')->comment('商品原始售价');
             $table->integer('price')->comment('价格'); // 通过调整记录明细
+            $table->json('rest')->nullable()->default(null); // 冗余
             $table->timestamps();
         });
     }

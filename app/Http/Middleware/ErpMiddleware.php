@@ -24,6 +24,8 @@ class ErpMiddleware
 
         View::share('notifyTypes',User::getTypes());
         ERP::provideToScript([
+            'timezone' => config('app.timezone', 'UTC'),
+            'userTimezone' => \App\Erp\Erp::resolveUserTimezone($request),
             'locales'     => $locales,
             'indexLocale' => app()->getLocale(),
             'assetDomain' => $request->getScheme().'://'.config('filesystems.disks.qiniu.domains.default')

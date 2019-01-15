@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('/orders/sync/dp/{id}', 'OrderController@dpSync');
+Route::patch('/orders/sync/dp/{id}', 'OrderController@changeStatus');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
