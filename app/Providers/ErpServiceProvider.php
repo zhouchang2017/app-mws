@@ -32,7 +32,7 @@ class ErpServiceProvider extends ServiceProvider
     {
         config([ 'auth.defaults.guard' => 'supplier_web' ]);
         // app name
-        config([ 'auth.name' => '供应商管理后台' ]);
+        config([ 'app.name' => '供应商管理后台' ]);
     }
 
     /**
