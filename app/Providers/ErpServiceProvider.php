@@ -15,7 +15,22 @@ class ErpServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->resources();
+        if ( !in_array(subDomain(), [ 'admin', 'supplier' ])) {
+            // abort(404);
+        }
+
+        adminComing() ? $this->loadAdminConfig() : $this->loadSupplierConfig();
+    }
+
+    public function loadAdminConfig()
+    {
+        // app name
+        config([ 'app.name' => 'ERP系统管理后台' ]);
+    }
+    public function loadSupplierConfig()
+    {
+        // app name
+        config([ 'auth.name' => '供应商管理后台' ]);
     }
 
     /**

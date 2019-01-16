@@ -28,3 +28,23 @@ if ( !function_exists('erpRequest')) {
 }
 
 
+if ( !function_exists('subDomain')) {
+    function subDomain()
+    {
+        return array_first(explode('.', request()->getHost()));
+    }
+}
+
+
+if ( !function_exists('adminComing')) {
+    function adminComing()
+    {
+        return subDomain() === 'admin';
+    }
+}
+if ( !function_exists('supplierComing')) {
+    function supplierComing()
+    {
+        return subDomain() === 'supplier';
+    }
+}

@@ -11,7 +11,7 @@
 |
 */
 
-Route::view('/', 'welcome');
+Route::view('/', 'home');
 
 Route::get('/test', function (\App\Http\Requests\ErpRequest $request) {
     return \App\Models\DP\Taxon::all();
