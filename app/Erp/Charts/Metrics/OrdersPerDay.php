@@ -10,6 +10,8 @@ class OrdersPerDay extends Trend
 {
     public $name = '订单增量';
 
+    public $width = 'full';
+
     /**
      * Calculate the value of the metric.
      *

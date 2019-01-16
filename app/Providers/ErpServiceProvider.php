@@ -24,11 +24,13 @@ class ErpServiceProvider extends ServiceProvider
 
     public function loadAdminConfig()
     {
+        config([ 'auth.defaults.guard' => 'admin' ]);
         // app name
         config([ 'app.name' => 'ERP系统管理后台' ]);
     }
     public function loadSupplierConfig()
     {
+        config([ 'auth.defaults.guard' => 'supplier_web' ]);
         // app name
         config([ 'auth.name' => '供应商管理后台' ]);
     }
