@@ -31,6 +31,7 @@ class WechatController extends Controller
 
         if ( !$user->hasBind()) {
             $oauthUser = session('wechat.oauth_user.default');
+            dd($oauthUser);
             $user->wechat()->create([
                 'openid' => $oauthUser->getId(),
                 'avatar' => $oauthUser->getAvatar(),
