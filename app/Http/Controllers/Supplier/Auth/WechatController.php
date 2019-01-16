@@ -21,6 +21,7 @@ class WechatController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except(['getBindUrl','checkIsBind']);
+        $this->middleware('wechat.oauth')->only(['bind']);
     }
 
 

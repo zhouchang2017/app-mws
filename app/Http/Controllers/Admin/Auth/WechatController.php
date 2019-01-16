@@ -20,6 +20,7 @@ class WechatController extends Controller
     public function __construct()
     {
         $this->middleware(['guest'])->except(['getBindUrl', 'checkIsBind']);
+        $this->middleware('wechat.oauth')->only(['bind']);
     }
 
 
@@ -27,7 +28,7 @@ class WechatController extends Controller
     {
         $this->authorizeUrl();
 
-        if (!$user->hasBind()) {
+        if ( !$user->hasBind()) {
             $oauthUser = session('wechat.oauth_user.default');
             $user->wechat()->create([
                 'openid' => $oauthUser->getId(),
