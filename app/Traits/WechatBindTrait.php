@@ -44,6 +44,9 @@ trait WechatBindTrait
      */
     public function authorizeUrl()
     {
+        dump(Cache::has(request()->fullUrl()));
+        dump(request()->hasValidSignature());
+        dd(1);
         tap(Cache::has(request()->fullUrl()), function ($flag) {
             throw_unless($flag && request()->hasValidSignature(), AuthorizationException::class);
             Cache::forget(request()->fullUrl());
