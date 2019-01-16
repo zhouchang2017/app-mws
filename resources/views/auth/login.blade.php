@@ -10,8 +10,7 @@
             <div class="border-b py-8 font-bold text-black text-center text-xl tracking-widest uppercase">
                 Welcome back!
             </div>
-            {{dd($domain)}}
-            <form class="bg-grey-lightest px-10 py-10" method="POST" action="{{ route($domain.'.login') }}">
+            <form class="bg-grey-lightest px-10 py-10" method="POST" action="{{ url('login') }}">
                 @csrf
 
                 <div class="mb-3">
@@ -65,16 +64,16 @@
                 </div>
             </form>
 
-            <div class="border-t px-10 py-6">
-                <div class="flex">
-                    @if (Route::has($domain.'.password.request'))
-                        <a class="ml-auto inline-flex font-bold text-primary hover:text-primary-50% no-underline"
-                           href="{{ route($domain.'.password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif
-                </div>
-            </div>
+            {{--<div class="border-t px-10 py-6">--}}
+                {{--<div class="flex">--}}
+                    {{--@if (Route::has($domain.'.password.request'))--}}
+                        {{--<a class="ml-auto inline-flex font-bold text-primary hover:text-primary-50% no-underline"--}}
+                           {{--href="{{ route($domain.'.password.request') }}">--}}
+                            {{--{{ __('Forgot Your Password?') }}--}}
+                        {{--</a>--}}
+                    {{--@endif--}}
+                {{--</div>--}}
+            {{--</div>--}}
         </div>
     </div>
 
