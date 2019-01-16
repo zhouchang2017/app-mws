@@ -19,7 +19,7 @@
     <link href="{{ asset('css/vendor.css') }}" rel="stylesheet">
 </head>
 <body class="h-full">
-<div id="app" class="text-base text-grey-darkest font-normal relative bg-40 h-fill">
+<div id="app" class="text-base text-grey-darkest font-normal relative h-fill">
     <div class="bg-primary">
         <div class="mx-auto w-full px-2 lg:px-4 ">
         <div class="flex sm:items-center justify-between  py-4">
@@ -78,7 +78,7 @@
         </div>
     </div>
     </div>
-    <div class="flex h-auto">
+    <div class="flex h-auto  bg-40">
         @component('components.nav-menu')
         @endcomponent
         {{--<div class="container mx-auto lg:p-8 p-4 sm:p-2">--}}
