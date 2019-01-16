@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,8 +18,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/vendor.css') }}" rel="stylesheet">
 </head>
-<body>
-<div id="app" class="text-base text-grey-darkest font-normal relative bg-40 min-h-fill">
+<body class="h-full">
+<div id="app" class="text-base text-grey-darkest font-normal relative bg-40 h-fill">
     <div class="bg-primary">
         <div class="mx-auto w-full px-2 lg:px-4 ">
         <div class="flex sm:items-center justify-between  py-4">
