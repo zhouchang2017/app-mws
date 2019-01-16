@@ -10,7 +10,7 @@
             <div class="border-b py-8 font-bold text-black text-center text-xl tracking-widest uppercase">
                 Welcome back!
             </div>
-
+            {{dd($domain)}}
             <form class="bg-grey-lightest px-10 py-10" method="POST" action="{{ route($domain.'.login') }}">
                 @csrf
 
