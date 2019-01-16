@@ -20,25 +20,29 @@ class WechatController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except(['getBindUrl','checkIsBind']);
-        $this->middleware('wechat.oauth:snsapi_userinfo')->only(['bind']);
+        $this->middleware('guest')->except(['getBindUrl', 'checkIsBind']);
+        $this->middleware('wechat.oauth')->only(['doBind']);
+    }
+
+    public function doBind(SupplierUser $user, ErpRequest $request)
+    {
+        if ( !$user->hasBind()) {
+            /** @var \Overtrue\Socialite\User $oauthUser */
+            $oauthUser = session('wechat.oauth_user.default');
+            $user->wechat()->create([
+                'openid' => $oauthUser->getId(),
+                'avatar' => $oauthUser->getAvatar() ?? 'default',
+                'nickname' => $oauthUser->getNickname() ?? str_random(16),
+            ]);
+            return view('wechat.success', ['message' => '绑定成功！']);
+        }
+        return view('wechat.success', ['message' => '您已经绑定，无需再次绑定！']);
     }
 
 
     public function bind(SupplierUser $user, ErpRequest $request)
     {
         $this->authorizeUrl();
-
-        if ( !$user->hasBind()) {
-            /** @var \Overtrue\Socialite\User $oauthUser */
-            $oauthUser = session('wechat.oauth_user.default');
-            $user->wechat()->create([
-                'openid' => $oauthUser->getId(),
-                'avatar' => $oauthUser->getAvatar(),
-                'nickname' => $oauthUser->getNickname(),
-            ]);
-            return view('wechat.success', ['message' => '绑定成功！']);
-        }
-        return view('wechat.success', ['message' => '您已经绑定，无需再次绑定！']);
+        return $this->doBind($user, $request);
     }
 }
